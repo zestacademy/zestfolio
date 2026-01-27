@@ -7,7 +7,7 @@ import { db } from '@/lib/firebase';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Loader2, Users, Eye, Search, TrendingUp, Award, Activity } from 'lucide-react';
+import { Loader2, Users, Eye, Search, Award, Activity } from 'lucide-react';
 import Link from 'next/link';
 
 // Admin emails - in production, store this in environment variables
