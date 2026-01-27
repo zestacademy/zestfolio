@@ -1,29 +1,12 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Navbar - Responsive */}
-      <header className="px-4 md:px-6 h-16 flex items-center border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-        <div className="flex items-center gap-2 font-bold text-lg md:text-xl tracking-tight">
-          <img src="/logo.png" alt="Zestfolio Logo" className="w-7 h-7 md:w-8 md:h-8 object-contain" />
-          <span><span className="text-primary">Zest</span>folio</span>
-        </div>
-        <nav className="ml-auto hidden sm:flex gap-4 sm:gap-6 text-sm font-medium">
-          <Link href="/features" className="hover:text-primary transition-colors">Features</Link>
-          <Link href="/templates" className="hover:text-primary transition-colors">Templates</Link>
-          <Link href="/examples" className="hover:text-primary transition-colors">Examples</Link>
-        </nav>
-        <div className="ml-4 md:ml-6 flex items-center gap-2">
-          <Link
-            href="/login"
-            className="px-3 md:px-4 py-2 text-sm font-medium text-primary-foreground bg-primary rounded-md hover:bg-primary/90 transition-colors"
-          >
-            Sign In
-          </Link>
-        </div>
-      </header>
+      <Navbar />
 
       <main className="flex-1">
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-b from-background to-muted/20">
@@ -88,9 +71,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
-        <p className="text-xs text-center md:text-left text-muted-foreground">© 2024 Zest Academy. All rights reserved.</p>
-      </footer>
+      <Footer />
     </div>
   );
 }

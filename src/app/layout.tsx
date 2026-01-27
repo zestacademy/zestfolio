@@ -3,6 +3,7 @@ import { Outfit } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/lib/auth-context";
+import { ThemeProvider } from "@/lib/theme-context";
 
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
   description: "Build a professional, shareable portfolio in minutes. Powered by Zest Academy.",
   icons: {
     icon: '/logo.png',
-    shortcut: '/favicon.ico',
+    shortcut: '/logo.png',
     apple: '/logo.png',
   },
 };
@@ -24,9 +25,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={cn("min-h-screen bg-background font-sans antialiased", outfit.className)}>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

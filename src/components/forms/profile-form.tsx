@@ -1,30 +1,36 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/lib/auth-context';
-import { db } from '@/lib/firebase';
-import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { db, storage } from '@/lib/firebase';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, Save } from 'lucide-react';
+import { Loader2, Save, Camera, User } from 'lucide-react';
+import Image from 'next/image';
 
 export default function ProfileForm() {
     const { user } = useAuth();
     const [loading, setLoading] = useState(false);
+    const [uploading, setUploading] = useState(false);
+    const [profilePhotoURL, setProfilePhotoURL] = useState<string>('');
+    const fileInputRef = useRef<HTMLInputElement>(null);
     const [formData, setFormData] = useState({
         username: '',
         fullName: '',
         professionalTitle: '',
         aboutMe: '',
         domain: '',
-        email: '', // Read-only usually, but editable field for portfolio display
+        email: '',
         publicEmail: '',
         linkedin: '',
         github: '',
         twitter: '',
         website: '',
+        profilePhoto: '',
     });
 
     useEffect(() => {
@@ -36,8 +42,10 @@ export default function ProfileForm() {
                 if (docSnap.exists()) {
                     const data = docSnap.data();
                     setFormData(prev => ({ ...prev, ...data, ...data.socialLinks }));
+                    if (data.profilePhoto) {
+                        setProfilePhotoURL(data.profilePhoto);
+                    }
                 } else {
-                    // Init with auth data
                     setFormData(prev => ({ ...prev, fullName: user.displayName || '', email: user.email || '' }));
                 }
             } catch (error) {
@@ -52,6 +60,45 @@ export default function ProfileForm() {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
+    const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file || !user) return;
+
+        // Validate file type
+        if (!file.type.startsWith('image/')) {
+            alert('Please upload an image file');
+            return;
+        }
+
+        // Validate file size (max 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            alert('File size must be less than 5MB');
+            return;
+        }
+
+        setUploading(true);
+        try {
+            // Create a unique filename
+            const filename = `profile-photos/${user.uid}/${Date.now()}-${file.name}`;
+            const storageRef = ref(storage, filename);
+
+            // Upload the file
+            await uploadBytes(storageRef, file);
+
+            // Get the download URL
+            const downloadURL = await getDownloadURL(storageRef);
+
+            // Update state
+            setProfilePhotoURL(downloadURL);
+            setFormData(prev => ({ ...prev, profilePhoto: downloadURL }));
+        } catch (error) {
+            console.error("Error uploading photo:", error);
+            alert('Failed to upload photo. Please try again.');
+        } finally {
+            setUploading(false);
+        }
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!user) return;
@@ -62,13 +109,14 @@ export default function ProfileForm() {
                 ...profileData,
                 socialLinks: { linkedin, github, twitter, website },
                 updatedAt: new Date(),
-                uid: user.uid, // Ensure UID is saved
+                uid: user.uid,
             };
 
             await setDoc(doc(db, 'portfolios', user.uid), dataToSave, { merge: true });
-            // You might want to show a toast here
+            alert('Profile saved successfully!');
         } catch (error) {
             console.error("Error saving profile:", error);
+            alert('Failed to save profile. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -76,6 +124,63 @@ export default function ProfileForm() {
 
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Profile Photo Card */}
+            <Card>
+                <CardHeader>
+                    <CardTitle>Profile Photo</CardTitle>
+                    <CardDescription>Upload a professional photo for your portfolio.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                    <div className="flex flex-col sm:flex-row items-center gap-6">
+                        {/* Photo Preview */}
+                        <div className="relative w-32 h-32 rounded-full overflow-hidden bg-muted border-4 border-border">
+                            {profilePhotoURL ? (
+                                <Image
+                                    src={profilePhotoURL}
+                                    alt="Profile"
+                                    fill
+                                    className="object-cover"
+                                />
+                            ) : (
+                                <div className="w-full h-full flex items-center justify-center bg-primary/10">
+                                    <User className="w-16 h-16 text-primary/30" />
+                                </div>
+                            )}
+                            {uploading && (
+                                <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                                    <Loader2 className="w-8 h-8 text-white animate-spin" />
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Upload Button */}
+                        <div className="flex-1 space-y-3">
+                            <input
+                                ref={fileInputRef}
+                                type="file"
+                                accept="image/*"
+                                onChange={handlePhotoUpload}
+                                className="hidden"
+                            />
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={() => fileInputRef.current?.click()}
+                                disabled={uploading}
+                                className="gap-2"
+                            >
+                                <Camera className="w-4 h-4" />
+                                {uploading ? 'Uploading...' : profilePhotoURL ? 'Change Photo' : 'Upload Photo'}
+                            </Button>
+                            <p className="text-xs text-muted-foreground">
+                                Recommended: Square image, at least 400x400px, max 5MB
+                            </p>
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
+
+            {/* Personal Information Card */}
             <Card>
                 <CardHeader>
                     <CardTitle>Personal Information</CardTitle>
@@ -137,6 +242,7 @@ export default function ProfileForm() {
                 </CardContent>
             </Card>
 
+            {/* Social Links Card */}
             <Card>
                 <CardHeader>
                     <CardTitle>Social Links</CardTitle>

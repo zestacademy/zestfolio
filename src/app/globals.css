@@ -7,60 +7,83 @@
 :root {
   --background: 0 0% 100%;
   --foreground: 197 100% 5%;
-  /* Night Sea */
+  /* Night Sea #001219 */
   --card: 0 0% 100%;
   --card-foreground: 197 100% 5%;
   --popover: 0 0% 100%;
   --popover-foreground: 197 100% 5%;
   --primary: 203 58% 25%;
-  /* Aegean Blue */
+  /* Aegean Blue #1B4965 */
   --primary-foreground: 0 0% 100%;
   --secondary: 73 47% 81%;
-  /* Limestone */
+  /* Limestone #DDE5B6 */
   --secondary-foreground: 197 100% 5%;
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
+  --muted: 73 47% 81%;
+  /* Using Limestone for muted backgrounds */
+  --muted-foreground: 203 58% 25%;
+  /* Using Aegean Blue for muted text */
   --accent: 176 30% 61%;
-  /* Verdigris */
+  /* Verdigris #7FB6B2 */
   --accent-foreground: 197 100% 5%;
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 210 40% 98%;
-  --border: 214.3 31.8% 91.4%;
+  --border: 176 30% 81%;
+  /* Light Verdigris for borders */
   --input: 214.3 31.8% 91.4%;
   --ring: 203 58% 25%;
+  /* Aegean Blue for focus rings */
   --radius: 0.5rem;
   --chart-1: 203 58% 25%;
+  /* Aegean Blue */
   --chart-2: 176 30% 61%;
+  /* Verdigris */
   --chart-3: 197 100% 5%;
+  /* Night Sea */
   --chart-4: 73 47% 81%;
+  /* Limestone */
   --chart-5: 27 87% 67%;
 }
 
 .dark {
-  --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 98%;
-  --card: 222.2 84% 4.9%;
-  --card-foreground: 210 40% 98%;
-  --popover: 222.2 84% 4.9%;
-  --popover-foreground: 210 40% 98%;
-  --primary: 210 40% 98%;
-  --primary-foreground: 222.2 47.4% 11.2%;
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
-  --accent: 217.2 32.6% 17.5%;
-  --accent-foreground: 210 40% 98%;
-  --destructive: 0 62.8% 30.6%;
+  --background: 197 100% 3%;
+  /* Very dark Night Sea */
+  --foreground: 73 47% 95%;
+  /* Light Limestone for text */
+  --card: 203 58% 8%;
+  /* Dark Aegean Blue */
+  --card-foreground: 73 47% 95%;
+  --popover: 203 58% 8%;
+  --popover-foreground: 73 47% 95%;
+  --primary: 176 30% 61%;
+  /* Verdigris - accent color in dark mode */
+  --primary-foreground: 197 100% 5%;
+  /* Night Sea for contrast */
+  --secondary: 203 58% 15%;
+  /* Darker Aegean Blue */
+  --secondary-foreground: 73 47% 90%;
+  --muted: 203 58% 12%;
+  /* Muted Aegean Blue */
+  --muted-foreground: 73 47% 70%;
+  /* Muted Limestone */
+  --accent: 176 30% 55%;
+  /* Slightly darker Verdigris */
+  --accent-foreground: 73 47% 95%;
+  --destructive: 0 62.8% 50%;
   --destructive-foreground: 210 40% 98%;
-  --border: 217.2 32.6% 17.5%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 212.7 26.8% 83.9%;
-  --chart-1: 220 70% 50%;
-  --chart-2: 160 60% 45%;
-  --chart-3: 30 80% 55%;
-  --chart-4: 280 65% 60%;
-  --chart-5: 340 75% 55%;
+  --border: 203 58% 18%;
+  /* Subtle Aegean Blue borders */
+  --input: 203 58% 15%;
+  --ring: 176 30% 61%;
+  /* Verdigris for focus */
+  --chart-1: 176 30% 61%;
+  /* Verdigris */
+  --chart-2: 203 58% 45%;
+  /* Lighter Aegean Blue */
+  --chart-3: 73 47% 81%;
+  /* Limestone */
+  --chart-4: 176 50% 70%;
+  /* Bright Verdigris */
+  --chart-5: 27 87% 67%;
 }
 
 @theme inline {
@@ -100,5 +123,44 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Custom Utilities */
+@layer utilities {
+  .bg-grid-pattern {
+    background-image:
+      linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .animate-gradient {
+    background-size: 200% auto;
+    animation: gradient 3s linear infinite;
+  }
+
+  .animate-spin-slow {
+    animation: spin 3s linear infinite;
+  }
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% center;
+    }
+
+    100% {
+      background-position: 200% center;
+    }
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
   }
 }
