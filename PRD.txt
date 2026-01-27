@@ -1,0 +1,312 @@
+Zest Academy – Student Portfolio Builder
+1. Product Overview
+
+Product Name (Working): Zestfolio (Zest Academy Portfolio Builder)
+Product Type: Web-based portfolio generation platform (Sub-website of Zest Academy)
+Target Users:
+
+Engineering students
+
+Diploma / degree students
+
+Freshers
+
+Self-learners building their first professional presence
+
+Problem Statement (Tell it like it is):
+Most students either:
+
+Don’t have a portfolio at all, or
+
+Have half-baked GitHub Pages sites they never finish
+
+The barrier is not skill, it is structure, confidence, and speed.
+
+Solution:
+A guided platform where students enter structured information and instantly get a live, responsive, shareable portfolio website — without writing code.
+
+2. Goals & Success Metrics
+Primary Goals
+
+Enable any student to publish a portfolio in under 10 minutes
+
+Ensure portfolios are:
+
+Mobile-first
+
+Professional
+
+Publicly shareable
+
+Make portfolios career-ready, not decorative
+
+Success Metrics (KPIs)
+
+Time to first published portfolio (TTFP)
+
+Number of published portfolios
+
+Portfolio share clicks
+
+Student reuse / edits after first publish
+
+Recruiter or external visits (later phase)
+
+3. Target Users & Personas
+Persona 1: Final Year Student
+
+Needs portfolio for placements
+
+Minimal design sense
+
+Wants something “good enough and clean”
+
+Persona 2: First / Second Year Student
+
+Exploring tech identity
+
+Wants flexibility to update over time
+
+Persona 3: Self-learner / Career Switcher
+
+Strong projects, weak presentation
+
+Needs structure more than creativity
+
+4. Core Features (MVP)
+4.1 User Onboarding
+
+Simple signup/login
+
+Email + OTP (preferred)
+
+Google login (optional)
+
+No password complexity at start
+
+4.2 Portfolio Data Input (Structured Form)
+
+Mandatory Fields
+
+Full Name
+
+Professional Title (e.g., EEE Student | Web Developer)
+
+Short Bio / About Me
+
+Domain / Field (Web, EEE, AI, etc.)
+
+Education (multiple entries)
+
+Skills (tag-based)
+
+Projects (title, description, links)
+
+Contact details (email, LinkedIn, GitHub)
+
+Optional Fields
+
+Profile photo
+
+Resume upload (PDF)
+
+Certifications
+
+Achievements
+
+Blogs / Articles
+
+Social links
+
+Design principle: Form-driven, not free-form chaos
+
+4.3 Template System
+
+3–5 professionally designed templates at launch
+
+Templates must be:
+
+Fully responsive
+
+Accessible (WCAG basics)
+
+Neutral, recruiter-friendly
+
+Preview before publishing
+
+Same data → different visual layouts
+
+4.4 Portfolio Generation Engine
+
+Auto-generate static portfolio website
+
+Clean URLs:
+
+zestacademy.in/u/username
+
+OR custom subdomain (future)
+
+Hosted by Zest Academy
+
+SEO-ready:
+
+Meta tags
+
+Open Graph preview
+
+Clean HTML structure
+
+4.5 Live Preview & Edit
+
+Real-time preview panel
+
+Inline edits (edit → preview instantly)
+
+Version safety (draft vs published)
+
+4.6 Publish & Share
+
+One-click Publish
+
+Public URL generated instantly
+
+Share buttons:
+
+Copy link
+
+LinkedIn
+
+WhatsApp
+
+QR code (nice touch for resumes)
+
+5. Non-Functional Requirements
+Performance
+
+Page load < 2 seconds on mobile
+
+Static-first rendering
+
+Security
+
+User data isolation
+
+No public edit access
+
+Secure file uploads
+
+Scalability
+
+Must support 10,000+ student portfolios
+
+CDN-backed hosting
+
+Reliability
+
+99.5% uptime minimum
+
+Auto backups of user data
+
+6. Tech Stack (Suggested, Not Mandated)
+Frontend
+
+Next.js / React
+
+Tailwind CSS
+
+Mobile-first design
+
+Backend
+
+Node.js / API routes
+
+Auth system
+
+Template rendering service
+
+Database
+
+PostgreSQL / MongoDB
+
+Structured schema (important)
+
+Hosting
+
+Vercel / Netlify for frontend
+
+Cloud storage for assets
+
+Custom domain mapping support later
+
+7. User Flow (High Level)
+
+User signs up
+
+Guided form input (step-by-step)
+
+Select template
+
+Live preview
+
+Publish
+
+Share portfolio
+
+Edit anytime
+
+8. Admin Panel (Phase 1 – Minimal)
+
+View all portfolios
+
+Disable reported portfolios
+
+Template management
+
+Basic analytics dashboard
+
+9. Future Enhancements (Phase 2 & 3)
+Phase 2
+
+Custom domain support
+
+Analytics for portfolio views
+
+Resume-to-portfolio import
+
+Dark mode toggle
+
+Phase 3
+
+AI-assisted content writing
+
+Recruiter view mode
+
+Skill verification badges (Zest Academy certified)
+
+Portfolio scoring & feedback
+
+10. Risks & Constraints
+
+Students may over-edit → enforce simplicity
+
+Design consistency vs freedom balance
+
+Hosting costs if usage scales fast
+
+Mitigation:
+
+Limit customization early
+
+Encourage clarity over creativity
+
+11. Strategic Fit with Zest Academy
+
+This product:
+
+Strengthens student outcomes
+
+Increases brand visibility (powered by Zest Academy)
+
+Creates a long-term student ecosystem
+
+Acts as a gateway to advanced Zest Academy programs
