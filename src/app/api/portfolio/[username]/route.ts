@@ -34,6 +34,14 @@ export async function GET(
         skills
     };
 
+    // Debug: Log fetched data
+    console.log('📊 Fetched Portfolio Data for:', username);
+    console.log('   - Full Name:', portfolio.fullName);
+    console.log('   - Title:', portfolio.professionalTitle);
+    console.log('   - Projects:', portfolio.projects?.length || 0);
+    console.log('   - Skills:', portfolio.skills?.length || 0);
+    console.log('   - Template:', portfolio.templateId);
+
     const templateId = portfolio.templateId || 'template01';
 
     // Locate template file
