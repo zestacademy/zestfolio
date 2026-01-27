@@ -24,27 +24,9 @@ export async function GET(
         const userDoc = querySnapshot.docs[0];
         const data = userDoc.data() as any;
 
-        // Check Status & Inactivity (90 Days)
-        let isInactive = data.status === 'inactive';
-
-        // Use lastActiveAt or fallback to updatedAt/createdAt
-        const activityDate = data.lastActiveAt || data.updatedAt || data.createdAt;
-
-        if (!isInactive && activityDate) {
-            // Check if last active > 90 days ago
-            try {
-                // handle Timestamp or Date
-                const lastActive = activityDate.toDate ? activityDate.toDate() : new Date(activityDate);
-                const ninetyDaysAgo = new Date();
-                ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
-
-                if (lastActive < ninetyDaysAgo) {
-                    isInactive = true;
-                }
-            } catch (e) {
-                console.error("Error checking activity date", e);
-            }
-        }
+        // Check Status (Manual Pause only)
+        // Note: 90-day automatic inactivity logic has been removed.
+        const isInactive = data.status === 'inactive';
 
         if (isInactive) {
             return new NextResponse(`
