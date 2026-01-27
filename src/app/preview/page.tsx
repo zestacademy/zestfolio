@@ -5,7 +5,7 @@ import { useAuth } from '@/lib/auth-context';
 import { db } from '@/lib/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { Button } from '@/components/ui/button';
-import { Loader2, ArrowLeft, Monitor, Smartphone, Tablet, ExternalLink } from 'lucide-react';
+import { Loader2, ArrowLeft, Smartphone, Tablet, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 import { PortfolioData } from '@/types';
 
@@ -71,8 +71,8 @@ export default function PreviewPage() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="icon" onClick={() => setViewport('desktop')} className={viewport === 'desktop' ? 'bg-slate-800 text-white' : 'text-slate-400'}>
-                        <Monitor className="w-4 h-4" />
+                    <Button variant="ghost" size="sm" onClick={() => setViewport('desktop')} className={viewport === 'desktop' ? 'bg-slate-800 text-white' : 'text-slate-400'}>
+                        Desktop
                     </Button>
                     <Button variant="ghost" size="icon" onClick={() => setViewport('tablet')} className={viewport === 'tablet' ? 'bg-slate-800 text-white' : 'text-slate-400'}>
                         <Tablet className="w-4 h-4" />
@@ -90,11 +90,11 @@ export default function PreviewPage() {
             </div>
 
             {/* Viewport Container */}
-            <div className="flex-1 bg-slate-950 relative overflow-hidden">
+            <div className="flex-1 bg-slate-950 relative overflow-auto">
                 {viewport === 'desktop' ? (
                     <iframe
                         src={previewUrl}
-                        className="w-full h-full border-none"
+                        className="w-full h-full min-h-[850px] border-none"
                         title="Portfolio Preview"
                     />
                 ) : (

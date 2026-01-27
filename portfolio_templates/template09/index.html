@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Technical Researcher Portfolio | Data Engineering &amp; Distributed Systems</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1337ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101322",
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader", "serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Newsreader', serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased transition-colors duration-300">
+    <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+        <!-- Top Navigation -->
+        <header
+            class="sticky top-0 z-50 w-full border-b border-solid border-slate-200 dark:border-[#232948] bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-6 lg:px-20 py-3">
+            <div class="mx-auto flex max-w-[1200px] items-center justify-between whitespace-nowrap">
+                <div class="flex items-center gap-8">
+                    <div class="flex items-center gap-3">
+                        <div class="text-primary">
+                            <span class="material-symbols-outlined text-3xl">terminal</span>
+                        </div>
+                        <h2 class="text-lg font-bold leading-tight tracking-tight hidden sm:block">Technical Portfolio
+                        </h2>
+                    </div>
+                    <nav class="hidden md:flex items-center gap-9">
+                        <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Home</a>
+                        <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Research</a>
+                        <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Architecture</a>
+                        <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Contact</a>
+                    </nav>
+                </div>
+                <div class="flex flex-1 justify-end gap-4">
+                    <button
+                        class="flex min-w-[120px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold tracking-tight hover:bg-blue-700 transition-all">
+                        <span class="truncate">Download CV</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+        <main class="mx-auto flex w-full max-w-[1200px] flex-1 flex-col lg:flex-row gap-8 px-6 lg:px-20 py-10">
+            <!-- Sidebar: Profile & Skills -->
+            <aside class="w-full lg:w-72 shrink-0">
+                <div class="sticky top-24 flex flex-col gap-8">
+                    <!-- Profile Card -->
+                    <div
+                        class="flex flex-col gap-4 p-6 rounded-xl bg-white dark:bg-[#1a1e2e] shadow-sm border border-slate-100 dark:border-[#232948]">
+                        <div class="flex flex-col gap-4">
+                            <div id="portfolio-hero-image"
+                                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-20 border-2 border-primary/20"
+                                data-alt="Monochrome professional headshot of a research engineer"
+                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCed0qlxuBdO3_uRQZEYEouzhk-sqme0rUQgsQNgXFlxXa7WdZzGEOt29csb_1qrc9vqoxAZEaZMXL6xbfkStSdGCGWVqmRJ2jBVciYrKVboSle30NquJIS2n49afUxF_Sum0bInxBMU7IcdJzdh-IO7fpFEYcXNGVC_TzK8sspy0GlpUL0IQPqm-vJyiBRsCi4FNoqiNgvlqAx3RI47zWiWq3ff4WePtnWBTXoAv42KULkC7EkY2jGKCKlHsTl1GZcg3987sAYnzW0");'>
+                            </div>
+                            <div class="flex flex-col">
+                                <h1 id="portfolio-name" class="text-xl font-bold leading-tight">Dr. Elias Thorne</h1>
+                                <p id="portfolio-title" class="text-slate-500 dark:text-[#929bc9] text-sm font-medium">
+                                    Research Engineer</p>
+                                <p class="text-primary text-xs font-semibold uppercase tracking-wider mt-1">Distributed
+                                    Systems Specialist</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Technical Skills Group -->
+                    <div class="flex flex-col gap-4">
+                        <h3 id="portfolio-skills-header"
+                            class="text-xs font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-[#929bc9] px-2">
+                            Core Competencies</h3>
+                        <div id="portfolio-skills" class="flex flex-wrap gap-2 px-2">
+                            <!-- Skills injected here -->
+                            <span class="px-3 py-1 bg-slate-100 dark:bg-[#232948] rounded text-xs font-medium">Apache
+                                Spark</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <!-- Main Content Area -->
+            <div class="flex-1 flex flex-col gap-10">
+                <!-- Hero Section -->
+                <section class="flex flex-col gap-6">
+                    <div class="flex flex-col gap-4">
+                        <p class="text-primary font-bold tracking-widest text-xs uppercase">Scholarly Portfolio 2024</p>
+                        <h1
+                            class="text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight text-slate-900 dark:text-white">
+                            Distributed Systems &amp; <br />Large-Scale Data Orchestration
+                        </h1>
+                        <p id="portfolio-bio"
+                            class="text-slate-600 dark:text-[#929bc9] text-xl max-w-2xl leading-relaxed">
+                            Focusing on architectural efficiency, low-latency data pipelines, and the rigorous
+                            mathematical validation of distributed consensus.
+                        </p>
+                    </div>
+                </section>
+                <hr class="border-slate-200 dark:border-[#232948]" />
+
+                <!-- Education Section -->
+                <section>
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 id="portfolio-education-header" class="text-2xl font-bold tracking-tight">Education</h2>
+                    </div>
+                    <div id="portfolio-education" class="flex flex-col gap-4">
+                        <!-- Education Item -->
+                        <div
+                            class="group flex flex-col gap-4 p-6 rounded-xl bg-white dark:bg-[#1a1e2e] border border-slate-100 dark:border-[#232948] hover:border-primary/40 transition-all shadow-sm">
+                            <div class="flex flex-col gap-2">
+                                <h3 class="text-xl font-bold leading-tight group-hover:text-primary transition-colors">
+                                    b tech
+                                </h3>
+                                <p class="text-primary text-sm font-semibold">aliet</p>
+                                <p class="text-slate-500 dark:text-[#929bc9] text-sm">eee</p>
+                                <p class="text-slate-400 dark:text-[#6b7280] text-xs font-medium">2024 - 2027</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <hr class="border-slate-200 dark:border-[#232948]" />
+
+                <!-- Whitepapers/Projects Section -->
+                <section>
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 id="portfolio-projects-header" class="text-2xl font-bold tracking-tight">Selected Work</h2>
+                    </div>
+                    <div id="portfolio-projects" class="flex flex-col gap-4">
+                        <!-- Publication Item 1 -->
+                        <div
+                            class="group flex flex-col md:flex-row gap-6 p-6 rounded-xl bg-white dark:bg-[#1a1e2e] border border-slate-100 dark:border-[#232948] hover:border-primary/40 transition-all shadow-sm">
+                            <div
+                                class="flex items-center justify-center rounded-lg bg-slate-100 dark:bg-[#232948] shrink-0 size-16 text-primary group-hover:scale-110 transition-transform">
+                                <span class="material-symbols-outlined text-3xl">description</span>
+                            </div>
+                            <div class="flex flex-1 flex-col gap-2">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <h3
+                                        class="text-lg font-bold leading-tight group-hover:text-primary transition-colors">
+                                        Optimizing Sharding in Distributed Databases</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Footer Info -->
+                <footer
+                    class="mt-10 py-10 border-t border-slate-200 dark:border-[#232948] flex flex-col md:flex-row justify-between items-center gap-6">
+                    <p class="text-slate-500 text-sm italic">© 2024. All rights reserved.</p>
+                    <div class="flex gap-6">
+                        <a id="social-email" class="text-slate-500 hover:text-primary transition-colors" href="#"><span
+                                class="material-symbols-outlined">alternate_email</span></a>
+                        <a id="social-github" class="text-slate-500 hover:text-primary transition-colors" href="#"><span
+                                class="material-symbols-outlined">hub</span></a>
+                        <a id="social-linkedin" class="text-slate-500 hover:text-primary transition-colors"
+                            href="#"><span class="material-symbols-outlined">article</span></a>
+                    </div>
+                </footer>
+
+                <!-- ZestFolio Credits & CTA -->
+                <div
+                    class="w-full border-t border-slate-200 dark:border-[#232948] bg-background-light dark:bg-[#0a0a0f] py-8 px-6 mt-10">
+                    <div class="max-w-[1200px] mx-auto text-center space-y-4">
+                        <p class="text-slate-500 dark:text-slate-400 text-sm">
+                            Portfolio created with <span class="text-primary font-bold">ZestFolio</span>
+                        </p>
+                        <div class="space-y-3">
+                            <p class="text-slate-900 dark:text-white text-lg font-semibold">
+                                Want to create your portfolio right now?
+                            </p>
+                            <a href="https://zestfolio.vercel.app/" target="_blank" rel="noopener noreferrer"
+                                class="inline-flex items-center justify-center px-8 py-3 bg-primary text-white text-sm font-bold rounded-lg hover:opacity-90 transition-all duration-300 shadow-lg">
+                                Click Here Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

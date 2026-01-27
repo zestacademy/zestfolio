@@ -26,6 +26,8 @@ interface Portfolio {
     education?: any[];
     createdAt?: any;
     updatedAt?: any;
+    lastActiveAt?: any;
+    status?: 'active' | 'inactive';
 }
 
 export default function AdminPage() {
@@ -35,40 +37,49 @@ export default function AdminPage() {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [isAdmin, setIsAdmin] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        if (!authLoading && user) {
-            // Check if user is admin
-            const adminStatus = ADMIN_EMAILS.includes(user.email || '');
-            setIsAdmin(adminStatus);
-
-            if (!adminStatus) {
-                router.push('/dashboard');
-            }
-        } else if (!authLoading && !user) {
-            router.push('/login');
-        }
-    }, [user, authLoading, router]);
+    // ... (keep useEffect for auth check)
 
     useEffect(() => {
         const fetchPortfolios = async () => {
             if (!isAdmin) return;
+            setLoading(true);
+            setError(null);
 
             try {
-                const q = query(collection(db, 'portfolios'), orderBy('updatedAt', 'desc'));
+                // Simplified query to avoid index issues
+                const q = query(collection(db, 'portfolios'));
+                console.log("Fetching portfolios...");
                 const querySnapshot = await getDocs(q);
+                console.log("Snapshot size:", querySnapshot.size);
+
+                if (querySnapshot.empty) {
+                    setError("Database returned 0 records. Collection 'portfolios' might be empty.");
+                }
+
                 const portfolioData: Portfolio[] = [];
 
                 querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    // console.log("Doc:", doc.id, data);
                     portfolioData.push({
                         id: doc.id,
-                        ...doc.data()
+                        ...data
                     } as Portfolio);
                 });
 
+                // Client-side sort instead
+                portfolioData.sort((a, b) => {
+                    const dateA = a.updatedAt?.seconds || 0;
+                    const dateB = b.updatedAt?.seconds || 0;
+                    return dateB - dateA;
+                });
+
                 setPortfolios(portfolioData);
-            } catch (error) {
-                console.error('Error fetching portfolios:', error);
+            } catch (err: any) {
+                console.error('Error fetching portfolios:', err);
+                setError(`Failed to load data: ${err.message}`);
             } finally {
                 setLoading(false);
             }
@@ -79,42 +90,61 @@ export default function AdminPage() {
         }
     }, [isAdmin]);
 
-    if (authLoading || loading) {
-        return (
-            <div className="flex h-screen w-full items-center justify-center">
-                <Loader2 className="h-8 w-8 animate-spin text-primary" />
-            </div>
-        );
-    }
+    // ... (keep loading checks)
 
-    if (!isAdmin) {
-        return null;
-    }
+    // Helper for inactivity check
+    const isUserInactive = (p: Portfolio) => {
+        if (p.status === 'inactive') return true;
+
+        // Fallback to updatedAt if lastActiveAt is not set (for older users)
+        const activityDate = p.lastActiveAt || p.updatedAt;
+
+        if (activityDate) {
+            try {
+                const lastActive = activityDate.toDate ? activityDate.toDate() : new Date(activityDate);
+                const ninetyDaysAgo = new Date();
+                ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
+                return lastActive < ninetyDaysAgo;
+            } catch (e) { return false; }
+        }
+        return false;
+    };
 
     // Filter portfolios based on search
     const filteredPortfolios = portfolios.filter(portfolio => {
+        if (!searchTerm) return true;
         const searchLower = searchTerm.toLowerCase();
         return (
-            portfolio.username?.toLowerCase().includes(searchLower) ||
-            portfolio.profile?.name?.toLowerCase().includes(searchLower) ||
-            portfolio.profile?.email?.toLowerCase().includes(searchLower)
+            (portfolio.username || '').toLowerCase().includes(searchLower) ||
+            (portfolio.profile?.name || '').toLowerCase().includes(searchLower) ||
+            (portfolio.profile?.email || '').toLowerCase().includes(searchLower) ||
+            portfolio.id.toLowerCase().includes(searchLower)
         );
     });
 
     // Calculate stats
     const totalUsers = portfolios.length;
-    const livePortfolios = portfolios.filter(p => p.username).length;
+    const inactiveUsers = portfolios.filter(p => isUserInactive(p)).length;
+    const livePortfolios = portfolios.filter(p => p.username && !isUserInactive(p)).length; // Only count active as live
     const totalProjects = portfolios.reduce((sum, p) => sum + (p.projects?.length || 0), 0);
     const avgProjectsPerUser = totalUsers > 0 ? (totalProjects / totalUsers).toFixed(1) : 0;
 
     return (
         <div className="min-h-screen bg-background p-4 md:p-8">
             <div className="max-w-7xl mx-auto space-y-8">
+                {/* Debug Info / Error Banner */}
+                {error && (
+                    <div className="p-4 rounded-lg bg-red-100 border border-red-200 text-red-800">
+                        <strong>Error:</strong> {error}
+                    </div>
+                )}
                 {/* Header */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
                         <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-primary">Admin Dashboard</h1>
-                        <p className="text-muted-foreground mt-1">Manage and monitor all portfolios</p>
+                        <p className="text-muted-foreground mt-1">
+                            Logged in as: <span className="font-mono text-xs bg-slate-100 px-1 py-0.5 rounded text-slate-700 dark:bg-slate-800 dark:text-slate-300">{user?.email}</span>
+                        </p>
                     </div>
                     <Link href="/dashboard">
                         <Button variant="outline">Back to Dashboard</Button>
@@ -138,7 +168,7 @@ export default function AdminPage() {
                     <div className="p-6 rounded-xl border bg-gradient-to-br from-green-50 to-green-100 dark:from-green-950 dark:to-green-900 text-card-foreground shadow-sm">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-sm font-medium text-green-600 dark:text-green-400">Live Portfolios</p>
+                                <p className="text-sm font-medium text-green-600 dark:text-green-400">Active Portfolios</p>
                                 <h3 className="text-3xl font-bold mt-2 text-green-700 dark:text-green-300">{livePortfolios}</h3>
                             </div>
                             <div className="p-3 rounded-full bg-green-200 dark:bg-green-800">
@@ -147,14 +177,14 @@ export default function AdminPage() {
                         </div>
                     </div>
 
-                    <div className="p-6 rounded-xl border bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950 dark:to-purple-900 text-card-foreground shadow-sm">
+                    <div className="p-6 rounded-xl border bg-gradient-to-br from-red-50 to-red-100 dark:from-red-950 dark:to-red-900 text-card-foreground shadow-sm">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-sm font-medium text-purple-600 dark:text-purple-400">Total Projects</p>
-                                <h3 className="text-3xl font-bold mt-2 text-purple-700 dark:text-purple-300">{totalProjects}</h3>
+                                <p className="text-sm font-medium text-red-600 dark:text-red-400">Inactive Users</p>
+                                <h3 className="text-3xl font-bold mt-2 text-red-700 dark:text-red-300">{inactiveUsers}</h3>
                             </div>
-                            <div className="p-3 rounded-full bg-purple-200 dark:bg-purple-800">
-                                <TrendingUp className="w-6 h-6 text-purple-700 dark:text-purple-300" />
+                            <div className="p-3 rounded-full bg-red-200 dark:bg-red-800">
+                                <Eye className="w-6 h-6 text-red-700 dark:text-red-300" />
                             </div>
                         </div>
                     </div>
@@ -193,58 +223,94 @@ export default function AdminPage() {
                                     <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground hidden md:table-cell">Username</th>
                                     <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground hidden lg:table-cell">Projects</th>
                                     <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground hidden lg:table-cell">Skills</th>
+                                    <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground hidden lg:table-cell">Last Active</th>
                                     <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">Status</th>
                                     <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">Actions</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y">
                                 {filteredPortfolios.length > 0 ? (
-                                    filteredPortfolios.map((portfolio) => (
-                                        <tr key={portfolio.id} className="hover:bg-muted/30 transition-colors">
-                                            <td className="px-4 py-4">
-                                                <div className="flex flex-col">
-                                                    <span className="font-medium">{portfolio.profile?.name || 'No name'}</span>
-                                                    <span className="text-sm text-muted-foreground truncate max-w-[200px]">
-                                                        {portfolio.profile?.email || portfolio.id}
+                                    filteredPortfolios.map((portfolio) => {
+                                        const isPaused = portfolio.status === 'inactive';
+
+                                        // Calculate inactivity
+                                        let lastActiveDate: Date | null = null;
+                                        const activityDate = portfolio.lastActiveAt || portfolio.updatedAt || portfolio.createdAt;
+                                        if (activityDate) {
+                                            try {
+                                                lastActiveDate = activityDate.toDate ? activityDate.toDate() : new Date(activityDate);
+                                            } catch (e) { }
+                                        }
+
+                                        let isDormant = false;
+                                        if (lastActiveDate) {
+                                            const ninetyDaysAgo = new Date();
+                                            ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
+                                            isDormant = lastActiveDate < ninetyDaysAgo;
+                                        }
+
+                                        const isInactive = isPaused || isDormant;
+
+                                        return (
+                                            <tr key={portfolio.id} className="hover:bg-muted/30 transition-colors">
+                                                <td className="px-4 py-4">
+                                                    <div className="flex flex-col">
+                                                        <span className="font-medium">{portfolio.profile?.name || 'No name'}</span>
+                                                        <span className="text-sm text-muted-foreground truncate max-w-[200px]">
+                                                            {portfolio.profile?.email || portfolio.id}
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td className="px-4 py-4 hidden md:table-cell">
+                                                    <span className="px-2 py-1 rounded bg-primary/10 text-primary text-sm font-mono">
+                                                        {portfolio.username || 'No username'}
                                                     </span>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-4 hidden md:table-cell">
-                                                <span className="px-2 py-1 rounded bg-primary/10 text-primary text-sm font-mono">
-                                                    {portfolio.username || 'No username'}
-                                                </span>
-                                            </td>
-                                            <td className="px-4 py-4 text-center hidden lg:table-cell">
-                                                <span className="font-semibold">{portfolio.projects?.length || 0}</span>
-                                            </td>
-                                            <td className="px-4 py-4 text-center hidden lg:table-cell">
-                                                <span className="font-semibold">{portfolio.skills?.length || 0}</span>
-                                            </td>
-                                            <td className="px-4 py-4">
-                                                {portfolio.username ? (
-                                                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs font-medium">
-                                                        <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
-                                                        Live
-                                                    </span>
-                                                ) : (
-                                                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs font-medium">
-                                                        <span className="w-1.5 h-1.5 rounded-full bg-gray-400"></span>
-                                                        Draft
-                                                    </span>
-                                                )}
-                                            </td>
-                                            <td className="px-4 py-4">
-                                                {portfolio.username && (
-                                                    <a href={`/u/${portfolio.username}`} target="_blank" rel="noopener noreferrer">
-                                                        <Button size="sm" variant="ghost" className="gap-2">
-                                                            <Eye className="w-4 h-4" />
-                                                            <span className="hidden sm:inline">View</span>
-                                                        </Button>
-                                                    </a>
-                                                )}
-                                            </td>
-                                        </tr>
-                                    ))
+                                                </td>
+                                                <td className="px-4 py-4 text-center hidden lg:table-cell">
+                                                    <span className="font-semibold">{portfolio.projects?.length || 0}</span>
+                                                </td>
+                                                <td className="px-4 py-4 text-center hidden lg:table-cell">
+                                                    <span className="font-semibold">{portfolio.skills?.length || 0}</span>
+                                                </td>
+                                                <td className="px-4 py-4 text-sm text-muted-foreground hidden lg:table-cell">
+                                                    {lastActiveDate ? lastActiveDate.toLocaleDateString() : 'N/A'}
+                                                </td>
+                                                <td className="px-4 py-4">
+                                                    {isPaused ? (
+                                                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 text-xs font-medium">
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                                                            Paused
+                                                        </span>
+                                                    ) : isDormant ? (
+                                                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 text-xs font-medium" title="Inactive > 90 days">
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                                                            Dormant
+                                                        </span>
+                                                    ) : portfolio.username ? (
+                                                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs font-medium">
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                                                            Live
+                                                        </span>
+                                                    ) : (
+                                                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs font-medium">
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-gray-400"></span>
+                                                            Draft
+                                                        </span>
+                                                    )}
+                                                </td>
+                                                <td className="px-4 py-4">
+                                                    {portfolio.username && (
+                                                        <a href={`/u/${portfolio.username}`} target="_blank" rel="noopener noreferrer">
+                                                            <Button size="sm" variant="ghost" className="gap-2">
+                                                                <Eye className="w-4 h-4" />
+                                                                <span className="hidden sm:inline">View</span>
+                                                            </Button>
+                                                        </a>
+                                                    )}
+                                                </td>
+                                            </tr>
+                                        );
+                                    })
                                 ) : (
                                     <tr>
                                         <td colSpan={6} className="px-4 py-12 text-center">

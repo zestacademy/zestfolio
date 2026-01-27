@@ -1,0 +1,239 @@
+<html>
+
+<head>
+  <meta charset="utf-8" />
+
+
+  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
+  <link as="style"
+    href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Space+Grotesk%3Awght%40400%3B500%3B700&amp;family=JetBrains+Mono%3Awght%40700"
+    onload="this.rel='stylesheet'" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <title>TechNexus | Systems Portfolio</title>
+  <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+        .neon-glow {
+          box-shadow: 0 0 10px rgba(13, 242, 13, 0.5), inset 0 0 5px rgba(13, 242, 13, 0.2);
+          border: 1px solid rgba(13, 242, 13, 0.8);
+        }
+        .neon-glow:hover {
+          box-shadow: 0 0 20px rgba(13, 242, 13, 0.8), inset 0 0 8px rgba(13, 242, 13, 0.4);
+          background-color: rgba(13, 242, 13, 0.1);
+        }
+        .neon-icon-glow {
+          filter: drop-shadow(0 0 5px rgba(13, 242, 13, 0.8));
+        }
+      }
+    </style>
+</head>
+
+<body>
+  <div class="relative flex h-auto min-h-screen w-full flex-col bg-[#111811] dark group/design-root overflow-x-hidden"
+    style='font-family: "Space Grotesk", "Noto Sans", sans-serif;'>
+    <div class="layout-container flex h-full grow flex-col">
+      <header
+        class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#283928] px-10 py-3">
+        <div class="flex items-center gap-4 text-white">
+          <div class="size-4">
+            <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <path clip-rule="evenodd"
+                d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z"
+                fill="currentColor" fill-rule="evenodd"></path>
+              <path clip-rule="evenodd"
+                d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z"
+                fill="currentColor" fill-rule="evenodd"></path>
+            </svg>
+          </div>
+          <h2 id="portfolio-name" class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">TechNexus</h2>
+        </div>
+        <div class="flex flex-1 justify-end gap-8">
+          <div class="flex items-center gap-9">
+            <a class="text-white text-sm font-medium leading-normal" href="#home">Home</a>
+            <a class="text-white text-sm font-medium leading-normal" href="#projects">Projects</a>
+            <a class="text-white text-sm font-medium leading-normal" href="#skills">Skills</a>
+            <a class="text-white text-sm font-medium leading-normal" href="#contact">Contact</a>
+          </div>
+          <button
+            class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#283928] text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
+            <div class="text-white" data-icon="List" data-size="20px" data-weight="regular">
+              <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z">
+                </path>
+              </svg>
+            </div>
+          </button>
+          <div id="portfolio-hero-image" class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAQOUCPwo_Oof0pOAbP6fCtZI-kLYlwyuwgsGkoW-zqtsMbV6uqbleSNaYmGebCeECb-OAWAJkPegc1OSisQ831OZ20GT3537vOZAqkG6Xnxfdj0sOWw9cnkLqjhqZZauT4DV8gKAFwvbhMdmS78J0PVAb-_p4IQrSJBc-5UR2b7mLhwFt_oEQEIWSyFPCHfyFkTBvl2WKAjfYoPKGcoBvLVnwQeJBEJd_zvk8EVfq-269LTsk7EdZ-oen_VlCm80YMHc3aecNM_FaO");'>
+          </div>
+        </div>
+      </header>
+      <div class="px-40 flex flex-1 justify-center py-5">
+        <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+          <div id="home" class="@container">
+            <div class="flex flex-col gap-6 px-4 py-10 @[480px]:gap-8 @[864px]:flex-row">
+              <div id="portfolio-main-image"
+                class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg @[480px]:h-auto @[480px]:min-w-[400px] @[864px]:w-full"
+                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAmNVspZRRKibfB3YjEha5TXyb8zIIiW-FWYWnynXgr0JVygsS_Fttv71UcEXEjqqwXqnBmFEyeZGRZKw2I2M2Qtty5PFizUlwePFSgBV-zjOXymbuklcmnLd1z33oFKiXTXjWJKu1IZhFJVHnUCZ3uKwgFhdI5FJywPiOGcM6szO9imcxjiifztmZS_DYD5WMSV6x3vZ5hGYiKhz_cYp3sOBLnfElKDEby3lCStm7KtBYYgyUymTXp5RS4MI-rRncZRthhFDxC6TiC");'>
+              </div>
+              <div class="flex flex-col gap-6 @[480px]:min-w-[400px] @[480px]:gap-8 @[864px]:justify-center">
+                <div class="flex flex-col gap-2 text-left">
+                  <h1 id="portfolio-title"
+                    class="text-white text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em]">
+                    SENIOR SYSTEMS ENGINEER
+                  </h1>
+                  <h2 id="portfolio-bio"
+                    class="text-white text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal">
+                    A seasoned systems engineer with a passion for innovation and a proven track record in designing,
+                    implementing, and maintaining complex systems. Adept at
+                    problem-solving and optimizing performance, I thrive in challenging environments where I can
+                    leverage my technical expertise to drive success.
+                  </h2>
+                </div>
+                <div class="flex flex-col gap-6">
+                  <div class="flex items-center gap-4">
+                    <button
+                      class="flex min-w-[140px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#0df20d] text-[#111811] text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em]">
+                      <span class="truncate">View Projects</span>
+                    </button>
+                    <button
+                      class="neon-glow flex min-w-[140px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-transparent text-[#0df20d] text-sm leading-normal tracking-[0.05em] transition-all duration-300"
+                      style='font-family: "JetBrains Mono", monospace;'>
+                      <span class="material-symbols-outlined text-[18px]">download</span>
+                      <span class="truncate font-bold">GET RESUME</span>
+                    </button>
+                  </div>
+                  <div class="flex items-center gap-6 pt-2">
+                    <a id="social-github" class="text-[#0df20d] neon-icon-glow transition-transform hover:scale-110"
+                      href="#" title="GitHub">
+                      <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4">
+                        </path>
+                        <path d="M9 18c-4.51 2-5-2-7-2"></path>
+                      </svg>
+                    </a>
+                    <a id="social-linkedin" class="text-[#0df20d] neon-icon-glow transition-transform hover:scale-110"
+                      href="#" title="LinkedIn">
+                      <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                        <rect height="12" width="4" x="2" y="9"></rect>
+                        <circle cx="4" cy="4" r="2"></circle>
+                      </svg>
+                    </a>
+                    <a id="social-twitter" class="text-[#0df20d] neon-icon-glow transition-transform hover:scale-110"
+                      href="#" title="X / Twitter">
+                      <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z">
+                        </path>
+                      </svg>
+                    </a>
+                    <a id="social-website" class="text-[#0df20d] neon-icon-glow transition-transform hover:scale-110"
+                      href="#" title="Personal Blog">
+                      <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" x2="22" y1="12" y2="12"></line>
+                        <path
+                          d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                        </path>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h2 id="portfolio-projects-header"
+            class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
+            <span id="projects"></span>Featured Projects
+          </h2>
+          <div id="portfolio-projects"
+            class="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden">
+            <div class="flex items-stretch p-4 gap-3">
+              <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-60">
+                <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg flex flex-col"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCZs3e1DJ61cmh1EhiYNekWwHW7QG-cfIgGKLQ2IZMlBmPOALGRRpNPkZ4_F4EVuIcei1hI1FEVMiF-jdFBtDN2z5S4ERWVWby1rTwyiv6VBp0_lbVbuRSTNu0GeMOj2eVwfc2F9ZjnkWepvXMW1RK1-zEaf0ydwlbHWSNmtzypX6ucS31Trs_xbX_3YDBIz7UZM6NQhOTbY784ZVkOy_Twq5FlioRf-JqYabmcNA8OGBtgx3iGqcntSiT4LKIhfN8vqagPlhe5PiwX");'>
+                </div>
+                <div>
+                  <p class="text-white text-base font-medium leading-normal">Project Chimera</p>
+                  <p class="text-[#9cba9c] text-sm font-normal leading-normal">A cutting-edge system architecture for a
+                    next-generation smart city.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h2 id="portfolio-skills-header"
+            class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Skills</h2>
+          <div id="portfolio-skills" class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
+            <div class="flex flex-1 gap-3 rounded-lg border border-[#3b543b] bg-[#1b271b] p-4 items-center">
+              <h2 class="text-white text-base font-bold leading-tight">System Design</h2>
+            </div>
+          </div>
+          <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
+            <span id="contact"></span>Contact
+          </h2>
+          <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+            <label class="flex flex-col min-w-40 flex-1">
+              <p class="text-white text-base font-medium leading-normal pb-2">Email</p>
+              <input id="portfolio-email"
+                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-0 border-none bg-[#283928] focus:border-none h-14 placeholder:text-[#9cba9c] p-4 text-base font-normal leading-normal"
+                placeholder="your.email@example.com" value="" />
+            </label>
+          </div>
+          <div class="flex px-4 py-3 justify-start">
+            <button
+              class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#0df20d] text-[#111811] text-sm font-bold leading-normal tracking-[0.015em]">
+              <span class="truncate">Send</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ZestFolio Credits & CTA -->
+    <div class="w-full border-t border-[#283928] bg-[#0a0f0a] py-8 px-4 mt-10">
+      <div class="max-w-[960px] mx-auto text-center space-y-4">
+        <p class="text-[#9cba9c] text-sm">
+          Portfolio created with <span class="text-[#0df20d] font-bold">ZestFolio</span>
+        </p>
+        <div class="space-y-3">
+          <p class="text-white text-lg font-semibold">
+            Want to create your portfolio right now?
+          </p>
+          <a href="https://zestfolio.vercel.app/" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center justify-center px-8 py-3 bg-[#0df20d] text-[#111811] text-sm font-bold rounded-lg hover:bg-[#0bf00b] transition-all duration-300 shadow-lg hover:shadow-[0_0_20px_rgba(13,242,13,0.5)]">
+            Click Here Now
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Smooth Scroll Script -->
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        const target = document.querySelector(targetId);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

@@ -8,13 +8,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Loader2, Plus, Trash2, GraduationCap } from 'lucide-react';
+import { Loader2, Plus, Trash2, GraduationCap, Pencil, Save } from 'lucide-react';
 import { Education } from '@/types';
 
 export default function EducationForm() {
     const { user } = useAuth();
     const [loading, setLoading] = useState(false);
     const [educations, setEducations] = useState<Education[]>([]);
+    const [editingIndex, setEditingIndex] = useState<number | null>(null);
     const [newEdu, setNewEdu] = useState<Education>({
         institution: '',
         degree: '',
@@ -46,11 +47,24 @@ export default function EducationForm() {
         if (!user) return;
         setLoading(true);
         try {
-            const eduToAdd = { ...newEdu };
-            await updateDoc(doc(db, 'portfolios', user.uid), {
-                education: arrayUnion(eduToAdd)
-            });
-            setEducations(prev => [...prev, eduToAdd]);
+            if (editingIndex !== null) {
+                // Update
+                const updatedEducation = [...educations];
+                updatedEducation[editingIndex] = newEdu;
+                await updateDoc(doc(db, 'portfolios', user.uid), {
+                    education: updatedEducation
+                });
+                setEducations(updatedEducation);
+                setEditingIndex(null);
+            } else {
+                // Add
+                const eduToAdd = { ...newEdu };
+                await updateDoc(doc(db, 'portfolios', user.uid), {
+                    education: arrayUnion(eduToAdd)
+                });
+                setEducations(prev => [...prev, eduToAdd]);
+            }
+
             setNewEdu({
                 institution: '',
                 degree: '',
@@ -60,7 +74,7 @@ export default function EducationForm() {
                 current: false,
             });
         } catch (error) {
-            console.error("Error adding education:", error);
+            console.error("Error saving education:", error);
         } finally {
             setLoading(false);
         }
@@ -68,21 +82,42 @@ export default function EducationForm() {
 
     const handleDelete = async (edu: Education) => {
         if (!user) return;
-        try {
-            await updateDoc(doc(db, 'portfolios', user.uid), {
-                education: arrayRemove(edu)
-            });
-            setEducations(prev => prev.filter(item => item !== edu)); // Basic filter, might need ID for robustness
-        } catch (error) {
-            console.error("Error deleting education:", error);
+        if (confirm('Are you sure you want to delete this education entry?')) {
+            try {
+                await updateDoc(doc(db, 'portfolios', user.uid), {
+                    education: arrayRemove(edu)
+                });
+                setEducations(prev => prev.filter(item => item !== edu));
+                if (editingIndex !== null) setEditingIndex(null);
+            } catch (error) {
+                console.error("Error deleting education:", error);
+            }
         }
     }
 
+    const handleEdit = (edu: Education, index: number) => {
+        setNewEdu(edu);
+        setEditingIndex(index);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const handleCancelEdit = () => {
+        setEditingIndex(null);
+        setNewEdu({
+            institution: '',
+            degree: '',
+            fieldOfStudy: '',
+            startDate: '',
+            endDate: '',
+            current: false,
+        });
+    };
+
     return (
         <div className="space-y-6">
-            <Card>
+            <Card className={editingIndex !== null ? "border-primary" : ""}>
                 <CardHeader>
-                    <CardTitle>Add Education</CardTitle>
+                    <CardTitle>{editingIndex !== null ? 'Edit Education' : 'Add Education'}</CardTitle>
                     <CardDescription>Add your degrees and schools.</CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -108,39 +143,58 @@ export default function EducationForm() {
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="endDate">End Date (or Expected)</Label>
-                                <Input id="endDate" type="text" value={newEdu.endDate} onChange={(e) => setNewEdu({ ...newEdu, endDate: e.target.value })} placeholder="e.g. 2024" />
+                                <Input id="endDate" type="text" value={newEdu.endDate || ''} onChange={(e) => setNewEdu({ ...newEdu, endDate: e.target.value })} placeholder="e.g. 2024" />
                             </div>
                         </div>
-                        <Button type="submit" disabled={loading} className="w-full">
-                            {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Plus className="w-4 h-4 mr-2" />}
-                            Add Education
-                        </Button>
+                        <div className="flex gap-2">
+                            <Button type="submit" disabled={loading} className="flex-1">
+                                {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : (editingIndex !== null ? <Save className="w-4 h-4 mr-2" /> : <Plus className="w-4 h-4 mr-2" />)}
+                                {editingIndex !== null ? 'Update Education' : 'Add Education'}
+                            </Button>
+                            {editingIndex !== null && (
+                                <Button type="button" variant="outline" onClick={handleCancelEdit}>
+                                    Cancel
+                                </Button>
+                            )}
+                        </div>
                     </form>
                 </CardContent>
             </Card>
 
             <div className="grid gap-4">
-                {educations.map((edu, index) => (
-                    <Card key={index} className="relative">
-                        <CardHeader className="pb-2">
-                            <div className="flex justify-between items-start">
-                                <div>
-                                    <CardTitle className="text-lg">{edu.institution}</CardTitle>
-                                    <div className="text-sm font-medium text-muted-foreground mt-1">{edu.degree} in {edu.fieldOfStudy}</div>
+                {educations
+                    .sort((a, b) => {
+                        // Sort by start date in descending order (most recent first)
+                        const yearA = parseInt(a.startDate) || 0;
+                        const yearB = parseInt(b.startDate) || 0;
+                        return yearB - yearA;
+                    })
+                    .map((edu, index) => (
+                        <Card key={index} className={`relative ${editingIndex === index ? 'ring-2 ring-primary' : ''}`}>
+                            <CardHeader className="pb-2">
+                                <div className="flex justify-between items-start">
+                                    <div>
+                                        <CardTitle className="text-lg">{edu.institution}</CardTitle>
+                                        <div className="text-sm font-medium text-muted-foreground mt-1">{edu.degree} in {edu.fieldOfStudy}</div>
+                                    </div>
+                                    <div className="flex gap-1">
+                                        <Button variant="ghost" size="icon" onClick={() => handleEdit(edu, educations.indexOf(edu))}>
+                                            <Pencil className="w-4 h-4 text-primary" />
+                                        </Button>
+                                        <Button variant="ghost" size="icon" className="text-destructive hover:bg-destructive/10" onClick={() => handleDelete(edu)}>
+                                            <Trash2 className="w-4 h-4" />
+                                        </Button>
+                                    </div>
                                 </div>
-                                <Button variant="ghost" size="icon" className="text-destructive hover:bg-destructive/10" onClick={() => handleDelete(edu)}>
-                                    <Trash2 className="w-4 h-4" />
-                                </Button>
-                            </div>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="flex items-center text-sm text-muted-foreground">
-                                <GraduationCap className="mr-2 h-4 w-4" />
-                                {edu.startDate} - {edu.endDate || 'Present'}
-                            </div>
-                        </CardContent>
-                    </Card>
-                ))}
+                            </CardHeader>
+                            <CardContent>
+                                <div className="flex items-center text-sm text-muted-foreground">
+                                    <GraduationCap className="mr-2 h-4 w-4" />
+                                    {edu.startDate} - {edu.endDate || 'Present'}
+                                </div>
+                            </CardContent>
+                        </Card>
+                    ))}
             </div>
         </div>
     );

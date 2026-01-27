@@ -16,22 +16,23 @@ export default function TemplatesPage() {
     const [loadingId, setLoadingId] = useState<string | null>(null);
     const [selectedId, setSelectedId] = useState<string | null>(null);
 
+
     // Fetch current template selection
     useEffect(() => {
-        const fetchCurrentTemplate = async () => {
+        const fetchData = async () => {
             if (!user) return;
             try {
                 const docRef = doc(db, 'portfolios', user.uid);
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
                     const data = docSnap.data();
-                    setSelectedId(data.templateId || null);
+                    setSelectedId(data.templateId || 'template01');
                 }
             } catch (error) {
-                console.error('Error fetching current template:', error);
+                console.error('Error fetching template:', error);
             }
         };
-        fetchCurrentTemplate();
+        fetchData();
     }, [user]);
 
     const handleSelectTemplate = async (templateId: string) => {
@@ -51,6 +52,8 @@ export default function TemplatesPage() {
             setLoadingId(null);
         }
     };
+
+
 
     return (
         <div className="space-y-6 pb-10">
@@ -111,23 +114,27 @@ export default function TemplatesPage() {
                         </CardContent>
 
                         <CardFooter className="pt-3 border-t bg-muted/20">
-                            <Button
-                                className="w-full"
-                                variant={selectedId === template.id ? "outline" : "default"}
-                                onClick={() => handleSelectTemplate(template.id)}
-                                disabled={loadingId === template.id || selectedId === template.id}
-                            >
-                                {loadingId === template.id ? (
-                                    <>
-                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                        Applying...
-                                    </>
-                                ) : selectedId === template.id ? (
-                                    "Selected"
-                                ) : (
-                                    "Use This Template"
-                                )}
-                            </Button>
+                            {selectedId === template.id ? (
+                                <Button variant="outline" className="w-full cursor-default bg-background/50" disabled>
+                                    <Check className="mr-2 h-4 w-4 text-green-600" /> Active
+                                </Button>
+                            ) : (
+                                <Button
+                                    className="w-full"
+                                    variant={selectedId === template.id ? "outline" : "default"}
+                                    onClick={() => handleSelectTemplate(template.id)}
+                                    disabled={loadingId === template.id || selectedId === template.id}
+                                >
+                                    {loadingId === template.id ? (
+                                        <>
+                                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                            Applying...
+                                        </>
+                                    ) : (
+                                        "Use This Template"
+                                    )}
+                                </Button>
+                            )}
                         </CardFooter>
                     </Card>
                 ))}

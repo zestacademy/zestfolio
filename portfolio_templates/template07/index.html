@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Professional Case Study Portfolio</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1337ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101322",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-white transition-colors duration-300">
+    <div
+        class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
+        <div class="layout-container flex h-full grow flex-col">
+            <!-- Navigation -->
+            <div
+                class="w-full flex justify-center py-2 sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+                <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+                    <header
+                        class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-b-[#232948] px-6 py-3">
+                        <div class="flex items-center gap-4 text-slate-900 dark:text-white">
+                            <div class="size-6 text-primary">
+                                <span class="material-symbols-outlined text-3xl">deployed_code</span>
+                            </div>
+                            <h2
+                                class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">
+                                Portfolio.PM</h2>
+                        </div>
+                        <div class="flex flex-1 justify-end gap-8">
+                            <div class="hidden md:flex items-center gap-9">
+                                <a class="text-slate-600 dark:text-white text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors"
+                                    href="#">Case Studies</a>
+                                <a class="text-slate-600 dark:text-white text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors"
+                                    href="#">Experience</a>
+                                <a class="text-slate-600 dark:text-white text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors"
+                                    href="#">Insights</a>
+                            </div>
+                            <a id="portfolio-email"
+                                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em]">
+                                <span class="truncate">Contact Me</span>
+                            </a>
+                        </div>
+                    </header>
+                </div>
+            </div>
+            <main class="flex-1">
+                <!-- Hero Section -->
+                <div class="px-6 md:px-40 flex justify-center py-10">
+                    <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+                        <div class="@container">
+                            <div class="flex flex-col gap-6 py-10 @[864px]:flex-row @[864px]:items-center">
+                                <div id="portfolio-hero-image"
+                                    class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl @[480px]:h-auto @[480px]:min-w-[320px] @[864px]:w-1/2"
+                                    data-alt="Professional corporate headshot of a product manager in a suit"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDgEMGTnvzR9J_CPwuujXVpyUZhanGCI2c806ixhlWYp0ruBda9DeNOtoUjlWFanW7XDc8ZOFQluVKWN2sZm8Zy99IMgRLLPeZxQUeHp6foCNZhYHwD9HMLN8vWNEhWb0bG7Es_UyXSD77bmvIiNItVMQ3FjIfGZX4ykx4U23cW29M8oE47iXEeLA1N8evzla_dBwENKNS7qQaVJmbTm16ICJnZHSzvbj2v5TrCOBJNtpQK7CXuiioqtsCw5TEqUhYe7cif0uF2xfRC");'>
+                                </div>
+                                <div class="flex flex-col gap-6 @[864px]:w-1/2 @[864px]:justify-center">
+                                    <div class="flex flex-col gap-4 text-left">
+                                        <div id="portfolio-title"
+                                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary w-fit text-xs font-bold uppercase tracking-wider">
+                                            Senior Product Strategist
+                                        </div>
+                                        <h1 id="portfolio-name"
+                                            class="text-slate-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl">
+                                            Turning Complex Problems Into Profitable Products
+                                        </h1>
+                                        <p id="portfolio-bio"
+                                            class="text-slate-600 dark:text-slate-400 text-sm font-normal leading-relaxed @[480px]:text-lg">
+                                            Specializing in B2B scalability, enterprise UX, and go-to-market strategies
+                                            for global technology firms and high-growth startups.
+                                        </p>
+                                    </div>
+                                    <div class="flex gap-3">
+                                        <button
+                                            class="flex min-w-[140px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold">
+                                            <span class="truncate">View Portfolio</span>
+                                        </button>
+                                        <button
+                                            class="flex min-w-[140px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-base font-bold">
+                                            <span class="truncate">Read Resume</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Core Competencies Section -->
+                <div class="px-6 md:px-40 flex justify-center py-5">
+                    <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+                        <h2 id="portfolio-skills-header"
+                            class="text-slate-900 dark:text-white text-[24px] font-bold leading-tight tracking-[-0.015em] pb-3 pt-5">
+                            Strategic Expertise</h2>
+                        <div id="portfolio-skills" class="flex gap-3 py-3 flex-wrap">
+                            <!-- Skills injected here -->
+                            <div
+                                class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-slate-200 dark:bg-[#232948] px-4">
+                                <span class="material-symbols-outlined text-primary text-sm">insights</span>
+                                <p class="text-slate-800 dark:text-white text-sm font-semibold leading-normal">Data
+                                    Analysis</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Three-Column Project Grid -->
+                <div class="px-6 md:px-40 flex justify-center py-10">
+                    <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+                        <h2 id="portfolio-projects-header"
+                            class="text-slate-900 dark:text-white text-[24px] font-bold leading-tight tracking-[-0.015em] pb-8">
+                            Featured Case Studies</h2>
+                        <div id="portfolio-projects" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <!-- Projects injected here -->
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <!-- Footer -->
+            <footer class="px-6 md:px-40 flex justify-center py-10 border-t border-slate-200 dark:border-slate-800">
+                <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                        <div class="flex items-center gap-4 text-slate-900 dark:text-white opacity-60">
+                            <span class="material-symbols-outlined">deployed_code</span>
+                            <p class="text-sm font-medium">© 2024 Product Professional Portfolio. All rights reserved.
+                            </p>
+                        </div>
+                        <div class="flex gap-6">
+                            <a id="social-linkedin" class="text-slate-500 hover:text-primary" href="#"><span
+                                    class="material-symbols-outlined">person_pin</span></a>
+                            <a id="social-github" class="text-slate-500 hover:text-primary" href="#"><span
+                                    class="material-symbols-outlined">deploy_code</span></a>
+                            <a id="social-email" class="text-slate-500 hover:text-primary" href="#"><span
+                                    class="material-symbols-outlined">mail</span></a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- ZestFolio Credits & CTA -->
+            <div class="w-full border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#0a0a0f] py-8 px-4">
+                <div class="max-w-[1200px] mx-auto text-center space-y-4">
+                    <p class="text-gray-600 dark:text-gray-400 text-sm">
+                        Portfolio created with <span class="text-primary font-bold">ZestFolio</span>
+                    </p>
+                    <div class="space-y-3">
+                        <p class="text-gray-900 dark:text-white text-lg font-semibold">
+                            Want to create your portfolio right now?
+                        </p>
+                        <a href="https://zestfolio.vercel.app/" target="_blank" rel="noopener noreferrer"
+                            class="inline-flex items-center justify-center px-8 py-3 bg-primary text-white text-sm font-bold rounded-lg hover:opacity-90 transition-all duration-300 shadow-lg">
+                            Click Here Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

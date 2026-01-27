@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Data Science Leadership Portfolio</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-[#0d121b] dark:text-gray-100 font-display transition-colors duration-300">
+    <div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+        <header
+            class="sticky top-0 z-50 w-full border-b border-solid border-gray-200 dark:border-gray-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+            <div class="mx-auto flex max-w-[1200px] items-center justify-between px-6 py-4">
+                <div class="flex items-center gap-3">
+                    <div class="text-primary">
+                        <svg class="size-6" fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z"
+                                fill-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h2 id="portfolio-title" class="text-lg font-bold tracking-tight">DS Lead Portfolio</h2>
+                </div>
+                <nav class="hidden md:flex flex-1 justify-center gap-10">
+                    <a class="text-sm font-medium hover:text-primary transition-colors" href="#competencies">Skills</a>
+                    <a class="text-sm font-medium hover:text-primary transition-colors"
+                        href="#case-studies">Projects</a>
+                </nav>
+                <div class="flex items-center gap-3">
+                    <button
+                        class="flex min-w-[90px] cursor-pointer items-center justify-center rounded-lg h-10 px-5 bg-primary text-white text-sm font-bold transition-all hover:opacity-90 active:scale-95">
+                        Contact
+                    </button>
+                    <div id="portfolio-hero-image"
+                        class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-gray-200 dark:border-gray-700"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBHKXsULkxUi3SrJeA149h-W8Q2daxcO7DfxGe_HoVFvi20QDuqOCK6dhsFxSCQ5gCQPKvSqk2N4QjPbBV1UvWCflwVJMHjd9-obLwiPpQTBBETSOzRz_uQFSgwaR_7CUcCDjHOst6yzUvNuWe0TTEvjIsAE_L45eHGm_T9WGObtl3wLIvJUWVdgikApxgeEqOTWT4ms6kqnPZmOp56_05Ta7YzZfYPQf9O2dSHaV4VpgicAjl6QEEbhsZ3Fa-H-2W3w8f58qgXf2cV");'>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="mx-auto flex w-full max-w-[1200px] flex-col px-6 py-12 md:py-24">
+            <section class="flex flex-col items-center text-center gap-8 mb-24">
+                <div class="relative">
+                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-2xl size-40 md:size-48 shadow-xl ring-4 ring-white dark:ring-gray-800"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAO-D4Uxp2YRxLA2m2G4-7hiINt5Q5Ff8qxNG9nk-C6ilhxqs_d7dthvcV25Efv3yyi-nDVBOSQONrLXIYjz7mzieU8KyJfu_EELBLOuIsAGVVF-OAMMaBDxYEKJHK9nhDd1-BasfdvFdWw1rFF5vT0uNUXVT7UL_c1ETsfeH0OWH2u40ypH1pvUF8JXUYzl__3QDBOFRNs4KVu5ehnb88ZvdpV1lvNvd0pP5Os73saZvcGO6322tPzfzKi8Y3VQfgQIdwpS6BEU3tI");'>
+                    </div>
+                    <div class="absolute -bottom-2 -right-2 bg-primary text-white p-2 rounded-lg shadow-lg">
+                        <span class="material-symbols-outlined text-[20px]">verified</span>
+                    </div>
+                </div>
+                <div class="max-w-[800px] flex flex-col gap-6">
+                    <div class="flex flex-col gap-4">
+                        <h1 id="portfolio-name"
+                            class="text-4xl md:text-5xl font-extrabold tracking-tight text-[#1e293b] dark:text-white">
+                            Director of Data Science</h1>
+                        <p id="portfolio-bio"
+                            class="text-lg md:text-xl text-[#475569] dark:text-gray-400 leading-relaxed">
+                            Strategic leader specializing in ML Ops and enterprise-scale predictive modeling. Driving
+                            measurable business impact through data-driven innovation and scalable technical
+                            architectures.
+                        </p>
+                    </div>
+                    <div class="flex justify-center gap-4">
+                        <button
+                            class="flex items-center justify-center gap-2 rounded-lg h-12 px-8 border-2 border-gray-300 dark:border-gray-700 bg-transparent text-gray-700 dark:text-gray-200 text-base font-bold transition-all hover:bg-white dark:hover:bg-gray-800 hover:border-primary/50 active:scale-95">
+                            <span class="material-symbols-outlined">picture_as_pdf</span>
+                            Download Resume
+                        </button>
+                    </div>
+                </div>
+            </section>
+            <section class="mb-24" id="competencies">
+                <div class="flex flex-col items-center mb-10">
+                    <h4 id="portfolio-skills-header"
+                        class="text-primary text-sm font-bold tracking-widest uppercase mb-2">Core Competencies</h4>
+                    <div class="h-1 w-12 bg-primary rounded-full"></div>
+                </div>
+                <div id="portfolio-skills" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Skills injected here -->
+                    <div class="bg-primary/10 dark:bg-primary/20 p-3 rounded-lg w-fit text-primary">
+                        <span class="material-symbols-outlined text-[32px]">architecture</span>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <h3 class="text-xl font-bold text-[#1e293b] dark:text-white">Technical Strategy</h3>
+                    </div>
+                </div>
+            </section>
+            <section class="mb-24" id="case-studies">
+                <div class="flex justify-between items-end mb-10">
+                    <div>
+                        <h2 id="portfolio-projects-header" class="text-3xl font-bold text-[#1e293b] dark:text-white">
+                            Impact Portfolio</h2>
+                    </div>
+                </div>
+                <div id="portfolio-projects" class="flex flex-col gap-6">
+                    <!-- Projects injected here -->
+                </div>
+            </section>
+        </main>
+        <footer
+            class="w-full bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 py-12 px-6 mt-auto">
+            <div class="mx-auto max-w-[1200px] flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="flex flex-col gap-2 text-center md:text-left">
+                    <h3 class="font-bold text-lg">Portfolio</h3>
+                </div>
+                <div class="flex gap-6">
+                    <a id="social-linkedin"
+                        class="p-2 rounded-full border border-gray-200 dark:border-gray-700 hover:text-primary hover:border-primary transition-all"
+                        href="#">
+                        <svg class="size-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z">
+                            </path>
+                        </svg>
+                    </a>
+                    <a id="social-github"
+                        class="p-2 rounded-full border border-gray-200 dark:border-gray-700 hover:text-primary hover:border-primary transition-all"
+                        href="#">
+                        <svg class="size-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12">
+                            </path>
+                        </svg>
+                    </a>
+                    <a id="portfolio-email"
+                        class="p-2 rounded-full border border-gray-200 dark:border-gray-700 hover:text-primary hover:border-primary transition-all"
+                        href="#">
+                        <span class="material-symbols-outlined size-5">mail</span>
+                    </a>
+                </div>
+            </div>
+        </footer>
+
+        <!-- ZestFolio Credits & CTA -->
+        <div class="w-full border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#0a0a0f] py-8 px-4">
+            <div class="max-w-[1200px] mx-auto text-center space-y-4">
+                <p class="text-gray-600 dark:text-gray-400 text-sm">
+                    Portfolio created with <span class="text-primary font-bold">ZestFolio</span>
+                </p>
+                <div class="space-y-3">
+                    <p class="text-gray-900 dark:text-white text-lg font-semibold">
+                        Want to create your portfolio right now?
+                    </p>
+                    <a href="https://zestfolio.vercel.app/" target="_blank" rel="noopener noreferrer"
+                        class="inline-flex items-center justify-center px-8 py-3 bg-primary text-white text-sm font-bold rounded-lg hover:opacity-90 transition-all duration-300 shadow-lg">
+                        Click Here Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

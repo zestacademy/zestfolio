@@ -32,6 +32,8 @@ export default function ProfileForm() {
         twitter: '',
         website: '',
         profilePhoto: '',
+        phone: '',
+        location: '',
     });
 
     useEffect(() => {
@@ -139,7 +141,7 @@ export default function ProfileForm() {
             <Card>
                 <CardHeader>
                     <CardTitle>Profile Photo</CardTitle>
-                    <CardDescription>Upload a professional photo for your portfolio.</CardDescription>
+                    <CardDescription>Add a professional photo using an image URL.</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                     <div className="flex flex-col sm:flex-row items-center gap-6">
@@ -151,41 +153,52 @@ export default function ProfileForm() {
                                     alt="Profile"
                                     fill
                                     className="object-cover"
+                                    unoptimized
                                 />
                             ) : (
                                 <div className="w-full h-full flex items-center justify-center bg-primary/10">
                                     <User className="w-16 h-16 text-primary/30" />
                                 </div>
                             )}
-                            {uploading && (
-                                <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                                    <Loader2 className="w-8 h-8 text-white animate-spin" />
-                                </div>
-                            )}
                         </div>
 
-                        {/* Upload Button */}
-                        <div className="flex-1 space-y-3">
-                            <input
-                                ref={fileInputRef}
-                                type="file"
-                                accept="image/*"
-                                onChange={handlePhotoUpload}
-                                className="hidden"
-                            />
-                            <Button
-                                type="button"
-                                variant="outline"
-                                onClick={() => fileInputRef.current?.click()}
-                                disabled={uploading}
-                                className="gap-2"
-                            >
-                                <Camera className="w-4 h-4" />
-                                {uploading ? 'Uploading...' : profilePhotoURL ? 'Change Photo' : 'Upload Photo'}
-                            </Button>
-                            <p className="text-xs text-muted-foreground">
-                                Recommended: Square image, at least 400x400px, max 5MB
-                            </p>
+                        {/* URL Input */}
+                        <div className="flex-1 space-y-3 w-full">
+                            <div className="space-y-2">
+                                <Label htmlFor="photoUrl">Photo URL</Label>
+                                <div className="flex gap-2">
+                                    <Input
+                                        id="photoUrl"
+                                        value={formData.profilePhoto}
+                                        onChange={(e) => {
+                                            setFormData(prev => ({ ...prev, profilePhoto: e.target.value }));
+                                            setProfilePhotoURL(e.target.value);
+                                        }}
+                                        placeholder="Paste image URL (e.g., from Imgur, GitHub, etc.)"
+                                    />
+                                    {formData.profilePhoto && (
+                                        <Button
+                                            type="button"
+                                            variant="outline"
+                                            size="icon"
+                                            onClick={() => {
+                                                setFormData(prev => ({ ...prev, profilePhoto: '' }));
+                                                setProfilePhotoURL('');
+                                            }}
+                                        >
+                                            <Camera className="w-4 h-4" />
+                                        </Button>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="text-xs text-muted-foreground space-y-1">
+                                <p className="font-medium">📸 Free Image Hosting:</p>
+                                <ul className="ml-4 space-y-0.5">
+                                    <li>• <a href="https://imgur.com" target="_blank" className="text-primary hover:underline">Imgur.com</a> - Upload & copy link</li>
+                                    <li>• <a href="https://postimages.org" target="_blank" className="text-primary hover:underline">PostImages.org</a> - No account needed</li>
+                                    <li>• <a href="https://imgbb.com" target="_blank" className="text-primary hover:underline">ImgBB.com</a> - Free hosting</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </CardContent>
@@ -256,6 +269,19 @@ export default function ProfileForm() {
                         <div className="space-y-2">
                             <Label htmlFor="publicEmail">Public Email</Label>
                             <Input id="publicEmail" name="publicEmail" value={formData.publicEmail} onChange={handleChange} placeholder="Email for contact form" />
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="phone">Phone Number</Label>
+                            <Input id="phone" name="phone" value={// @ts-ignore
+                                formData.phone} onChange={handleChange} placeholder="e.g. +1 234 567 890" />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="location">Location</Label>
+                            <Input id="location" name="location" value={// @ts-ignore
+                                formData.location} onChange={handleChange} placeholder="e.g. San Francisco, CA" />
                         </div>
                     </div>
                 </CardContent>

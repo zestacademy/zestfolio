@@ -2,6 +2,8 @@
 
 import { useAuth } from '@/lib/auth-context';
 import { useRouter } from 'next/navigation';
+import { db } from '@/lib/firebase';
+import { doc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { useEffect } from 'react';
 import { Sidebar } from '@/components/dashboard/sidebar';
 import { Loader2 } from 'lucide-react';
@@ -17,6 +19,14 @@ export default function DashboardLayout({
     useEffect(() => {
         if (!loading && !user) {
             router.push('/login');
+        } else if (user) {
+            // Track user activity
+            updateDoc(doc(db, 'portfolios', user.uid), {
+                lastActiveAt: serverTimestamp()
+            }).catch(e => {
+                // Ignore errors (e.g. if profile doesn't exist yet, though it should)
+                console.log('Error tracking activity:', e);
+            });
         }
     }, [user, loading, router]);
 
