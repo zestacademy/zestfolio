@@ -4,13 +4,12 @@ service cloud.firestore {
     
     // User Portfolios Collection
     match /portfolios/{userId} {
-      // 1. Ownership: Users can only write to their own document (matches their Auth UID)
+      // 1. Write Access: STRICT - Users can only write to their own document
       allow write: if request.auth != null && request.auth.uid == userId;
       
-      // 2. Read Access:
-      // - The owner can always read their own data.
-      // - Public users can read ANY portfolio. 
-      // (Since this is a portfolio site, profiles are inherently public content).
+      // 2. Read Access: PUBLIC
+      // This is required because your Next.js server fetches these profiles 
+      // using the client SDK to render the public pages.
       allow read: if true;
     }
   }
