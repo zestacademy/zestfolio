@@ -132,19 +132,11 @@ export default function AdminPage() {
     return (
         <div className="min-h-screen bg-background p-4 md:p-8">
             <div className="max-w-7xl mx-auto space-y-8">
-                {/* Debug Info / Error Banner */}
-                {error && (
-                    <div className="p-4 rounded-lg bg-red-100 border border-red-200 text-red-800">
-                        <strong>Error:</strong> {error}
-                    </div>
-                )}
                 {/* Header */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
                         <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-primary">Admin Dashboard</h1>
-                        <p className="text-muted-foreground mt-1">
-                            Logged in as: <span className="font-mono text-xs bg-slate-100 px-1 py-0.5 rounded text-slate-700 dark:bg-slate-800 dark:text-slate-300">{user?.email}</span>
-                        </p>
+                        <p className="text-muted-foreground mt-1">Manage and monitor all portfolios</p>
                     </div>
                     <Link href="/dashboard">
                         <Button variant="outline">Back to Dashboard</Button>
@@ -152,7 +144,7 @@ export default function AdminPage() {
                 </div>
 
                 {/* Stats Grid */}
-                <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                     <div className="p-6 rounded-xl border bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 text-card-foreground shadow-sm">
                         <div className="flex items-center justify-between">
                             <div>
@@ -173,18 +165,6 @@ export default function AdminPage() {
                             </div>
                             <div className="p-3 rounded-full bg-green-200 dark:bg-green-800">
                                 <Activity className="w-6 h-6 text-green-700 dark:text-green-300" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="p-6 rounded-xl border bg-gradient-to-br from-red-50 to-red-100 dark:from-red-950 dark:to-red-900 text-card-foreground shadow-sm">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-sm font-medium text-red-600 dark:text-red-400">Inactive Users</p>
-                                <h3 className="text-3xl font-bold mt-2 text-red-700 dark:text-red-300">{inactiveUsers}</h3>
-                            </div>
-                            <div className="p-3 rounded-full bg-red-200 dark:bg-red-800">
-                                <Eye className="w-6 h-6 text-red-700 dark:text-red-300" />
                             </div>
                         </div>
                     </div>
@@ -223,7 +203,6 @@ export default function AdminPage() {
                                     <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground hidden md:table-cell">Username</th>
                                     <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground hidden lg:table-cell">Projects</th>
                                     <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground hidden lg:table-cell">Skills</th>
-                                    <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground hidden lg:table-cell">Last Active</th>
                                     <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">Status</th>
                                     <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">Actions</th>
                                 </tr>
@@ -232,24 +211,6 @@ export default function AdminPage() {
                                 {filteredPortfolios.length > 0 ? (
                                     filteredPortfolios.map((portfolio) => {
                                         const isPaused = portfolio.status === 'inactive';
-
-                                        // Calculate inactivity
-                                        let lastActiveDate: Date | null = null;
-                                        const activityDate = portfolio.lastActiveAt || portfolio.updatedAt || portfolio.createdAt;
-                                        if (activityDate) {
-                                            try {
-                                                lastActiveDate = activityDate.toDate ? activityDate.toDate() : new Date(activityDate);
-                                            } catch (e) { }
-                                        }
-
-                                        let isDormant = false;
-                                        if (lastActiveDate) {
-                                            const ninetyDaysAgo = new Date();
-                                            ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
-                                            isDormant = lastActiveDate < ninetyDaysAgo;
-                                        }
-
-                                        const isInactive = isPaused || isDormant;
 
                                         return (
                                             <tr key={portfolio.id} className="hover:bg-muted/30 transition-colors">
@@ -272,19 +233,11 @@ export default function AdminPage() {
                                                 <td className="px-4 py-4 text-center hidden lg:table-cell">
                                                     <span className="font-semibold">{portfolio.skills?.length || 0}</span>
                                                 </td>
-                                                <td className="px-4 py-4 text-sm text-muted-foreground hidden lg:table-cell">
-                                                    {lastActiveDate ? lastActiveDate.toLocaleDateString() : 'N/A'}
-                                                </td>
                                                 <td className="px-4 py-4">
                                                     {isPaused ? (
                                                         <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-900 text-amber-700 dark:text-amber-300 text-xs font-medium">
                                                             <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
                                                             Paused
-                                                        </span>
-                                                    ) : isDormant ? (
-                                                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 text-xs font-medium" title="Inactive > 90 days">
-                                                            <span className="w-1.5 h-1.5 rounded-full bg-red-500"></span>
-                                                            Dormant
                                                         </span>
                                                     ) : portfolio.username ? (
                                                         <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs font-medium">
