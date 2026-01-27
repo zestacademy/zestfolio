@@ -3,7 +3,7 @@
 import { useAuth } from '@/lib/auth-context';
 import { useRouter } from 'next/navigation';
 import { db } from '@/lib/firebase';
-import { doc, updateDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { useEffect } from 'react';
 import { Sidebar } from '@/components/dashboard/sidebar';
 import { Loader2 } from 'lucide-react';
@@ -20,11 +20,15 @@ export default function DashboardLayout({
         if (!loading && !user) {
             router.push('/login');
         } else if (user) {
-            // Track user activity
-            updateDoc(doc(db, 'portfolios', user.uid), {
-                lastActiveAt: serverTimestamp()
-            }).catch(e => {
-                // Ignore errors (e.g. if profile doesn't exist yet, though it should)
+            // Track user activity & ensure doc exists
+            setDoc(doc(db, 'portfolios', user.uid), {
+                lastActiveAt: serverTimestamp(),
+                // Sync essential auth data if missing, but don't overwrite if present (merge logic handles this for new fields, 
+                // but deep merge is tricky. Here we just update lastActiveAt. 
+                // To create a robust doc for new users, we'd need more logic, 
+                // but this ensures the doc EXISTs for the Admin Dashboard.)
+                ...(user.email ? { email: user.email } : {})  // Store email at root for easier querying if needed, or just ensure doc content
+            }, { merge: true }).catch(e => {
                 console.log('Error tracking activity:', e);
             });
         }
