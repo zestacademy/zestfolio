@@ -35,8 +35,9 @@ export default function DashboardLayout({
     return (
         <div className="flex min-h-screen bg-background">
             <Sidebar />
-            <main className="flex-1 ml-64 p-8 overflow-y-auto h-screen">
-                <div className="max-w-5xl mx-auto">
+            {/* Main content area - adjust for mobile header and desktop sidebar */}
+            <main className="flex-1 lg:ml-64 pt-16 lg:pt-0 overflow-y-auto min-h-screen">
+                <div className="max-w-5xl mx-auto p-4 sm:p-6 lg:p-8">
                     {children}
                 </div>
             </main>
