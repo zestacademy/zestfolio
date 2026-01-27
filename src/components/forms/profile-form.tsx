@@ -14,7 +14,8 @@ import Image from 'next/image';
 
 export default function ProfileForm() {
     const { user } = useAuth();
-    const [loading, setLoading] = useState(false);
+    const [saving, setSaving] = useState(false);
+    const [initialized, setInitialized] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [profilePhotoURL, setProfilePhotoURL] = useState<string>('');
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -50,10 +51,37 @@ export default function ProfileForm() {
                 }
             } catch (error) {
                 console.error("Error fetching profile:", error);
+            } finally {
+                setInitialized(true);
             }
         };
         fetchProfile();
     }, [user]);
+
+    // Auto-save effect
+    useEffect(() => {
+        if (!initialized || !user) return;
+
+        const timer = setTimeout(async () => {
+            setSaving(true);
+            try {
+                const { linkedin, github, twitter, website, ...profileData } = formData;
+                const dataToSave = {
+                    ...profileData,
+                    socialLinks: { linkedin, github, twitter, website },
+                    updatedAt: new Date(),
+                    uid: user.uid,
+                };
+                await setDoc(doc(db, 'portfolios', user.uid), dataToSave, { merge: true });
+            } catch (error) {
+                console.error("Error auto-saving:", error);
+            } finally {
+                setSaving(false);
+            }
+        }, 2000); // 2 second debounce
+
+        return () => clearTimeout(timer);
+    }, [formData, user, initialized]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -64,13 +92,11 @@ export default function ProfileForm() {
         const file = e.target.files?.[0];
         if (!file || !user) return;
 
-        // Validate file type
         if (!file.type.startsWith('image/')) {
             alert('Please upload an image file');
             return;
         }
 
-        // Validate file size (max 5MB)
         if (file.size > 5 * 1024 * 1024) {
             alert('File size must be less than 5MB');
             return;
@@ -78,17 +104,11 @@ export default function ProfileForm() {
 
         setUploading(true);
         try {
-            // Create a unique filename
             const filename = `profile-photos/${user.uid}/${Date.now()}-${file.name}`;
             const storageRef = ref(storage, filename);
-
-            // Upload the file
             await uploadBytes(storageRef, file);
-
-            // Get the download URL
             const downloadURL = await getDownloadURL(storageRef);
 
-            // Update state
             setProfilePhotoURL(downloadURL);
             setFormData(prev => ({ ...prev, profilePhoto: downloadURL }));
         } catch (error) {
@@ -101,29 +121,20 @@ export default function ProfileForm() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!user) return;
-        setLoading(true);
-        try {
-            const { linkedin, github, twitter, website, ...profileData } = formData;
-            const dataToSave = {
-                ...profileData,
-                socialLinks: { linkedin, github, twitter, website },
-                updatedAt: new Date(),
-                uid: user.uid,
-            };
-
-            await setDoc(doc(db, 'portfolios', user.uid), dataToSave, { merge: true });
-            alert('Profile saved successfully!');
-        } catch (error) {
-            console.error("Error saving profile:", error);
-            alert('Failed to save profile. Please try again.');
-        } finally {
-            setLoading(false);
-        }
+        // Manual save is now just a duplicate action, but helps user confidence
     };
 
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="fixed bottom-4 right-4 z-50">
+                {saving && (
+                    <div className="bg-primary text-primary-foreground px-4 py-2 rounded-full shadow-lg flex items-center gap-2 text-sm animate-in fade-in slide-in-from-bottom-5">
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        Saving changes...
+                    </div>
+                )}
+            </div>
+
             {/* Profile Photo Card */}
             <Card>
                 <CardHeader>
@@ -183,8 +194,16 @@ export default function ProfileForm() {
             {/* Personal Information Card */}
             <Card>
                 <CardHeader>
-                    <CardTitle>Personal Information</CardTitle>
-                    <CardDescription>This will be displayed on your public portfolio header.</CardDescription>
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <CardTitle>Personal Information</CardTitle>
+                            <CardDescription>This will be displayed on your public portfolio header.</CardDescription>
+                        </div>
+                        <div className="text-xs text-muted-foreground flex items-center gap-1">
+                            {saving ? <Loader2 className="w-3 h-3 animate-spin" /> : <Save className="w-3 h-3" />}
+                            {saving ? 'Auto-saving...' : 'Auto-saved'}
+                        </div>
+                    </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
                     <div className="space-y-2">
@@ -271,10 +290,10 @@ export default function ProfileForm() {
             </Card>
 
             <div className="flex justify-end">
-                <Button type="submit" disabled={loading} className="min-w-[120px]">
-                    {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
-                    Save Changes
-                </Button>
+                {/* Visual indicator mostly, since it's auto-saving */}
+                <p className="text-sm text-muted-foreground mr-4 flex items-center">
+                    {saving ? 'Saving changes...' : 'All changes saved'}
+                </p>
             </div>
         </form>
     );

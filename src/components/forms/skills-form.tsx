@@ -12,7 +12,8 @@ import { Loader2, Save, X } from 'lucide-react';
 
 export default function SkillsForm() {
     const { user } = useAuth();
-    const [loading, setLoading] = useState(false);
+    const [saving, setSaving] = useState(false);
+    const [initialized, setInitialized] = useState(false);
     const [skills, setSkills] = useState<string[]>([]);
     const [inputValue, setInputValue] = useState('');
 
@@ -27,10 +28,33 @@ export default function SkillsForm() {
                 }
             } catch (error) {
                 console.error("Error fetching skills:", error);
+            } finally {
+                setInitialized(true);
             }
         };
         fetchSkills();
     }, [user]);
+
+    // Auto-save effect
+    useEffect(() => {
+        if (!initialized || !user) return;
+
+        // Debounce to avoid excessive writes while adding/removing rapidly
+        const timer = setTimeout(async () => {
+            setSaving(true);
+            try {
+                await updateDoc(doc(db, 'portfolios', user.uid), {
+                    skills: skills
+                });
+            } catch (error) {
+                console.error("Error auto-saving skills:", error);
+            } finally {
+                setSaving(false);
+            }
+        }, 1500);
+
+        return () => clearTimeout(timer);
+    }, [skills, user, initialized]);
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter' && inputValue.trim()) {
@@ -46,27 +70,20 @@ export default function SkillsForm() {
         setSkills(skills.filter(s => s !== skill));
     };
 
-    const handleSave = async () => {
-        if (!user) return;
-        setLoading(true);
-        try {
-            await updateDoc(doc(db, 'portfolios', user.uid), {
-                skills: skills
-            });
-            // Toast success
-        } catch (error) {
-            console.error("Error saving skills:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
     return (
         <div className="space-y-6">
             <Card>
                 <CardHeader>
-                    <CardTitle>Skills</CardTitle>
-                    <CardDescription>Add your technical skills and tools.</CardDescription>
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <CardTitle>Skills</CardTitle>
+                            <CardDescription>Add your technical skills and tools.</CardDescription>
+                        </div>
+                        <div className="text-xs text-muted-foreground flex items-center gap-1">
+                            {saving ? <Loader2 className="w-3 h-3 animate-spin" /> : <Save className="w-3 h-3" />}
+                            {saving ? 'Auto-saving...' : 'Auto-saved'}
+                        </div>
+                    </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
                     <div className="space-y-2">
@@ -91,13 +108,6 @@ export default function SkillsForm() {
                     </div>
                 </CardContent>
             </Card>
-
-            <div className="flex justify-end">
-                <Button onClick={handleSave} disabled={loading} className="min-w-[120px]">
-                    {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
-                    Save Skills
-                </Button>
-            </div>
         </div>
     );
 }

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { LayoutDashboard, User, Folder, Award, Settings, LogOut, GraduationCap, Menu, X, Shield } from 'lucide-react';
+import { LayoutDashboard, User, Folder, Award, Settings, LogOut, GraduationCap, Menu, X, Shield, LayoutTemplate } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { auth } from '@/lib/firebase';
 import { signOut } from 'firebase/auth';
@@ -17,6 +17,7 @@ const sidebarItems = [
     { icon: GraduationCap, label: 'Education', href: '/dashboard/education' },
     { icon: Folder, label: 'Projects', href: '/dashboard/projects' },
     { icon: Award, label: 'Skills & Certs', href: '/dashboard/skills' },
+    { icon: LayoutTemplate, label: 'Templates', href: '/dashboard/templates' },
     { icon: Settings, label: 'Settings', href: '/dashboard/settings' },
 ];
 
