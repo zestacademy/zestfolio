@@ -6,18 +6,19 @@ ZestFolio is a dynamic portfolio building platform designed for students to show
 
 ### **For Students (Users)**
 *   **Dynamic Portfolio Generation**: Create a stunning portfolio in minutes.
-*   **Theme Selection**: Choose from multiple professionally designed templates.
+*   **Theme Selection**: Choose from multiple professionally designed templates (Modern, Creative, Minimalist, etc.).
 *   **Project Showcase**: Add projects with images, descriptions, and links.
 *   **Skill Management**: Visual skill tags with automatic icon mapping.
-*   **Education Timeline**: sorted chronologically.
+*   **Education Timeline**: Organize academic history chronologically.
+*   **Profile Management**: Update personal details, social links, and profile photos.
 *   **Status Control**: Manually "Pause" your portfolio to hide it from the public (Maintenance Mode).
-*   **Auto-Inactivity**: Accounts inactive for >90 days are automatically marked as "Dormant".
 
 ### **For Administrators**
-*   **Admin Dashboard**: comprehensive overview of all users.
-*   **User Monitoring**: Track total users, active portfolios, and inactive users.
-*   **Activity Logs**: View "Last Active" dates to identify dormant accounts.
-*   **Search**: Filter users by name, email, or username.
+*   **Admin Dashboard**: Comprehensive overview of all users.
+*   **Real-Time Monitoring**: Track Total Users, Active Portfolios, and Average Projects per user.
+*   **User Management**: View user details including Full Name, URL Name (Username), and Portfolio Status.
+*   **Search**: Filter users by Full Name, URL Name, or Email.
+*   **Status Indicators**: Quickly identify portfolios that are **Live** (Green), **Paused** (Amber), or **Draft** (Gray).
 
 ## 🛠 Tech Stack
 
@@ -26,6 +27,7 @@ ZestFolio is a dynamic portfolio building platform designed for students to show
 *   **Styling**: Tailwind CSS + Shadcn UI
 *   **Database**: Firebase Firestore
 *   **Authentication**: Firebase Auth
+*   **Storage**: Firebase Storage (for images)
 *   **Icons**: Lucide React
 
 ## 📦 Getting Started
@@ -66,24 +68,27 @@ ZestFolio is a dynamic portfolio building platform designed for students to show
 ## 📅 System Updates (Change Log)
 
 ### **Latest Update (January 28, 2026)**
-*   **Admin Dashboard Enhancements**:
-    *   Added "Inactive Users" tracking (users inactive > 90 days).
-    *   Added "Last Active" column to admin table.
-    *   Implemented visual status indicators: **Live** (Green), **Paused** (Amber), **Dormant** (Red).
-*   **User Settings**:
-    *   New "Settings" page added.
-    *   Implemented "Pause Portfolio" functionality.
-*   **Security & Logic**:
-    *   Updated `firestore.rules` to secure write access while allowing public reads.
-    *   Implemented automatic maintenance page for inactive/paused portfolios.
-    *   Added automatic "Last Active" timestamp tracking on dashboard login.
-*   **Network Access**: Updated `package.json` to bind dev server to `0.0.0.0` for local network testing.
+*   **Admin Dashboard Cleanup & Reconfiguration**:
+    *   **Improved User Identification**: Table now displays "Full Name" and "URL Name" directly from the database root.
+    *   **Enhanced Search**: Search functionality now filters by Full Name, URL Name, and Email.
+    *   **Simplified Stats**: Removed "Inactive Users" card; now showing Total Users, Active Portfolios, and Avg Projects/User.
+    *   **Admin Security**: Implemented strict email-based admin authentication (`zestacademy@...`).
+    *   **Loading States**: Added visual loading indicators for better UX.
+*   **Data Structure Optimization**:
+    *   Flattened user profile data structure (FullName/Email now at document root) for more efficient querying and display.
+*   **Profile Management**:
+    *   Users can update their "Full Name" and "URL Name" which are reflected instantly across the app.
+
+### **Previous Updates**
+*   **User Settings**: "Pause Portfolio" functionality added.
+*   **Security**: Updated `firestore.rules` and implemented automatic maintenance page.
+*   **Network Access**: Dev server spans `0.0.0.0` for local testing.
 
 ## 🔒 Security Rules (Firestore)
 
 *   **Public Read**: Allowed for `portfolios` collection (required for public pages).
 *   **Private Write**: Only the document owner can edit their portfolio.
-*   **Admin Access**: Special admin accounts (`zestacademy@...`) have full read access.
+*   **Admin Access**: Special admin accounts (`zestacademy@rsmk.co.in`, `zestacademyonline@gmail.com`) have full dashboard access.
 
 ## 🤝 Contributing
 
