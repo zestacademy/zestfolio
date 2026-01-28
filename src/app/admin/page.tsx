@@ -16,11 +16,8 @@ const ADMIN_EMAILS = ['zestacademy@rsmk.co.in', 'zestacademyonline@gmail.com'];
 interface Portfolio {
     id: string;
     username?: string;
-    profile?: {
-        name?: string;
-        title?: string;
-        email?: string;
-    };
+    fullName?: string;
+    email?: string;
     projects?: any[];
     skills?: any[];
     education?: any[];
@@ -60,9 +57,8 @@ export default function AdminPage() {
             try {
                 // Simplified query to avoid index issues
                 const q = query(collection(db, 'portfolios'));
-                console.log("Fetching portfolios...");
+
                 const querySnapshot = await getDocs(q);
-                console.log("Snapshot size:", querySnapshot.size);
 
                 if (querySnapshot.empty) {
                     setError("Database returned 0 records. Collection 'portfolios' might be empty.");
@@ -132,8 +128,8 @@ export default function AdminPage() {
         const searchLower = searchTerm.toLowerCase();
         return (
             (portfolio.username || '').toLowerCase().includes(searchLower) ||
-            (portfolio.profile?.name || '').toLowerCase().includes(searchLower) ||
-            (portfolio.profile?.email || '').toLowerCase().includes(searchLower) ||
+            (portfolio.fullName || '').toLowerCase().includes(searchLower) ||
+            (portfolio.email || '').toLowerCase().includes(searchLower) ||
             portfolio.id.toLowerCase().includes(searchLower)
         );
     });
@@ -202,7 +198,7 @@ export default function AdminPage() {
                 <div className="relative">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                     <Input
-                        placeholder="Search by username, name, or email..."
+                        placeholder="Search by full name, url name, or email..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="pl-10 h-12"
@@ -215,8 +211,8 @@ export default function AdminPage() {
                         <table className="w-full">
                             <thead className="bg-muted/50 border-b">
                                 <tr>
-                                    <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">User</th>
-                                    <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground hidden md:table-cell">Username</th>
+                                    <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">Full Name</th>
+                                    <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground hidden md:table-cell">URL Name</th>
                                     <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground hidden lg:table-cell">Projects</th>
                                     <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground hidden lg:table-cell">Skills</th>
                                     <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">Status</th>
@@ -232,15 +228,15 @@ export default function AdminPage() {
                                             <tr key={portfolio.id} className="hover:bg-muted/30 transition-colors">
                                                 <td className="px-4 py-4">
                                                     <div className="flex flex-col">
-                                                        <span className="font-medium">{portfolio.profile?.name || 'No name'}</span>
+                                                        <span className="font-medium">{portfolio.fullName || 'No name'}</span>
                                                         <span className="text-sm text-muted-foreground truncate max-w-[200px]">
-                                                            {portfolio.profile?.email || portfolio.id}
+                                                            {portfolio.email || portfolio.id}
                                                         </span>
                                                     </div>
                                                 </td>
                                                 <td className="px-4 py-4 hidden md:table-cell">
                                                     <span className="px-2 py-1 rounded bg-primary/10 text-primary text-sm font-mono">
-                                                        {portfolio.username || 'No username'}
+                                                        {portfolio.username || 'No URL Name'}
                                                     </span>
                                                 </td>
                                                 <td className="px-4 py-4 text-center hidden lg:table-cell">
