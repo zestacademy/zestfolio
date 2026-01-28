@@ -39,7 +39,17 @@ export default function AdminPage() {
     const [isAdmin, setIsAdmin] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    // ... (keep useEffect for auth check)
+    useEffect(() => {
+        if (!authLoading) {
+            if (user && user.email && ADMIN_EMAILS.includes(user.email)) {
+                setIsAdmin(true);
+            } else if (!user) {
+                router.push('/login');
+            } else {
+                router.push('/dashboard');
+            }
+        }
+    }, [user, authLoading, router]);
 
     useEffect(() => {
         const fetchPortfolios = async () => {
@@ -90,7 +100,13 @@ export default function AdminPage() {
         }
     }, [isAdmin]);
 
-    // ... (keep loading checks)
+    if (authLoading || (loading && isAdmin)) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            </div>
+        );
+    }
 
     // Helper for inactivity check
     const isUserInactive = (p: Portfolio) => {
