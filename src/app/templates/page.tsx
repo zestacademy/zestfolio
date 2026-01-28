@@ -1,9 +1,14 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { CheckCircle2, Sparkles, Layout } from "lucide-react";
+import { CheckCircle2, Sparkles, Layout, X, Maximize2 } from "lucide-react";
 
 export default function Templates() {
+    const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
+
     const templates = [
         {
             id: "template01",
@@ -79,6 +84,8 @@ export default function Templates() {
         }
     ];
 
+    const currentTemplate = templates.find(t => t.id === selectedTemplate);
+
     return (
         <div className="flex flex-col min-h-screen">
             <Navbar />
@@ -113,30 +120,23 @@ export default function Templates() {
                                     key={index}
                                     className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card transition-all duration-300 hover:shadow-2xl hover:-translate-y-2"
                                 >
-                                    {/* Preview Area with Iframe */}
-                                    <div className="relative h-64 bg-slate-900 overflow-hidden group-hover:h-80 transition-all duration-300">
+                                    {/* Preview Area with Iframe - Clickable */}
+                                    <div
+                                        className="relative h-64 bg-slate-900 overflow-hidden group-hover:h-80 transition-all duration-300 cursor-pointer"
+                                        onClick={() => setSelectedTemplate(template.id)}
+                                    >
                                         <iframe
                                             src={template.preview}
                                             className="w-full h-full pointer-events-none scale-50 origin-top-left"
                                             style={{ width: '200%', height: '200%' }}
                                             title={`${template.name} Preview`}
                                         />
-                                        {/* Overlay with actions */}
-                                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
-                                            <a
-                                                href={template.preview}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="px-4 py-2 bg-white text-black rounded-lg font-semibold hover:bg-gray-100 transition-colors"
-                                            >
-                                                Full Preview
-                                            </a>
-                                            <Link
-                                                href="/dashboard/templates"
-                                                className={`px-4 py-2 rounded-lg bg-gradient-to-r ${template.color} text-white font-semibold shadow-md hover:shadow-lg transition-all`}
-                                            >
-                                                Select
-                                            </Link>
+                                        {/* Hover Overlay */}
+                                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                            <div className="text-white text-center">
+                                                <Maximize2 className="w-12 h-12 mx-auto mb-2 opacity-80" />
+                                                <p className="text-sm font-medium">Click to preview</p>
+                                            </div>
                                         </div>
                                         {/* Sparkle Effect */}
                                         <Sparkles className="absolute top-4 right-4 w-6 h-6 text-accent opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -229,6 +229,50 @@ export default function Templates() {
             </main>
 
             <Footer />
+
+            {/* Full Screen Preview Modal */}
+            {selectedTemplate && currentTemplate && (
+                <div
+                    className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
+                    onClick={() => setSelectedTemplate(null)}
+                >
+                    <div
+                        className="relative w-full h-full max-w-7xl max-h-[90vh] bg-white rounded-xl overflow-hidden shadow-2xl"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        {/* Modal Header */}
+                        <div className="absolute top-0 left-0 right-0 z-10 bg-gradient-to-b from-black/80 to-transparent p-4 flex items-center justify-between">
+                            <div className="text-white">
+                                <h3 className="text-lg font-bold">{currentTemplate.name}</h3>
+                                <p className="text-sm text-white/80">{currentTemplate.description}</p>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Link
+                                    href="/dashboard/templates"
+                                    className={`px-4 py-2 rounded-lg bg-gradient-to-r ${currentTemplate.color} text-white font-semibold shadow-md hover:shadow-lg transition-all`}
+                                    onClick={() => setSelectedTemplate(null)}
+                                >
+                                    Use This Template
+                                </Link>
+                                <button
+                                    onClick={() => setSelectedTemplate(null)}
+                                    className="p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+                                    aria-label="Close preview"
+                                >
+                                    <X className="w-6 h-6 text-white" />
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Iframe Preview */}
+                        <iframe
+                            src={currentTemplate.preview}
+                            className="w-full h-full"
+                            title={`${currentTemplate.name} Full Preview`}
+                        />
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

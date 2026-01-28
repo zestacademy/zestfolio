@@ -5,13 +5,13 @@ import { getStorage } from "firebase/storage";
 import { getAnalytics, isSupported } from "firebase/analytics";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAGng4_qT_Ot5EvCMnyU8DNYeERh4NarnY",
-    authDomain: "zestfolio-247.firebaseapp.com",
-    projectId: "zestfolio-247",
-    storageBucket: "zestfolio-247.firebasestorage.app",
-    messagingSenderId: "385796648663",
-    appId: "1:385796648663:web:cbbca9d4171e1f024f0a92",
-    measurementId: "G-FCK6W9QV7X"
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "",
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "",
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "",
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "",
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "",
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "",
+    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || ""
 };
 
 // Initialize Firebase (Singleton pattern to prevent re-initialization)
