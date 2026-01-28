@@ -1,184 +1,365 @@
 <!DOCTYPE html>
-
-<html class="dark" lang="en">
+<html lang="en" class="scroll-smooth">
 
 <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Professional Case Study Portfolio</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
-    <script id="tailwind-config">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elias Thorne | Systems Architect</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Fonts: Syne for headers, Space Mono for technical details -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap"
+        rel="stylesheet">
+
+    <script>
         tailwind.config = {
-            darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#1337ec",
-                        "background-light": "#f6f6f8",
-                        "background-dark": "#101322",
+                        'acid': '#bef264', // Acid Lime
+                        'blueprint': '#0f172a', // Deep Navy
                     },
                     fontFamily: {
-                        "display": ["Manrope"]
+                        header: ['Syne', 'sans-serif'],
+                        mono: ['Space Mono', 'monospace'],
                     },
-                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
-                },
-            },
+                }
+            }
         }
     </script>
+
+    <style type="text/tailwindcss">
+        @layer base {
+            body { @apply bg-blueprint text-stone-300 font-mono overflow-x-hidden; }
+            h1, h2, h3 { @apply font-header uppercase text-white; }
+        }
+        @layer utilities {
+            .brutal-shadow { box-shadow: 8px 8px 0px 0px #bef264; }
+            .brutal-shadow-white { box-shadow: 6px 6px 0px 0px rgba(255,255,255,0.1); }
+            .grid-pattern {
+                background-image: radial-gradient(rgba(190, 242, 100, 0.1) 1px, transparent 1px);
+                background-size: 30px 30px;
+            }
+            .blueprint-line { @apply border-acid/20 border-dashed border-l-2 pl-8; }
+        }
+    </style>
 </head>
 
-<body class="bg-background-light dark:bg-background-dark font-display text-white transition-colors duration-300">
-    <div
-        class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
-        <div class="layout-container flex h-full grow flex-col">
-            <!-- Navigation -->
-            <div
-                class="w-full flex justify-center py-2 sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
-                <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-                    <header
-                        class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-b-[#232948] px-6 py-3">
-                        <div class="flex items-center gap-4 text-slate-900 dark:text-white">
-                            <div class="size-6 text-primary">
-                                <span class="material-symbols-outlined text-3xl">deployed_code</span>
-                            </div>
-                            <h2
-                                class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">
-                                Portfolio.PM</h2>
-                        </div>
-                        <div class="flex flex-1 justify-end gap-8">
-                            <div class="hidden md:flex items-center gap-9">
-                                <a class="text-slate-600 dark:text-white text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors"
-                                    href="#">Case Studies</a>
-                                <a class="text-slate-600 dark:text-white text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors"
-                                    href="#">Experience</a>
-                                <a class="text-slate-600 dark:text-white text-sm font-medium hover:text-primary dark:hover:text-primary transition-colors"
-                                    href="#">Insights</a>
-                            </div>
-                            <a id="portfolio-email"
-                                class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em]">
-                                <span class="truncate">Contact Me</span>
-                            </a>
-                        </div>
-                    </header>
-                </div>
-            </div>
-            <main class="flex-1">
-                <!-- Hero Section -->
-                <div class="px-6 md:px-40 flex justify-center py-10">
-                    <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-                        <div class="@container">
-                            <div class="flex flex-col gap-6 py-10 @[864px]:flex-row @[864px]:items-center">
-                                <div id="portfolio-hero-image"
-                                    class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl @[480px]:h-auto @[480px]:min-w-[320px] @[864px]:w-1/2"
-                                    data-alt="Professional corporate headshot of a product manager in a suit"
-                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDgEMGTnvzR9J_CPwuujXVpyUZhanGCI2c806ixhlWYp0ruBda9DeNOtoUjlWFanW7XDc8ZOFQluVKWN2sZm8Zy99IMgRLLPeZxQUeHp6foCNZhYHwD9HMLN8vWNEhWb0bG7Es_UyXSD77bmvIiNItVMQ3FjIfGZX4ykx4U23cW29M8oE47iXEeLA1N8evzla_dBwENKNS7qQaVJmbTm16ICJnZHSzvbj2v5TrCOBJNtpQK7CXuiioqtsCw5TEqUhYe7cif0uF2xfRC");'>
-                                </div>
-                                <div class="flex flex-col gap-6 @[864px]:w-1/2 @[864px]:justify-center">
-                                    <div class="flex flex-col gap-4 text-left">
-                                        <div id="portfolio-title"
-                                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary w-fit text-xs font-bold uppercase tracking-wider">
-                                            Senior Product Strategist
-                                        </div>
-                                        <h1 id="portfolio-name"
-                                            class="text-slate-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl">
-                                            Turning Complex Problems Into Profitable Products
-                                        </h1>
-                                        <p id="portfolio-bio"
-                                            class="text-slate-600 dark:text-slate-400 text-sm font-normal leading-relaxed @[480px]:text-lg">
-                                            Specializing in B2B scalability, enterprise UX, and go-to-market strategies
-                                            for global technology firms and high-growth startups.
-                                        </p>
-                                    </div>
-                                    <div class="flex gap-3">
-                                        <button
-                                            class="flex min-w-[140px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold">
-                                            <span class="truncate">View Portfolio</span>
-                                        </button>
-                                        <button
-                                            class="flex min-w-[140px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white text-base font-bold">
-                                            <span class="truncate">Read Resume</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Core Competencies Section -->
-                <div class="px-6 md:px-40 flex justify-center py-5">
-                    <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-                        <h2 id="portfolio-skills-header"
-                            class="text-slate-900 dark:text-white text-[24px] font-bold leading-tight tracking-[-0.015em] pb-3 pt-5">
-                            Strategic Expertise</h2>
-                        <div id="portfolio-skills" class="flex gap-3 py-3 flex-wrap">
-                            <!-- Skills injected here -->
-                            <div
-                                class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-slate-200 dark:bg-[#232948] px-4">
-                                <span class="material-symbols-outlined text-primary text-sm">insights</span>
-                                <p class="text-slate-800 dark:text-white text-sm font-semibold leading-normal">Data
-                                    Analysis</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Three-Column Project Grid -->
-                <div class="px-6 md:px-40 flex justify-center py-10">
-                    <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-                        <h2 id="portfolio-projects-header"
-                            class="text-slate-900 dark:text-white text-[24px] font-bold leading-tight tracking-[-0.015em] pb-8">
-                            Featured Case Studies</h2>
-                        <div id="portfolio-projects" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <!-- Projects injected here -->
-                        </div>
-                    </div>
-                </div>
-            </main>
-            <!-- Footer -->
-            <footer class="px-6 md:px-40 flex justify-center py-10 border-t border-slate-200 dark:border-slate-800">
-                <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-                    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                        <div class="flex items-center gap-4 text-slate-900 dark:text-white opacity-60">
-                            <span class="material-symbols-outlined">deployed_code</span>
-                            <p class="text-sm font-medium">© 2024 Product Professional Portfolio. All rights reserved.
-                            </p>
-                        </div>
-                        <div class="flex gap-6">
-                            <a id="social-linkedin" class="text-slate-500 hover:text-primary" href="#"><span
-                                    class="material-symbols-outlined">person_pin</span></a>
-                            <a id="social-github" class="text-slate-500 hover:text-primary" href="#"><span
-                                    class="material-symbols-outlined">deploy_code</span></a>
-                            <a id="social-email" class="text-slate-500 hover:text-primary" href="#"><span
-                                    class="material-symbols-outlined">mail</span></a>
-                        </div>
-                    </div>
-                </div>
-            </footer>
+<body class="grid-pattern">
 
-            <!-- ZestFolio Credits & CTA -->
-            <div class="w-full border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#0a0a0f] py-8 px-4">
-                <div class="max-w-[1200px] mx-auto text-center space-y-4">
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">
-                        Portfolio created with <span class="text-primary font-bold">ZestFolio</span>
+    <!-- SIDEBAR NAV (Desktop) / HEADER (Mobile) -->
+    <nav
+        class="fixed top-0 md:left-0 md:h-full w-full md:w-24 bg-blueprint border-b md:border-b-0 md:border-r border-acid/20 z-50 flex md:flex-col items-center justify-between p-6">
+        <div class="bg-acid text-blueprint p-2 brutal-shadow font-header font-black text-xl">ET.</div>
+        <div class="hidden md:flex flex-col gap-12 text-[10px] font-bold uppercase tracking-[0.3em] rotate-180"
+            style="writing-mode: vertical-rl;">
+            <a href="#about" class="hover:text-acid transition">Philosophy</a>
+            <a href="#projects" class="hover:text-acid transition">Archives</a>
+            <a href="#skills" class="hover:text-acid transition">Stack</a>
+            <a href="#contact" class="hover:text-acid transition text-acid">Contact</a>
+        </div>
+        <button class="md:hidden text-acid"><i data-lucide="menu"></i></button>
+    </nav>
+
+    <main class="md:ml-24 px-6 md:px-20 pb-20">
+
+        <!-- 1. HERO SECTION -->
+        <section id="home" class="min-h-screen flex flex-col justify-center pt-32">
+            <div class="max-w-6xl flex flex-col md:flex-row items-center gap-16">
+                <div class="flex-1 space-y-10">
+                    <div
+                        class="inline-block border-2 border-acid px-4 py-1 text-acid text-xs font-bold uppercase tracking-widest brutal-shadow">
+                        Protocol: Deep Work Enabled
+                    </div>
+                    <h1 id="portfolio-name" class="text-6xl md:text-[120px] leading-[0.85] tracking-tighter">
+                        Systems <br />
+                        <span class="text-acid italic">Architect.</span>
+                    </h1>
+                    <p id="portfolio-title" class="text-xl md:text-2xl text-stone-400 max-w-xl font-light">
+                        Engineering <span class="text-white bg-acid/20 px-2 underline decoration-acid">Autonomous
+                            Grids</span> and high-concentration hardware tools for the next industrial era.
                     </p>
-                    <div class="space-y-3">
-                        <p class="text-gray-900 dark:text-white text-lg font-semibold">
-                            Want to create your portfolio right now?
-                        </p>
-                        <a href="https://zestfolio.vercel.app/" target="_blank" rel="noopener noreferrer"
-                            class="inline-flex items-center justify-center px-8 py-3 bg-primary text-white text-sm font-bold rounded-lg hover:opacity-90 transition-all duration-300 shadow-lg">
-                            Click Here Now
+                    <div class="flex gap-6">
+                        <a href="#projects"
+                            class="bg-acid text-blueprint px-10 py-5 font-header font-black uppercase text-sm brutal-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
+                            View Archives
+                        </a>
+                        <a href="#contact"
+                            class="border-2 border-white text-white px-10 py-5 font-header font-black uppercase text-sm hover:bg-white/5 transition-all">
+                            Initiate
                         </a>
                     </div>
                 </div>
+
+                <div class="relative w-full max-w-md order-1 md:order-2">
+                    <div class="absolute -top-10 -right-10 text-acid/20 animate-spin-slow">
+                        <i data-lucide="settings" class="size-64"></i>
+                    </div>
+                    <!-- EDIT YOUR PHOTO URL HERE -->
+                    <div class="relative aspect-[4/5] bg-stone-800 border-2 border-acid overflow-hidden brutal-shadow">
+                        <img id="portfolio-main-image"
+                            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=800&q=80"
+                            class="w-full h-full object-cover grayscale brightness-75 contrast-125 mix-blend-screen"
+                            alt="Elias Thorne">
+                        <div class="absolute inset-0 bg-blueprint/40 mix-blend-multiply"></div>
+                    </div>
+                    <div
+                        class="absolute -bottom-6 -left-6 bg-acid text-blueprint p-4 brutal-shadow font-header text-sm italic">
+                        // ELIAS_THORNE.sys
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. ABOUT ME (Philosophy) -->
+        <section id="about" class="py-32 border-t border-acid/10">
+            <div class="grid md:grid-cols-12 gap-10">
+                <div class="md:col-span-4">
+                    <h2 class="text-4xl italic text-acid">01_<br />The INFJ<br />Method.</h2>
+                </div>
+                <div class="md:col-span-8 blueprint-line space-y-8 text-lg">
+                    <!-- EDIT YOUR BIO HERE -->
+                    <p id="portfolio-bio">
+                        I approach engineering through the lens of <span class="text-white font-bold italic">Cal
+                            Newport's Deep Work</span>. My personality type dictates a need for purposeful,
+                        high-concentration problem solving over shallow output.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. EDUCATION -->
+        <section id="education" class="py-32 border-t border-acid/10">
+            <div class="grid md:grid-cols-12 gap-10">
+                <div class="md:col-span-4">
+                    <h2 id="portfolio-education-header" class="text-4xl text-white">02_<br />Formation.</h2>
+                </div>
+                <div id="portfolio-education" class="md:col-span-8 space-y-12">
+                    <!-- EDIT EDUCATION ITEM -->
+                    <div class="bg-white/5 border border-white/10 p-8 brutal-shadow-white group">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-2xl group-hover:text-acid transition">B.Tech in Electrical Engineering
+                                </h3>
+                                <p class="text-stone-500 mt-2">University Name // Year 2021 — 2025</p>
+                            </div>
+                            <i data-lucide="cpu" class="text-acid/40"></i>
+                        </div>
+                        <p class="mt-6 text-sm text-stone-400 font-mono tracking-widest uppercase">Focus: Power
+                            Electronics & Industrial Automation</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. PROJECTS (Three-Column Unique Grid) -->
+        <section id="projects" class="py-32 border-t border-acid/10">
+            <div class="mb-16">
+                <h2 id="portfolio-projects-header" class="text-6xl md:text-8xl">Archives_</h2>
+                <p class="text-acid mt-4 uppercase tracking-[0.4em] text-xs">Technical Output Summary</p>
+            </div>
+
+            <div id="portfolio-projects" class="grid md:grid-cols-3 gap-0 border-2 border-acid/20 bg-acid/5">
+                <!-- PROJECT 1: COLOROHM -->
+                <div
+                    class="p-10 border-b md:border-b-0 md:border-r border-acid/20 group hover:bg-blueprint transition-all duration-500">
+                    <div class="flex justify-between mb-10">
+                        <span class="text-acid font-bold">01.</span>
+                        <a href="https://colorohm.rsmk.me" target="_blank" class="text-white hover:text-acid"><i
+                                data-lucide="external-link"></i></a>
+                    </div>
+                    <h3 class="text-2xl mb-4">ColorOhm</h3>
+                    <p class="text-stone-400 text-sm leading-relaxed mb-10">A zero-friction resistor color code
+                        calculator designed for engineers who value precision and speed.</p>
+                    <div class="space-y-2">
+                        <div class="h-1 w-full bg-acid/20">
+                            <div class="h-full bg-acid w-full"></div>
+                        </div>
+                        <p class="text-[10px] font-bold uppercase text-acid">Web Implementation</p>
+                    </div>
+                </div>
+
+                <!-- PROJECT 2: SMART EXHAUST -->
+                <div
+                    class="p-10 border-b md:border-b-0 md:border-r border-acid/20 group hover:bg-blueprint transition-all duration-500">
+                    <div class="flex justify-between mb-10">
+                        <span class="text-acid font-bold">02.</span>
+                        <i data-lucide="zap" class="text-stone-600 group-hover:text-acid transition"></i>
+                    </div>
+                    <h3 class="text-2xl mb-4">Smart Exhaust</h3>
+                    <p class="text-stone-400 text-sm leading-relaxed mb-10">Autonomous fan control using MQ-2 sensors
+                        and Arduino UNO with manual override and safety timers.</p>
+                    <div class="space-y-2">
+                        <div class="h-1 w-full bg-acid/20">
+                            <div class="h-full bg-acid w-3/4"></div>
+                        </div>
+                        <p class="text-[10px] font-bold uppercase text-acid">Hardware Prototyping</p>
+                    </div>
+                </div>
+
+                <!-- PROJECT 3: AUTONOMOUS GRIDS -->
+                <div class="p-10 group hover:bg-blueprint transition-all duration-500">
+                    <div class="flex justify-between mb-10">
+                        <span class="text-acid font-bold">03.</span>
+                        <span class="text-xs font-bold text-stone-600">IN PROGRESS</span>
+                    </div>
+                    <h3 class="text-2xl mb-4">Grid Research</h3>
+                    <p class="text-stone-400 text-sm leading-relaxed mb-10">Simulating decentralized energy networks to
+                        create self-healing infrastructure patterns.</p>
+                    <div class="space-y-2">
+                        <div class="h-1 w-full bg-acid/20">
+                            <div class="h-full bg-acid w-1/4"></div>
+                        </div>
+                        <p class="text-[10px] font-bold uppercase text-acid">Conceptual System</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. SKILLS -->
+        <section id="skills" class="py-32 border-t border-acid/10">
+            <h2 id="portfolio-skills-header" class="text-4xl mb-16">Expertise_Stack</h2>
+            <div id="portfolio-skills" class="flex flex-wrap gap-4">
+                <!-- EDIT SKILLS LIST -->
+                <div
+                    class="px-6 py-3 border-2 border-white/10 hover:border-acid transition cursor-default flex items-center gap-3">
+                    <span class="text-acid font-black">#</span> <span>Python</span>
+                </div>
+                <div
+                    class="px-6 py-3 border-2 border-white/10 hover:border-acid transition cursor-default flex items-center gap-3">
+                    <span class="text-acid font-black">#</span> <span>C++</span>
+                </div>
+                <div
+                    class="px-6 py-3 border-2 border-white/10 hover:border-acid transition cursor-default flex items-center gap-3">
+                    <span class="text-acid font-black">#</span> <span>MATLAB</span>
+                </div>
+                <div
+                    class="px-6 py-3 border-2 border-white/10 hover:border-acid transition cursor-default flex items-center gap-3">
+                    <span class="text-acid font-black">#</span> <span>Arduino</span>
+                </div>
+                <div
+                    class="px-6 py-3 border-2 border-white/10 hover:border-acid transition cursor-default flex items-center gap-3">
+                    <span class="text-acid font-black">#</span> <span>Tailwind CSS</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. CERTIFICATES -->
+        <section id="certificates" class="py-32 border-t border-acid/10">
+            <h2 id="portfolio-certifications-header" class="text-4xl mb-12">Credentials.</h2>
+            <div id="portfolio-certifications" class="space-y-4">
+                <!-- EDIT CERTIFICATES -->
+                <div
+                    class="flex items-center justify-between p-6 border-b border-acid/10 hover:bg-acid/5 transition group">
+                    <div class="flex items-center gap-6">
+                        <div class="text-acid group-hover:scale-125 transition-transform"><i data-lucide="award"></i>
+                        </div>
+                        <span class="text-xl uppercase font-header">Smart Grid Specialization</span>
+                    </div>
+                    <span class="text-[10px] font-bold text-stone-600">COURSERA // 2024</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. CONTACT (DIRECT ACTION) -->
+        <section id="contact" class="py-32 border-t border-acid/10 text-center">
+            <div class="max-w-4xl mx-auto space-y-16">
+                <h2 class="text-6xl md:text-[140px] leading-none tracking-tighter uppercase font-header">
+                    Start_ <br /> <span class="text-acid italic">Transmission.</span>
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <!-- EMAIL -->
+                    <a id="social-email" href="mailto:hello@example.com"
+                        class="p-10 border-2 border-white/10 hover:border-acid transition-all brutal-shadow-white hover:brutal-shadow group">
+                        <i data-lucide="mail"
+                            class="size-8 mx-auto mb-6 text-stone-500 group-hover:text-acid transition"></i>
+                        <p class="text-xs uppercase font-bold tracking-widest text-acid">Direct Email</p>
+                    </a>
+                    <!-- LINKEDIN -->
+                    <a id="social-linkedin" href="#"
+                        class="p-10 border-2 border-white/10 hover:border-acid transition-all brutal-shadow-white hover:brutal-shadow group">
+                        <i data-lucide="linkedin"
+                            class="size-8 mx-auto mb-6 text-stone-500 group-hover:text-acid transition"></i>
+                        <p class="text-xs uppercase font-bold tracking-widest text-acid">Professional</p>
+                    </a>
+                    <!-- GITHUB -->
+                    <a id="social-github" href="#"
+                        class="p-10 border-2 border-white/10 hover:border-acid transition-all brutal-shadow-white hover:brutal-shadow group">
+                        <i data-lucide="github"
+                            class="size-8 mx-auto mb-6 text-stone-500 group-hover:text-acid transition"></i>
+                        <p class="text-xs uppercase font-bold tracking-widest text-acid">Source Code</p>
+                    </a>
+                    <!-- TWITTER -->
+                    <a id="social-twitter" href="#"
+                        class="p-10 border-2 border-white/10 hover:border-acid transition-all brutal-shadow-white hover:brutal-shadow group">
+                        <i data-lucide="twitter"
+                            class="size-8 mx-auto mb-6 text-stone-500 group-hover:text-acid transition"></i>
+                        <p class="text-xs uppercase font-bold tracking-widest text-acid">Social</p>
+                    </a>
+                    <!-- WEBSITE -->
+                    <a id="social-website" href="#"
+                        class="p-10 border-2 border-white/10 hover:border-acid transition-all brutal-shadow-white hover:brutal-shadow group">
+                        <i data-lucide="globe"
+                            class="size-8 mx-auto mb-6 text-stone-500 group-hover:text-acid transition"></i>
+                        <p class="text-xs uppercase font-bold tracking-widest text-acid">Website</p>
+                    </a>
+                </div>
+
+                <div class="pt-20">
+                    <a href="mailto:hello@example.com"
+                        class="bg-acid text-blueprint px-12 py-6 font-header font-black uppercase text-lg brutal-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
+                        Establish Connection Protocol
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ZestFolio CTA -->
+    <div class="w-full border-t border-acid/10 bg-blueprint/80 py-12 px-4 md:ml-24">
+        <div class="max-w-[960px] mx-auto text-center space-y-4">
+            <p class="text-stone-500 text-sm">
+                Portfolio created with <span class="text-acid font-bold font-header uppercase">ZestFolio</span>
+            </p>
+            <div class="space-y-3">
+                <p class="text-white text-lg font-semibold">
+                    Want to create your portfolio right now?
+                </p>
+                <a href="https://zestfolio.vercel.app/" target="_blank" rel="noopener noreferrer"
+                    class="inline-flex items-center justify-center px-8 py-3 bg-acid text-blueprint font-header font-black uppercase text-xs tracking-widest brutal-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
+                    Click Here Now
+                </a>
             </div>
         </div>
     </div>
+
+    <footer class="py-6 border-t border-acid/10 md:ml-24 text-center">
+        <p class="text-[9px] font-bold uppercase tracking-[0.8em] text-stone-600">
+            © 2026 All Rights Reserved
+        </p>
+    </footer>
+
+    <script>
+        // Start Lucide Icons
+        lucide.createIcons();
+
+        // Custom Slow Spin Style
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin-slow {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+            .animate-spin-slow {
+                animation: spin-slow 20s linear infinite;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 
 </html>

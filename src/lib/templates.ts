@@ -9,65 +9,65 @@ export interface Template {
 export const PORTFOLIO_TEMPLATES: Template[] = [
     {
         id: 'template01',
-        name: 'Modern Professional',
-        description: 'A clean and professional design suitable for corporate portfolios.',
+        name: 'Neon Terminal',
+        description: 'Cyberpunk-inspired design with neon green accents and terminal aesthetics.',
         thumbnail: '/images/templates/template01.png',
-        features: ['Professional Header', 'Skills Grid', 'Experience Timeline']
+        features: ['Terminal Style', 'Neon Accents', 'Dark Theme', 'Tech-Focused']
     },
     {
         id: 'template02',
-        name: 'Creative Dark',
-        description: 'A dark-themed template perfect for designers and artists.',
+        name: 'Elegant Serif',
+        description: 'Professional serif typography with emerald green highlights and sophisticated layout.',
         thumbnail: '/images/templates/template02.png',
-        features: ['Dark Mode', 'Gallery View', 'Project Spotlight']
+        features: ['Serif Typography', 'Emerald Theme', 'Professional', 'Classic Design']
     },
     {
         id: 'template03',
-        name: 'Minimalist One',
-        description: 'Less is more. A simple, elegant single-page portfolio.',
+        name: 'Dark Glassmorphism',
+        description: 'Modern dark theme with frosted glass effects and indigo color scheme.',
         thumbnail: '/images/templates/template03.png',
-        features: ['Minimal Design', 'Fast Loading', 'Focus on Typography']
+        features: ['Glassmorphism', 'Dark Indigo', 'Modern UI', 'Blur Effects']
     },
     {
         id: 'template04',
-        name: 'Developer Blue',
-        description: 'Tailored for software developers with code-block aesthetics.',
+        name: 'Professional Blue',
+        description: 'Clean professional design with blue accents, perfect for corporate portfolios.',
         thumbnail: '/images/templates/template04.png',
-        features: ['Tech Stack Ions', 'GitHub Integration Style', 'Project Cards']
+        features: ['Blue Theme', 'Corporate', 'Spinning Badge', 'Premium Look']
     },
     {
         id: 'template05',
-        name: 'Vibrant Studio',
-        description: 'Colorful and dynamic, great for creative agencies.',
+        name: 'Industrial Amber',
+        description: 'Industrial-inspired design with amber/yellow highlights and bold typography.',
         thumbnail: '/images/templates/template05.png',
-        features: ['Bold Colors', 'Large Typography', 'Interactive Elements']
+        features: ['Amber Yellow', 'Bold Typography', 'Industrial', 'Dark Background']
     },
     {
         id: 'template06',
-        name: 'Academic Focus',
-        description: 'Structured layout ideal for researchers and academics.',
+        name: 'Systems Engineer',
+        description: 'Dark professional template with emerald and gold accents for technical portfolios.',
         thumbnail: '/images/templates/template06.png',
-        features: ['Publication List', 'Research Areas', 'CV Download']
+        features: ['Emerald & Gold', 'Technical Focus', 'Glass Panels', 'Modern Serif']
     },
     {
         id: 'template07',
-        name: 'Freelancer Bold',
-        description: 'Make a statement with high-contrast design and large visuals.',
+        name: 'Creative Portfolio',
+        description: 'Vibrant and creative design perfect for designers and creative professionals.',
         thumbnail: '/images/templates/template07.png',
-        features: ['Testimonials', 'Service Pricing', 'Call to Action']
+        features: ['Creative Design', 'Bold Colors', 'Portfolio Focus', 'Modern Layout']
     },
     {
         id: 'template08',
-        name: 'Tech Startup',
-        description: 'Modern SaaS-like aesthetic for product-focused portfolios.',
+        name: 'Minimal Clean',
+        description: 'Ultra-minimal clean design focusing on content with excellent typography.',
         thumbnail: '/images/templates/template08.png',
-        features: ['Feature Grid', 'Modern Gradients', 'Clean Layout']
+        features: ['Minimal Design', 'Clean Layout', 'Typography Focus', 'White Space']
     },
     {
         id: 'template09',
-        name: 'Content Creator',
-        description: 'Video and image heavy design for content producers.',
+        name: 'Dynamic Gradient',
+        description: 'Modern design with dynamic gradients and contemporary aesthetic.',
         thumbnail: '/images/templates/template09.png',
-        features: ['Social Media Integration', 'Video Embeds', 'Blog Section']
+        features: ['Gradient Design', 'Modern Look', 'Dynamic Colors', 'Contemporary']
     }
 ];

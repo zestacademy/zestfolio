@@ -6,46 +6,76 @@ import { CheckCircle2, Sparkles, Layout } from "lucide-react";
 export default function Templates() {
     const templates = [
         {
-            name: "Modern Minimalist",
-            description: "Clean, professional design perfect for tech-focused portfolios",
-            features: ["Dark mode support", "Project grid layout", "Smooth animations"],
-            color: "from-slate-600 to-slate-800",
-            preview: "bg-gradient-to-br from-slate-100 to-slate-200"
-        },
-        {
-            name: "Creative Bold",
-            description: "Eye-catching design ideal for designers and creative professionals",
-            features: ["Vibrant colors", "Image galleries", "Custom typography"],
-            color: "from-purple-600 to-pink-600",
-            preview: "bg-gradient-to-br from-purple-100 to-pink-100"
-        },
-        {
-            name: "Academic Classic",
-            description: "Traditional yet modern layout for research and academic work",
-            features: ["Publication lists", "Citation support", "Timeline view"],
-            color: "from-blue-600 to-cyan-600",
-            preview: "bg-gradient-to-br from-blue-100 to-cyan-100"
-        },
-        {
-            name: "Tech Developer",
-            description: "Code-centric design with syntax highlighting and GitHub integration",
-            features: ["Code snippets", "GitHub stats", "Tech stack badges"],
+            id: "template01",
+            name: "Tech Systems",
+            description: "Dark theme with neon green accents, perfect for systems engineers and tech professionals",
+            features: ["Neon glow effects", "Dark cyberpunk theme", "Profile photo showcase"],
             color: "from-green-600 to-emerald-600",
-            preview: "bg-gradient-to-br from-green-100 to-emerald-100"
+            preview: "/api/templates/template01"
         },
         {
-            name: "Business Professional",
-            description: "Corporate-style portfolio for business and finance students",
-            features: ["Timeline layout", "Achievement cards", "Contact forms"],
-            color: "from-indigo-600 to-blue-600",
-            preview: "bg-gradient-to-br from-indigo-100 to-blue-100"
+            id: "template02",
+            name: "Professional Clean",
+            description: "Clean, centered layout ideal for all professionals seeking a polished online presence",
+            features: ["Centered design", "Stats cards", "Professional styling"],
+            color: "from-teal-600 to-green-600",
+            preview: "/api/templates/template02"
         },
         {
-            name: "Artistic Showcase",
-            description: "Visual-first design for artists, photographers, and multimedia creators",
-            features: ["Full-screen images", "Video support", "Masonry grid"],
-            color: "from-rose-600 to-orange-600",
-            preview: "bg-gradient-to-br from-rose-100 to-orange-100"
+            id: "template03",
+            name: "Data Analyst",
+            description: "Modern data-focused design with blue accents for data scientists and analysts",
+            features: ["Data visualization ready", "Modern blue theme", "Clean typography"],
+            color: "from-blue-600 to-cyan-600",
+            preview: "/api/templates/template03"
+        },
+        {
+            id: "template04",
+            name: "Modern Universal",
+            description: "Light/dark mode support with flexible design suitable for any field",
+            features: ["Dark mode toggle", "Adaptive colors", "Universal appeal"],
+            color: "from-indigo-600 to-purple-600",
+            preview: "/api/templates/template04"
+        },
+        {
+            id: "template05",
+            name: "Minimal Blue",
+            description: "Simple, compact layout with blue accents for minimalist professionals",
+            features: ["Minimal design", "Compact layout", "Blue color scheme"],
+            color: "from-sky-600 to-blue-600",
+            preview: "/api/templates/template05"
+        },
+        {
+            id: "template06",
+            name: "Hardware Engineer",
+            description: "Retro-inspired design perfect for hardware engineers and tech enthusiasts",
+            features: ["Retro aesthetic", "Technical vibe", "Engineering focus"],
+            color: "from-orange-600 to-red-600",
+            preview: "/api/templates/template06"
+        },
+        {
+            id: "template07",
+            name: "Creative Bold",
+            description: "Bold, artistic layout designed for creative professionals and designers",
+            features: ["Vibrant colors", "Artistic flair", "Creative expression"],
+            color: "from-purple-600 to-pink-600",
+            preview: "/api/templates/template07"
+        },
+        {
+            id: "template08",
+            name: "Architecture Pro",
+            description: "Professional architecture theme showcasing projects and design work",
+            features: ["Project gallery", "Professional layout", "Architecture focus"],
+            color: "from-slate-600 to-gray-600",
+            preview: "/api/templates/template08"
+        },
+        {
+            id: "template09",
+            name: "Research Scholar",
+            description: "Academic/scholarly design ideal for researchers and academics",
+            features: ["Publication lists", "Academic styling", "Research focus"],
+            color: "from-blue-700 to-indigo-700",
+            preview: "/api/templates/template09"
         }
     ];
 
@@ -83,15 +113,30 @@ export default function Templates() {
                                     key={index}
                                     className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card transition-all duration-300 hover:shadow-2xl hover:-translate-y-2"
                                 >
-                                    {/* Preview Area */}
-                                    <div className={`relative h-48 ${template.preview} overflow-hidden`}>
-                                        <div className="absolute inset-0 flex items-center justify-center">
-                                            <div className={`w-32 h-32 rounded-lg bg-gradient-to-br ${template.color} opacity-40 blur-2xl group-hover:scale-150 transition-transform duration-500`}></div>
-                                        </div>
-                                        <div className="absolute inset-0 flex items-center justify-center">
-                                            <div className={`px-6 py-3 rounded-lg bg-gradient-to-r ${template.color} text-white font-semibold shadow-lg`}>
-                                                Preview
-                                            </div>
+                                    {/* Preview Area with Iframe */}
+                                    <div className="relative h-64 bg-slate-900 overflow-hidden group-hover:h-80 transition-all duration-300">
+                                        <iframe
+                                            src={template.preview}
+                                            className="w-full h-full pointer-events-none scale-50 origin-top-left"
+                                            style={{ width: '200%', height: '200%' }}
+                                            title={`${template.name} Preview`}
+                                        />
+                                        {/* Overlay with actions */}
+                                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
+                                            <a
+                                                href={template.preview}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="px-4 py-2 bg-white text-black rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                                            >
+                                                Full Preview
+                                            </a>
+                                            <Link
+                                                href="/dashboard/templates"
+                                                className={`px-4 py-2 rounded-lg bg-gradient-to-r ${template.color} text-white font-semibold shadow-md hover:shadow-lg transition-all`}
+                                            >
+                                                Select
+                                            </Link>
                                         </div>
                                         {/* Sparkle Effect */}
                                         <Sparkles className="absolute top-4 right-4 w-6 h-6 text-accent opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -118,7 +163,7 @@ export default function Templates() {
 
                                         {/* Action Button */}
                                         <Link
-                                            href="/dashboard"
+                                            href="/dashboard/templates"
                                             className={`w-full inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-gradient-to-r ${template.color} text-white font-medium shadow-md hover:shadow-lg transition-all`}
                                         >
                                             Use This Template

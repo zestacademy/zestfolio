@@ -109,7 +109,7 @@ export async function GET(
         // Professional Title
         const titleSelectors = ['#portfolio-title', 'h1:contains("SENIOR SYSTEMS ENGINEER")', '.user-title'];
         titleSelectors.forEach(sel => {
-            if ($(sel).length) $(sel).text(portfolio.professionalTitle.toUpperCase());
+            if ($(sel).length) $(sel).text(portfolio.professionalTitle);
         });
 
         // About Me
@@ -133,15 +133,68 @@ export async function GET(
             });
         }
 
-        // Profile Photo
+        // Profile Photo - Enhanced to properly display user photos
         if (portfolio.profilePhoto) {
-            const photoElements = $('#portfolio-hero-image, #portfolio-main-image, div.rounded-full[style*="background-image"], img.profile-photo');
-            photoElements.each((i, el) => {
+            // Update header profile photo (small circular image)
+            const headerPhotoSelectors = [
+                '#portfolio-hero-image',
+                'header img.profile-photo',
+                'header div.rounded-full[style*="background-image"]',
+                'header .size-10[style*="background-image"]'
+            ];
+
+            headerPhotoSelectors.forEach(sel => {
+                const $el = $(sel);
+                if ($el.length) {
+                    if ($el.is('img')) {
+                        $el.attr('src', portfolio.profilePhoto);
+                        $el.attr('alt', portfolio.fullName);
+                    } else {
+                        // For background-image divs, preserve other styles
+                        const existingStyle = $el.attr('style') || '';
+                        const newStyle = existingStyle.replace(/background-image:\s*url\([^)]+\)/gi, '');
+                        $el.attr('style', `${newStyle}; background-image: url("${portfolio.profilePhoto}"); background-size: cover; background-position: center;`.replace(/;\s*;/g, ';').trim());
+                    }
+                }
+            });
+
+            // Update hero section main image
+            const heroImageSelectors = [
+                '#portfolio-main-image',
+                '.hero-section img.profile-photo',
+                '.hero-section div[style*="background-image"]',
+                'div.aspect-video[style*="background-image"]'
+            ];
+
+            heroImageSelectors.forEach(sel => {
+                const $el = $(sel);
+                if ($el.length) {
+                    if ($el.is('img')) {
+                        $el.attr('src', portfolio.profilePhoto);
+                        $el.attr('alt', `${portfolio.fullName} - Profile Photo`);
+                    } else {
+                        // For hero images, use the profile photo as background
+                        const existingStyle = $el.attr('style') || '';
+                        const newStyle = existingStyle.replace(/background-image:\s*url\([^)]+\)/gi, '');
+                        $el.attr('style', `${newStyle}; background-image: url("${portfolio.profilePhoto}"); background-size: cover; background-position: center;`.replace(/;\s*;/g, ';').trim());
+                    }
+                }
+            });
+        } else {
+            // If no profile photo, use a professional placeholder
+            const placeholderUrl = 'data:image/svg+xml,' + encodeURIComponent(`
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="#0df20d">
+                    <circle cx="128" cy="80" r="40" fill="#1b271b"/>
+                    <path d="M128 128c-33 0-60 27-60 60v68h120v-68c0-33-27-60-60-60z" fill="#1b271b"/>
+                </svg>
+            `);
+
+            $('#portfolio-hero-image, #portfolio-main-image').each((i, el) => {
                 const $el = $(el);
                 if ($el.is('img')) {
-                    $el.attr('src', portfolio.profilePhoto);
+                    $el.attr('src', placeholderUrl);
                 } else {
-                    $el.attr('style', `background-image: url("${portfolio.profilePhoto}");`);
+                    $el.attr('style', `background-image: url("${placeholderUrl}"); background-size: cover; background-position: center;`);
                 }
             });
         }
@@ -174,7 +227,7 @@ export async function GET(
         });
 
         // Projects
-        const projectsHeader = $('#portfolio-projects-header, h2:contains("Featured Projects")');
+        const projectsHeader = $('#portfolio-projects-header, h2:contains(\"Featured Projects\")');
         const projectsContainer = $('#portfolio-projects');
 
         if (portfolio.projects && portfolio.projects.length > 0) {
@@ -183,17 +236,18 @@ export async function GET(
             let container = projectsContainer.length ? projectsContainer : projectsHeader.next('div');
 
             if (container.length) {
+                // Use neutral styling that works with any template theme
                 const projectsHTML = portfolio.projects.map((proj: any) => `
                     <div class="flex flex-col gap-4 rounded-lg min-w-[300px] max-w-[320px] shrink-0 snap-center">
-                        <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg relative overflow-hidden group border border-[#3b543b]/50" 
-                             style="background-image: url('${proj.imageUrl || 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=2070&auto=format&fit=crop'}'); background-color: #1a1a1a;">
+                        <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg relative overflow-hidden group" 
+                             style="background-image: url('${proj.imageUrl || 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=2070&auto=format&fit=crop'}'); background-color: #333;">
                              <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center backdrop-blur-sm">
-                                ${proj.link ? `<a href="${proj.link}" target="_blank" class="bg-[#0df20d] text-black px-6 py-2 rounded-full font-bold text-sm transform scale-90 group-hover:scale-100 transition-transform hover:bg-white">View Project</a>` : ''}
+                                ${proj.link ? `<a href="${proj.link}" target="_blank" class="bg-white/90 text-black px-6 py-2 rounded-full font-bold text-sm transform scale-90 group-hover:scale-100 transition-transform hover:bg-white">View Project</a>` : ''}
                              </div>
                         </div>
                         <div>
-                            <p class="text-white text-lg font-bold leading-normal line-clamp-1 mb-1">${proj.title || 'Untitled Project'}</p>
-                            <p class="text-[#9cba9c] text-sm font-normal leading-relaxed line-clamp-2 h-[40px]">${proj.description || ''}</p>
+                            <p class="text-lg font-bold leading-normal line-clamp-1 mb-1">${proj.title || 'Untitled Project'}</p>
+                            <p class="text-sm opacity-70 font-normal leading-relaxed line-clamp-2 hfont-normal leading-relaxed line-clamp-2 h-[40px]">${proj.description || ''}</p>
                         </div>
                     </div>
                 `).join('');
@@ -274,12 +328,13 @@ export async function GET(
                 const skillsHTML = portfolio.skills.map((skill: any) => {
                     const skillName = typeof skill === 'string' ? skill : (skill.name || skill);
                     const icon = getSkillIcon(skillName);
+                    // Neutral styling that adapts to template theme
                     return `
-                        <div class="flex items-center gap-3 rounded-lg border border-[#3b543b] bg-[#1b271b] px-4 py-3 min-w-[140px]">
-                            <div class="text-[#0df20d] w-5 h-5">
+                        <div class="flex items-center gap-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-800/50 px-4 py-3 min-w-[140px] backdrop-blur-sm">
+                            <div class="w-5 h-5 opacity-80">
                                 ${icon}
                             </div>
-                            <span class="text-white font-bold">${skillName}</span>
+                            <span class="font-semibold">${skillName}</span>
                         </div>
                     `;
                 }).join('');
@@ -300,12 +355,13 @@ export async function GET(
             if (container.length) {
                 container.empty();
                 const certificationsHTML = portfolio.certifications.map((cert: string) => {
+                    // Neutral styling that adapts to any template theme
                     return `
-                        <div class="flex items-center gap-3 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 min-w-[180px]">
-                            <div class="text-emerald-500">
+                        <div class="flex items-center gap-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 px-4 py-3 min-w-[180px]">
+                            <div class="opacity-70">
                                 <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px"><path d="M225.86,102.82c-3.77-3.94-7.67-8-9.14-11.57-1.36-3.27-1.44-8.69-1.52-13.94-.15-9.76-.31-20.82-8-28.51s-18.75-7.85-28.51-8c-5.25-.08-10.67-.16-13.94-1.52-3.56-1.47-7.63-5.37-11.57-9.14C146.28,23.51,138.44,16,128,16s-18.27,7.51-25.18,14.14c-3.94,3.77-8,7.67-11.57,9.14C88,40.64,82.56,40.72,77.31,40.8c-9.76.15-20.82.31-28.51,8S41,67.55,40.8,77.31c-.08,5.25-.16,10.67-1.52,13.94-1.47,3.56-5.37,7.63-9.14,11.57C23.51,109.72,16,117.56,16,128s7.51,18.27,14.14,25.18c3.77,3.94,7.67,8,9.14,11.57,1.36,3.27,1.44,8.69,1.52,13.94.15,9.76.31,20.82,8,28.51s18.75,7.85,28.51,8c5.25.08,10.67.16,13.94,1.52,3.56,1.47,7.63,5.37,11.57,9.14C109.72,232.49,117.56,240,128,240s18.27-7.51,25.18-14.14c3.94-3.77,8-7.67,11.57-9.14,3.27-1.36,8.69-1.44,13.94-1.52,9.76-.15,20.82-.31,28.51-8s7.85-18.75,8-28.51c.08-5.25.16-10.67,1.52-13.94,1.47-3.56,5.37-7.63,9.14-11.57C232.49,146.28,240,138.44,240,128S232.49,109.73,225.86,102.82Zm-52.2,6.84-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
                             </div>
-                            <span class="text-white font-semibold">${cert}</span>
+                            <span class="font-semibold">${cert}</span>
                         </div>
                     `;
                 }).join('');
@@ -319,16 +375,17 @@ export async function GET(
         // Education (Insert dynamically if not present)
         const eduHeader = $('h2:contains("Education")');
         if (portfolio.education && portfolio.education.length > 0 && eduHeader.length === 0) {
+            // Use neutral styling that works across all templates
             const educationHTML = `
                 <div class="education-section px-4 py-8">
-                    <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">Education</h2>
+                    <h2 class="text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">Education</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         ${portfolio.education.map((edu: any) => `
-                            <div class="p-5 rounded-lg border border-[#3b543b] bg-[#1b271b]/80 backdrop-blur-sm">
-                                <h3 class="text-white text-lg font-bold">${edu.degree}</h3>
-                                <p class="text-[#0df20d] font-medium text-lg">${edu.institution}</p>
-                                <p class="text-[#9cba9c] text-sm mt-1">${edu.fieldOfStudy}</p>
-                                <p class="text-[#7fb6b2] text-xs mt-3 font-mono uppercase tracking-widest">${edu.startDate} - ${edu.current ? 'Present' : edu.endDate}</p>
+                            <div class="p-5 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 backdrop-blur-sm">
+                                <h3 class="text-lg font-bold">${edu.degree}</h3>
+                                <p class="font-medium text-lg opacity-80">${edu.institution}</p>
+                                <p class="text-sm mt-1 opacity-70">${edu.fieldOfStudy}</p>
+                                <p class="text-xs mt-3 font-mono uppercase tracking-widest opacity-60">${edu.startDate} - ${edu.current ? 'Present' : edu.endDate}</p>
                             </div>
                         `).join('')}
                     </div>

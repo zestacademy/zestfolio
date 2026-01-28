@@ -1,241 +1,387 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html class="dark" lang="en">
 
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Principal Hardware Portfolio | Senior Engineering Leadership</title>
+    <title>Principal Systems Portfolio | Elias Thorne</title>
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Fonts: Noto Serif for headings, Noto Sans for body -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Noto+Sans:wght@400;500;700&display=swap"
         rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#0fbd2c",
+                        "primary": "#10b981", // Emerald Green
                         "gold-accent": "#D4AF37",
-                        "forest-deep": "#0d1b10",
-                        "background-light": "#f6f8f6",
-                        "background-dark": "#102213",
+                        "obsidian": "#0d0d0d",
+                        "forest-dark": "#052e16",
                     },
                     fontFamily: {
                         "display": ["Noto Serif", "serif"],
                         "sans": ["Noto Sans", "sans-serif"]
-                    },
-                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                    }
                 },
             },
         }
     </script>
     <style type="text/tailwindcss">
-        body {
-            font-family: 'Noto Sans', sans-serif;
+        @layer base {
+            body { @apply bg-obsidian text-stone-300 font-sans; }
+            h1, h2, h3, h4 { @apply font-display text-white tracking-tight; }
         }
-        h1, h2, h3, h4, .font-serif {
-            font-family: 'Noto Serif', serif;
+        @layer utilities {
+            .glass-panel { @apply bg-white/5 backdrop-blur-md border border-white/10; }
+            .gold-glow { text-shadow: 0 0 10px rgba(212, 175, 55, 0.3); }
+            .scroll-mt-header { scroll-margin-top: 5rem; }
         }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0d0d0d; }
+        ::-webkit-scrollbar-thumb { background: #052e16; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #10b981; }
     </style>
 </head>
 
-<body
-    class="bg-background-light dark:bg-background-dark text-forest-deep dark:text-background-light transition-colors duration-300">
-    <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
-        <div class="layout-container flex h-full grow flex-col">
-            <header
-                class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-solid border-primary/20 px-6 md:px-20 py-4 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="text-primary">
-                        <span class="material-symbols-outlined text-3xl">memory</span>
-                    </div>
-                    <div class="flex flex-col">
-                        <h2 id="portfolio-name"
-                            class="text-forest-deep dark:text-white text-lg font-bold leading-tight tracking-tight">
-                            Elias Thorne</h2>
-                        <span id="portfolio-title"
-                            class="text-[10px] uppercase tracking-[0.2em] font-bold text-gold-accent">Principal Hardware
-                            Engineer</span>
-                    </div>
-                </div>
-                <div class="hidden md:flex flex-1 justify-end gap-10 items-center">
-                    <nav class="flex items-center gap-8">
-                        <a class="text-forest-deep dark:text-background-light text-sm font-medium hover:text-primary transition-colors"
-                            href="#projects">Projects</a>
-                        <a class="text-forest-deep dark:text-background-light text-sm font-medium hover:text-primary transition-colors"
-                            href="#experience">Experience</a>
-                        <a class="text-forest-deep dark:text-background-light text-sm font-medium hover:text-primary transition-colors"
-                            href="#patents">Patents</a>
-                    </nav>
-                    <div class="flex items-center gap-4">
-                        <button
-                            class="flex items-center justify-center text-forest-deep dark:text-white hover:text-gold-accent transition-colors"
-                            title="View Resume">
-                            <span class="material-symbols-outlined text-2xl">description</span>
-                        </button>
-                        <button
-                            class="flex min-w-[120px] cursor-pointer items-center justify-center rounded-lg h-10 px-5 bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
-                            <span class="truncate">Connect</span>
-                        </button>
-                    </div>
-                </div>
-            </header>
-            <main class="flex-1">
-                <section class="relative flex flex-col md:flex-row min-h-[80vh] items-stretch overflow-hidden">
-                    <div
-                        class="w-full md:w-1/2 flex flex-col justify-center px-10 md:px-20 py-16 bg-white dark:bg-background-dark">
-                        <div class="max-w-xl">
-                            <h4 class="text-gold-accent font-bold tracking-[0.3em] text-xs uppercase mb-4">Architecture
-                                &amp; Strategy</h4>
-                            <h1
-                                class="text-forest-deep dark:text-white text-4xl lg:text-6xl font-black leading-tight mb-6">
-                                Engineering Systems for <span class="italic text-primary">Global Innovation</span>
-                            </h1>
-                            <p id="portfolio-bio"
-                                class="text-forest-deep/80 dark:text-background-light/70 text-lg leading-relaxed mb-8">
-                                With over 15 years in end-to-end product lifecycles, I lead technical teams to architect
-                                complex PCB systems and scale high-volume manufacturing for world-class technology
-                                firms.
-                            </p>
-                            <div class="flex flex-col sm:flex-row gap-4">
-                                <button
-                                    class="bg-forest-deep dark:bg-primary text-white px-8 py-3 rounded-lg font-bold hover:opacity-90 transition-all flex items-center justify-center gap-2">
-                                    View Portfolio <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                                </button>
-                                <button
-                                    class="bg-gold-accent text-white px-8 py-3 rounded-lg font-bold font-sans hover:brightness-110 transition-all flex items-center justify-center gap-2 shadow-lg shadow-gold-accent/20">
-                                    <span class="material-symbols-outlined text-lg">download</span>
-                                    Download CV
-                                </button>
-                                <a id="portfolio-email"
-                                    class="border border-forest-deep/20 dark:border-background-light/20 px-8 py-3 rounded-lg font-bold hover:bg-primary/5 transition-all text-center flex items-center justify-center">
-                                    Contact
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="portfolio-hero-image" class="w-full md:w-1/2 bg-center bg-cover min-h-[400px]"
-                        data-alt="Macro high-detail shot of high-end green PCB circuitry"
-                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBjB-gw7QyYlhDvemBBXfKoTcEkeew4R6FdizTAUC29ySDqMKQo15cJ1uAMVos3NcDjmPPtN7NMc3DncpTRYo9ZKhWNRfbCaeYFMsEynXFf28rz9SD2tqcssrxG1S2axvqOMJDByuu2U4EbXsOw0M_X-3PzLv6wfEnRySYVQHFlac5ODDLb6rAl6ASCXmhsfRZOMWhEYfBDLnY5mu-fOMh2_-WsaPcyZ8tL5vDCv8jIyIpC4UkBt74d5R9miWu3XrFllzz3X5nidvGC");'>
-                        <div class="w-full h-full bg-forest-deep/20 backdrop-brightness-75 flex items-end p-10">
-                            <div
-                                class="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20 text-white max-w-sm">
-                                <span class="text-xs uppercase tracking-widest text-gold-accent font-bold">Latest
-                                    Release</span>
-                                <h3 class="text-xl font-bold mt-1">Project Obsidian SoC</h3>
-                                <p class="text-sm opacity-80 mt-2">12-layer HDI design with optimized thermal
-                                    dissipation for AI edge computing.</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section class="bg-forest-deep text-white py-12 px-6 md:px-20">
-                    <div class="max-w-6xl mx-auto flex flex-wrap justify-between gap-8">
-                        <!-- Stats - kept static for now -->
-                        <div class="flex flex-col gap-1 min-w-[140px]">
-                            <span class="text-gold-accent font-bold text-4xl">12</span>
-                            <span class="text-xs uppercase tracking-widest opacity-60">Patents Held</span>
-                        </div>
-                        <div class="flex flex-col gap-1 min-w-[140px]">
-                            <span class="text-gold-accent font-bold text-4xl">45+</span>
-                            <span class="text-xs uppercase tracking-widest opacity-60">Products Launched</span>
-                        </div>
-                        <div class="flex flex-col gap-1 min-w-[140px]">
-                            <span class="text-gold-accent font-bold text-4xl">06</span>
-                            <span class="text-xs uppercase tracking-widest opacity-60">Global Teams Led</span>
-                        </div>
-                        <div class="flex flex-col gap-1 min-w-[140px]">
-                            <span class="text-gold-accent font-bold text-4xl">30%</span>
-                            <span class="text-xs uppercase tracking-widest opacity-60">Efficiency Gains</span>
-                        </div>
-                    </div>
-                </section>
-                <section class="py-20 px-6 md:px-20 bg-background-light dark:bg-background-dark">
-                    <div class="max-w-6xl mx-auto">
-                        <div
-                            class="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b border-primary/20 pb-6">
-                            <div>
-                                <h4 id="portfolio-skills-header"
-                                    class="text-primary font-bold tracking-[0.2em] text-xs uppercase mb-2">Capabilities
-                                </h4>
-                                <h2 class="text-forest-deep dark:text-white text-3xl font-bold">Product Lifecycle
-                                    Expertise</h2>
-                            </div>
-                        </div>
-                        <div id="portfolio-skills" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            <!-- Skills injected here -->
-                            <div
-                                class="bg-white dark:bg-background-dark/50 p-8 rounded-xl border border-primary/10 shadow-sm hover:shadow-xl hover:border-primary/30 transition-all group">
-                                <div
-                                    class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-all">
-                                    <span class="material-symbols-outlined">lightbulb</span>
-                                </div>
-                                <h3 class="text-xl font-bold mb-4">Conceptualization &amp; R&amp;D</h3>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section class="py-20 px-6 md:px-20 bg-white dark:bg-background-dark" id="projects">
-                    <div class="max-w-6xl mx-auto">
-                        <div class="text-center mb-16">
-                            <h2 id="portfolio-projects-header" class="text-4xl font-bold mb-4 italic">Signature Hardware
-                                Systems</h2>
-                            <p class="text-forest-deep/60 dark:text-background-light/60 max-w-2xl mx-auto">Selected
-                                deep-dives into high-impact systems designed for automotive, aerospace, and consumer
-                                electronics.</p>
-                        </div>
-                        <div id="portfolio-projects" class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                            <!-- Projects injected here -->
-                        </div>
-                    </div>
-                </section>
-            </main>
-            <footer class="bg-background-light dark:bg-background-dark border-t border-primary/10 py-20 px-6 md:px-20">
-                <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
-                    <div class="max-w-md">
-                        <div class="flex items-center gap-3 mb-6">
-                            <span class="material-symbols-outlined text-primary text-3xl">memory</span>
-                            <h2 class="text-forest-deep dark:text-white text-xl font-bold">Elias Thorne</h2>
-                        </div>
-                        <div class="flex gap-4 mt-8">
-                            <a id="social-linkedin"
-                                class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all"
-                                href="#">
-                                <span class="material-symbols-outlined text-lg">link</span>
-                            </a>
-                            <a id="social-email"
-                                class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all"
-                                href="#">
-                                <span class="material-symbols-outlined text-lg">mail</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </footer>
+<body class="selection:bg-primary/30 selection:text-white">
 
-            <!-- ZestFolio Credits & CTA -->
-            <div class="w-full border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#0a0a0f] py-8 px-4">
-                <div class="max-w-[1200px] mx-auto text-center space-y-4">
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">
-                        Portfolio created with <span class="text-primary font-bold">ZestFolio</span>
+    <!-- 1. NAVIGATION -->
+    <header class="sticky top-0 z-50 bg-obsidian/90 backdrop-blur-md border-b border-primary/20">
+        <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+            <div class="flex items-center gap-3">
+                <div class="text-primary group-hover:rotate-12 transition-transform">
+                    <span class="material-symbols-outlined text-3xl">memory</span>
+                </div>
+                <div class="flex flex-col">
+                    <!-- EDIT YOUR NAME HERE -->
+                    <h2 class="text-white text-lg font-bold leading-tight tracking-tight uppercase">Elias Thorne</h2>
+                    <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-gold-accent">Engineering
+                        Lead</span>
+                </div>
+            </div>
+
+            <nav
+                class="hidden md:flex gap-8 items-center text-[10px] font-bold uppercase tracking-[0.2em] text-stone-500">
+                <a class="hover:text-primary transition-colors" href="#about">About</a>
+                <a class="hover:text-primary transition-colors" href="#education">Education</a>
+                <a class="hover:text-primary transition-colors" href="#projects">Work</a>
+                <a class="hover:text-primary transition-colors" href="#skills">Skills</a>
+                <a class="hover:text-primary transition-colors" href="#contact">Contact</a>
+            </nav>
+
+            <a href="#contact"
+                class="px-6 py-2 bg-primary text-white text-[10px] font-bold uppercase tracking-widest rounded hover:bg-primary/80 transition-all shadow-lg shadow-primary/20">
+                Connect
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6">
+
+        <!-- 2. HERO SECTION -->
+        <section id="home" class="min-h-[85vh] flex flex-col md:flex-row items-center gap-16 py-12 md:py-24">
+            <div class="flex-1 space-y-8 order-2 md:order-1 text-center md:text-left">
+                <div class="space-y-4">
+                    <h4 class="text-gold-accent font-bold tracking-[0.3em] text-xs uppercase">Architecture & Strategy
+                    </h4>
+                    <!-- EDIT MAIN HEADING -->
+                    <h1 id="portfolio-name" class="text-5xl md:text-8xl font-black leading-[1.1] text-white">
+                        Designing <span class="italic text-primary">Resilient</span> Systems.
+                    </h1>
+                    <!-- EDIT TAGLINE -->
+                    <p id="portfolio-title" class="text-xl text-stone-400 max-w-xl leading-relaxed font-light">
+                        Specializing in <span class="text-white border-b border-gold-accent/40">Autonomous Grids</span>
+                        and high-concentration hardware tools built with the focus of deep work.
                     </p>
-                    <div class="space-y-3">
-                        <p class="text-gray-900 dark:text-white text-lg font-semibold">
-                            Want to create your portfolio right now?
-                        </p>
-                        <a href="https://zestfolio.vercel.app/" target="_blank" rel="noopener noreferrer"
-                            class="inline-flex items-center justify-center px-8 py-3 bg-primary text-white text-sm font-bold rounded-lg hover:opacity-90 transition-all duration-300 shadow-lg">
-                            Click Here Now
-                        </a>
+                </div>
+
+                <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                    <a href="#projects"
+                        class="px-10 py-4 bg-white text-obsidian text-xs font-bold uppercase tracking-widest rounded hover:bg-stone-200 transition-all">
+                        Project Archives
+                    </a>
+                    <a href="#contact"
+                        class="px-10 py-4 border border-stone-800 text-white text-xs font-bold uppercase tracking-widest rounded hover:bg-white/5 transition-all">
+                        Direct Channel
+                    </a>
+                </div>
+            </div>
+
+            <div class="flex-shrink-0 order-1 md:order-2 relative">
+                <!-- Industrial Frame -->
+                <div
+                    class="absolute -inset-4 border border-primary/20 rounded-2xl -rotate-3 group-hover:rotate-0 transition-transform">
+                </div>
+                <!-- EDIT HERO PHOTO URL -->
+                <div
+                    class="w-64 h-80 md:w-96 md:h-[500px] rounded-xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl relative z-10">
+                    <img id="portfolio-main-image"
+                        src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=1000"
+                        class="w-full h-full object-cover" alt="Profile Photo">
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. ABOUT ME -->
+        <section id="about" class="py-32 border-t border-white/5 scroll-mt-header">
+            <div class="grid md:grid-cols-2 gap-20">
+                <div class="space-y-6">
+                    <h2 class="text-4xl md:text-6xl font-bold">The focus of <br /><span class="italic text-primary">Deep
+                            Work.</span></h2>
+                    <div class="flex gap-4">
+                        <span
+                            class="px-3 py-1 bg-primary/10 text-primary border border-primary/20 rounded text-[10px] font-bold uppercase tracking-widest">INFJ-A</span>
+                        <span
+                            class="px-3 py-1 bg-white/5 text-stone-400 border border-white/10 rounded text-[10px] font-bold uppercase tracking-widest">Systems
+                            Thinker</span>
+                    </div>
+                </div>
+                <div class="space-y-6 text-stone-400 text-lg leading-relaxed font-light">
+                    <!-- EDIT BIO HERE -->
+                    <p id="portfolio-bio">
+                        I find my best work in the state of high-concentration flow. As an engineer inspired by Cal
+                        Newport's <span class="text-white italic">Deep Work</span>, I prioritize technical depth over
+                        surface-level output.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. EDUCATION -->
+        <section id="education" class="py-32 border-t border-white/5 scroll-mt-header">
+            <h2 id="portfolio-education-header"
+                class="text-3xl font-bold mb-16 uppercase tracking-widest text-primary/80">Academic Foundation</h2>
+            <div id="portfolio-education" class="space-y-12">
+                <!-- EDIT EDUCATION ITEM -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 group">
+                    <div class="flex items-center gap-8">
+                        <div class="text-gold-accent group-hover:scale-110 transition-transform">
+                            <i data-lucide="graduation-cap" class="size-10"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl group-hover:text-primary transition-colors">B.Tech in Electrical
+                                Engineering</h3>
+                            <p class="text-stone-500 italic">University Name • 2021 — 2025</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs font-bold uppercase tracking-[0.2em] text-stone-600">Major: Automation &
+                            Systems</p>
                     </div>
                 </div>
             </div>
+        </section>
+
+        <!-- 5. PROJECTS -->
+        <section id="projects" class="py-32 border-t border-white/5 scroll-mt-header">
+            <div class="flex justify-between items-end mb-16">
+                <h2 id="portfolio-projects-header" class="text-4xl font-bold italic">Featured <span
+                        class="text-primary">Systems</span></h2>
+            </div>
+            <div id="portfolio-projects" class="grid md:grid-cols-2 gap-12">
+                <!-- PROJECT 1: COLOROHM -->
+                <div class="group relative space-y-4">
+                    <div class="aspect-video glass-panel rounded-2xl overflow-hidden relative border border-white/5">
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800"
+                            class="w-full h-full object-cover opacity-50 group-hover:scale-105 group-hover:opacity-100 transition duration-1000">
+                        <div
+                            class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-obsidian/60 backdrop-blur-sm">
+                            <a href="https://colorohm.rsmk.me" target="_blank"
+                                class="px-8 py-3 bg-white text-obsidian font-bold rounded uppercase tracking-widest text-[10px]">Visit
+                                Live Tool</a>
+                        </div>
+                    </div>
+                    <h3 class="text-2xl">ColorOhm</h3>
+                    <p class="text-stone-500 font-light leading-relaxed">A live, precision resistor color code
+                        calculator for hardware developers. Built with zero-friction UX in mind.</p>
+                </div>
+
+                <!-- PROJECT 2: SMART EXHAUST -->
+                <div class="group relative space-y-4">
+                    <div class="aspect-video glass-panel rounded-2xl overflow-hidden relative border border-white/5">
+                        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800"
+                            class="w-full h-full object-cover opacity-50 group-hover:scale-105 group-hover:opacity-100 transition duration-1000">
+                    </div>
+                    <h3 class="text-2xl">Smart Exhaust System</h3>
+                    <p class="text-stone-500 font-light leading-relaxed">Autonomous fan control utilizing an MQ-2 sensor
+                        and Arduino with manual overrides and safety timers.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. SKILLS -->
+        <section id="skills" class="py-32 border-t border-white/5 scroll-mt-header text-center md:text-left">
+            <h2 id="portfolio-skills-header" class="text-3xl font-bold mb-16 uppercase tracking-widest text-primary/80">
+                Expertise Stack</h2>
+            <div id="portfolio-skills" class="grid grid-cols-2 md:grid-cols-4 gap-12">
+                <!-- EDIT SKILLS CATEGORIES -->
+                <div class="space-y-4">
+                    <h4 class="text-gold-accent font-bold uppercase tracking-[0.2em] text-[10px]">Logic</h4>
+                    <ul class="text-stone-500 space-y-2 font-light">
+                        <li>Python</li>
+                        <li>C / C++</li>
+                        <li>MATLAB</li>
+                    </ul>
+                </div>
+                <div class="space-y-4">
+                    <h4 class="text-gold-accent font-bold uppercase tracking-[0.2em] text-[10px]">Hardware</h4>
+                    <ul class="text-stone-500 space-y-2 font-light">
+                        <li>Arduino / ESP32</li>
+                        <li>PCB Layout</li>
+                        <li>Sensors (MQ-2/IMU)</li>
+                    </ul>
+                </div>
+                <div class="space-y-4">
+                    <h4 class="text-gold-accent font-bold uppercase tracking-[0.2em] text-[10px]">Systems</h4>
+                    <ul class="text-stone-500 space-y-2 font-light">
+                        <li>Simulink</li>
+                        <li>Smart Grids</li>
+                        <li>PID Control</li>
+                    </ul>
+                </div>
+                <div class="space-y-4">
+                    <h4 class="text-gold-accent font-bold uppercase tracking-[0.2em] text-[10px]">Interface</h4>
+                    <ul class="text-stone-500 space-y-2 font-light">
+                        <li>Tailwind CSS</li>
+                        <li>React Patterns</li>
+                        <li>HTML5/CSS3</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. CERTIFICATES -->
+        <section id="certificates" class="py-32 border-t border-white/5 scroll-mt-header">
+            <h2 id="portfolio-certifications-header"
+                class="text-3xl font-bold mb-12 uppercase tracking-widest text-primary/80 text-center">Credentials</h2>
+            <div id="portfolio-certifications" class="grid md:grid-cols-2 gap-6">
+                <!-- EDIT CERTIFICATE 1 -->
+                <div
+                    class="flex items-center gap-6 p-8 glass-panel rounded-2xl group hover:border-primary/50 transition-colors">
+                    <div class="text-primary group-hover:rotate-12 transition-transform">
+                        <i data-lucide="verified" class="size-8"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-bold">Smart Grid Technologies</h4>
+                        <p class="text-xs text-stone-500 mt-1 uppercase tracking-widest">Coursera • 2024</p>
+                    </div>
+                </div>
+                <!-- EDIT CERTIFICATE 2 -->
+                <div
+                    class="flex items-center gap-6 p-8 glass-panel rounded-2xl group hover:border-primary/50 transition-colors">
+                    <div class="text-primary group-hover:rotate-12 transition-transform">
+                        <i data-lucide="award" class="size-8"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-bold">Advanced Systems Automation</h4>
+                        <p class="text-xs text-stone-500 mt-1 uppercase tracking-widest">IEEE Chapter • 2023</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. CONTACT SECTION (NO FORM) -->
+        <section id="contact"
+            class="py-32 border-t border-white/5 scroll-mt-header text-center bg-forest-dark/30 rounded-[3rem] mb-20 px-8">
+            <div class="max-w-2xl mx-auto space-y-12">
+                <div class="space-y-4">
+                    <h2 class="text-5xl md:text-7xl font-bold italic">Establish <span class="text-primary">Link.</span>
+                    </h2>
+                    <p class="text-stone-500 text-lg font-light leading-relaxed">
+                        I am currently open to research collaborations and system architecture discussions.
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-8 pt-6">
+                    <!-- EDIT SOCIAL LINKS -->
+                    <a id="social-email" href="mailto:hello@example.com" class="group flex flex-col items-center gap-4">
+                        <div
+                            class="size-16 glass-panel rounded-full flex items-center justify-center text-stone-400 group-hover:bg-primary group-hover:text-obsidian transition-all">
+                            <i data-lucide="mail" class="size-6"></i>
+                        </div>
+                        <span class="text-[10px] font-bold uppercase tracking-widest opacity-60">Email</span>
+                    </a>
+                    <a id="social-linkedin" href="#" class="group flex flex-col items-center gap-4">
+                        <div
+                            class="size-16 glass-panel rounded-full flex items-center justify-center text-stone-400 group-hover:bg-primary group-hover:text-obsidian transition-all">
+                            <i data-lucide="linkedin" class="size-6"></i>
+                        </div>
+                        <span class="text-[10px] font-bold uppercase tracking-widest opacity-60">LinkedIn</span>
+                    </a>
+                    <a id="social-github" href="#" class="group flex flex-col items-center gap-4">
+                        <div
+                            class="size-16 glass-panel rounded-full flex items-center justify-center text-stone-400 group-hover:bg-primary group-hover:text-obsidian transition-all">
+                            <i data-lucide="github" class="size-6"></i>
+                        </div>
+                        <span class="text-[10px] font-bold uppercase tracking-widest opacity-60">GitHub</span>
+                    </a>
+                    <a id="social-twitter" href="#" class="group flex flex-col items-center gap-4">
+                        <div
+                            class="size-16 glass-panel rounded-full flex items-center justify-center text-stone-400 group-hover:bg-primary group-hover:text-obsidian transition-all">
+                            <i data-lucide="twitter" class="size-6"></i>
+                        </div>
+                        <span class="text-[10px] font-bold uppercase tracking-widest opacity-60">Twitter</span>
+                    </a>
+                    <a id="social-website" href="#" class="group flex flex-col items-center gap-4">
+                        <div
+                            class="size-16 glass-panel rounded-full flex items-center justify-center text-stone-400 group-hover:bg-primary group-hover:text-obsidian transition-all">
+                            <i data-lucide="globe" class="size-6"></i>
+                        </div>
+                        <span class="text-[10px] font-bold uppercase tracking-widest opacity-60">Website</span>
+                    </a>
+                </div>
+
+                <div class="pt-8">
+                    <a href="mailto:hello@yourdomain.com"
+                        class="inline-flex items-center gap-3 px-12 py-5 bg-primary text-obsidian font-bold uppercase tracking-[0.4em] rounded hover:shadow-2xl hover:shadow-primary/30 transition-all text-[10px]">
+                        Sync Communication
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ZestFolio CTA -->
+    <div class="w-full border-t border-white/5 bg-forest-dark/50 py-12 px-4">
+        <div class="max-w-[960px] mx-auto text-center space-y-4">
+            <p class="text-stone-500 text-sm">
+                Portfolio created with <span class="text-primary font-bold">ZestFolio</span>
+            </p>
+            <div class="space-y-3">
+                <p class="text-white text-lg font-semibold">
+                    Want to create your portfolio right now?
+                </p>
+                <a href="https://zestfolio.vercel.app/" target="_blank" rel="noopener noreferrer"
+                    class="inline-flex items-center justify-center px-8 py-3 bg-primary text-white text-xs font-bold uppercase tracking-widest rounded hover:bg-primary/80 transition-all shadow-lg shadow-primary/20">
+                    Click Here Now
+                </a>
+            </div>
         </div>
     </div>
+
+    <footer
+        class="py-6 border-t border-white/5 text-center text-[9px] font-bold uppercase tracking-[0.6em] text-stone-700">
+        © 2026 All Rights Reserved
+    </footer>
+
+    <script>
+        // Start Lucide Icons
+        lucide.createIcons();
+    </script>
 </body>
 
 </html>

@@ -4,208 +4,416 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Technical Researcher Portfolio | Data Engineering &amp; Distributed Systems</title>
+    <title>Archive | Systems & Research Engineer</title>
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Fonts: Newsreader for scholarly elegance, JetBrains Mono for code precision -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=JetBrains+Mono:wght@300;400;700&display=swap"
         rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#1337ec",
-                        "background-light": "#f6f6f8",
-                        "background-dark": "#101322",
+                        "research-accent": "#ff5a1f", // Warning Orange
+                        "midnight": "#0a0c12",
+                        "slate-panel": "#141824",
                     },
                     fontFamily: {
-                        "display": ["Newsreader", "serif"]
+                        "serif": ["Newsreader", "serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
                     },
-                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
                 },
             },
         }
     </script>
-    <style>
-        body {
-            font-family: 'Newsreader', serif;
+    <style type="text/tailwindcss">
+        @layer base {
+            body { @apply bg-midnight text-slate-400 font-serif selection:bg-research-accent selection:text-white; }
+            h1, h2, h3, h4 { @apply text-white font-serif tracking-tight; }
         }
-
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        @layer utilities {
+            .paper-texture {
+                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3仿真%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+                opacity: 0.02;
+            }
+            .sidebar-border { @apply border-r border-white/5; }
+            .section-label { @apply font-mono text-[10px] uppercase tracking-[0.4em] text-research-accent mb-4 block; }
+            .glass-inset { @apply bg-white/[0.02] border border-white/5 rounded-2xl; }
         }
     </style>
 </head>
 
-<body
-    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased transition-colors duration-300">
-    <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
-        <!-- Top Navigation -->
-        <header
-            class="sticky top-0 z-50 w-full border-b border-solid border-slate-200 dark:border-[#232948] bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-6 lg:px-20 py-3">
-            <div class="mx-auto flex max-w-[1200px] items-center justify-between whitespace-nowrap">
-                <div class="flex items-center gap-8">
+<body class="antialiased overflow-x-hidden">
+    <!-- Texture Overlay -->
+    <div class="fixed inset-0 paper-texture pointer-events-none z-[100]"></div>
+
+    <div class="relative flex min-h-screen w-full flex-col lg:flex-row">
+
+        <!-- SIDEBAR: PROFILE DATA -->
+        <aside class="w-full lg:w-[320px] shrink-0 sidebar-border bg-midnight z-50">
+            <div class="sticky top-0 h-full lg:h-screen p-8 flex flex-col justify-between">
+                <div class="space-y-10">
+                    <!-- Brand -->
                     <div class="flex items-center gap-3">
-                        <div class="text-primary">
-                            <span class="material-symbols-outlined text-3xl">terminal</span>
+                        <div
+                            class="size-10 bg-research-accent rounded-full flex items-center justify-center text-midnight rotate-12">
+                            <i data-lucide="microscope" class="size-5"></i>
                         </div>
-                        <h2 class="text-lg font-bold leading-tight tracking-tight hidden sm:block">Technical Portfolio
-                        </h2>
+                        <span class="font-mono text-[10px] font-bold tracking-[0.3em] uppercase">Archive_v2.0</span>
                     </div>
-                    <nav class="hidden md:flex items-center gap-9">
-                        <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Home</a>
-                        <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Research</a>
-                        <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Architecture</a>
-                        <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Contact</a>
-                    </nav>
+
+                    <!-- Profile Photo & Header -->
+                    <div class="space-y-6">
+                        <div class="relative inline-block group">
+                            <div
+                                class="absolute -inset-2 border border-research-accent/20 rounded-full animate-[spin_10s_linear_infinite]">
+                            </div>
+                            <!-- EDIT PHOTO URL HERE -->
+                            <div id="portfolio-main-image"
+                                class="size-32 rounded-full overflow-hidden border-2 border-research-accent/50 grayscale contrast-125 relative z-10">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=800&q=80"
+                                    alt="Dr. Elias Thorne" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <h1 id="portfolio-name" class="text-3xl font-medium leading-none">Dr. Elias Thorne</h1>
+                            <p id="portfolio-title"
+                                class="font-mono text-[11px] text-research-accent uppercase tracking-widest italic">
+                                Research Engineer // INFJ</p>
+                        </div>
+                    </div>
+
+                    <!-- Direct Links -->
+                    <div class="flex flex-col gap-3 font-mono text-[11px] uppercase tracking-widest pt-6">
+                        <a id="social-email" href="mailto:hello@example.com"
+                            class="flex items-center gap-3 text-slate-500 hover:text-white transition-colors">
+                            <i data-lucide="mail" class="size-4"></i> Establish_Signal
+                        </a>
+                        <a id="social-linkedin" href="#"
+                            class="flex items-center gap-3 text-slate-500 hover:text-white transition-colors">
+                            <i data-lucide="linkedin" class="size-4 text-research-accent/60"></i> Network_Node
+                        </a>
+                        <a id="social-github" href="#"
+                            class="flex items-center gap-3 text-slate-500 hover:text-white transition-colors">
+                            <i data-lucide="github" class="size-4"></i> Source_Archive
+                        </a>
+                        <a id="social-twitter" href="#"
+                            class="flex items-center gap-3 text-slate-500 hover:text-white transition-colors">
+                            <i data-lucide="twitter" class="size-4"></i> Social_Feed
+                        </a>
+                        <a id="social-website" href="#"
+                            class="flex items-center gap-3 text-slate-500 hover:text-white transition-colors">
+                            <i data-lucide="globe" class="size-4"></i> Web_Portal
+                        </a>
+                    </div>
                 </div>
-                <div class="flex flex-1 justify-end gap-4">
-                    <button
-                        class="flex min-w-[120px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold tracking-tight hover:bg-blue-700 transition-all">
-                        <span class="truncate">Download CV</span>
-                    </button>
+
+                <!-- Footer Sidebar -->
+                <div
+                    class="hidden lg:block pt-10 border-t border-white/5 font-mono text-[9px] text-slate-700 tracking-tighter uppercase leading-relaxed">
+                    System Core: i5-1135G7<br>
+                    Logic: The 80/20 Principle<br>
+                    State: High-Concentration Flow
                 </div>
             </div>
-        </header>
-        <main class="mx-auto flex w-full max-w-[1200px] flex-1 flex-col lg:flex-row gap-8 px-6 lg:px-20 py-10">
-            <!-- Sidebar: Profile & Skills -->
-            <aside class="w-full lg:w-72 shrink-0">
-                <div class="sticky top-24 flex flex-col gap-8">
-                    <!-- Profile Card -->
-                    <div
-                        class="flex flex-col gap-4 p-6 rounded-xl bg-white dark:bg-[#1a1e2e] shadow-sm border border-slate-100 dark:border-[#232948]">
-                        <div class="flex flex-col gap-4">
-                            <div id="portfolio-hero-image"
-                                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-20 border-2 border-primary/20"
-                                data-alt="Monochrome professional headshot of a research engineer"
-                                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCed0qlxuBdO3_uRQZEYEouzhk-sqme0rUQgsQNgXFlxXa7WdZzGEOt29csb_1qrc9vqoxAZEaZMXL6xbfkStSdGCGWVqmRJ2jBVciYrKVboSle30NquJIS2n49afUxF_Sum0bInxBMU7IcdJzdh-IO7fpFEYcXNGVC_TzK8sspy0GlpUL0IQPqm-vJyiBRsCi4FNoqiNgvlqAx3RI47zWiWq3ff4WePtnWBTXoAv42KULkC7EkY2jGKCKlHsTl1GZcg3987sAYnzW0");'>
-                            </div>
-                            <div class="flex flex-col">
-                                <h1 id="portfolio-name" class="text-xl font-bold leading-tight">Dr. Elias Thorne</h1>
-                                <p id="portfolio-title" class="text-slate-500 dark:text-[#929bc9] text-sm font-medium">
-                                    Research Engineer</p>
-                                <p class="text-primary text-xs font-semibold uppercase tracking-wider mt-1">Distributed
-                                    Systems Specialist</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Technical Skills Group -->
-                    <div class="flex flex-col gap-4">
-                        <h3 id="portfolio-skills-header"
-                            class="text-xs font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-[#929bc9] px-2">
-                            Core Competencies</h3>
-                        <div id="portfolio-skills" class="flex flex-wrap gap-2 px-2">
-                            <!-- Skills injected here -->
-                            <span class="px-3 py-1 bg-slate-100 dark:bg-[#232948] rounded text-xs font-medium">Apache
-                                Spark</span>
-                        </div>
-                    </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="flex-1 min-w-0 bg-[#0c0f17]">
+
+            <!-- 1. HERO & PHILOSOPHY -->
+            <section id="home" class="px-8 md:px-16 lg:px-24 py-20 lg:py-32 max-w-5xl">
+                <span class="section-label">Perspective_01</span>
+                <div class="space-y-10">
+                    <h2 class="text-5xl md:text-7xl lg:text-8xl font-medium leading-[0.95] text-white italic">
+                        Intentional <span class="text-research-accent not-italic font-bold">Systems</span> Architect.
+                    </h2>
+                    <p class="text-xl md:text-2xl text-slate-400 font-light leading-relaxed max-w-3xl">
+                        Dedicated to the rigorous development of <span
+                            class="text-white underline decoration-research-accent underline-offset-8">Autonomous
+                            Grids</span> and low-latency hardware tools, processed through the lens of deep technical
+                        focus.
+                    </p>
                 </div>
-            </aside>
-            <!-- Main Content Area -->
-            <div class="flex-1 flex flex-col gap-10">
-                <!-- Hero Section -->
-                <section class="flex flex-col gap-6">
-                    <div class="flex flex-col gap-4">
-                        <p class="text-primary font-bold tracking-widest text-xs uppercase">Scholarly Portfolio 2024</p>
-                        <h1
-                            class="text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight text-slate-900 dark:text-white">
-                            Distributed Systems &amp; <br />Large-Scale Data Orchestration
-                        </h1>
-                        <p id="portfolio-bio"
-                            class="text-slate-600 dark:text-[#929bc9] text-xl max-w-2xl leading-relaxed">
-                            Focusing on architectural efficiency, low-latency data pipelines, and the rigorous
-                            mathematical validation of distributed consensus.
+
+                <!-- About Me (Integrated) -->
+                <div class="grid md:grid-cols-2 gap-12 mt-24 pt-12 border-t border-white/5">
+                    <div class="space-y-4">
+                        <h3 class="text-xl italic font-medium">Deep Work Protocol</h3>
+                        <p id="portfolio-bio" class="text-sm font-light leading-relaxed">
+                            Inspired by Cal Newport’s philosophy, I prioritize high-concentration engineering over
+                            shallow output. As an INFJ personality, my work is driven by purpose and the meticulous
+                            elimination of technical distraction.
                         </p>
                     </div>
-                </section>
-                <hr class="border-slate-200 dark:border-[#232948]" />
-
-                <!-- Education Section -->
-                <section>
-                    <div class="flex items-center justify-between mb-6">
-                        <h2 id="portfolio-education-header" class="text-2xl font-bold tracking-tight">Education</h2>
+                    <div class="space-y-4">
+                        <h3 class="text-xl italic font-medium">Technical Thesis</h3>
+                        <p class="text-sm font-light leading-relaxed">
+                            My objective is the decentralization of energy systems. By integrating sensor-based
+                            automation with self-healing algorithms, I architect networks that are inherently resilient.
+                        </p>
                     </div>
-                    <div id="portfolio-education" class="flex flex-col gap-4">
-                        <!-- Education Item -->
-                        <div
-                            class="group flex flex-col gap-4 p-6 rounded-xl bg-white dark:bg-[#1a1e2e] border border-slate-100 dark:border-[#232948] hover:border-primary/40 transition-all shadow-sm">
-                            <div class="flex flex-col gap-2">
-                                <h3 class="text-xl font-bold leading-tight group-hover:text-primary transition-colors">
-                                    b tech
-                                </h3>
-                                <p class="text-primary text-sm font-semibold">aliet</p>
-                                <p class="text-slate-500 dark:text-[#929bc9] text-sm">eee</p>
-                                <p class="text-slate-400 dark:text-[#6b7280] text-xs font-medium">2024 - 2027</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                </div>
+            </section>
 
-                <hr class="border-slate-200 dark:border-[#232948]" />
+            <!-- 2. EDUCATION & FORMATION -->
+            <section id="education" class="px-8 md:px-16 lg:px-24 py-24 bg-slate-panel/30 border-y border-white/5">
+                <div class="max-w-5xl">
+                    <span class="section-label">Formation_Records</span>
+                    <h2 id="portfolio-education-header" class="text-4xl italic mb-12">Academic Credentials</h2>
 
-                <!-- Whitepapers/Projects Section -->
-                <section>
-                    <div class="flex items-center justify-between mb-6">
-                        <h2 id="portfolio-projects-header" class="text-2xl font-bold tracking-tight">Selected Work</h2>
-                    </div>
-                    <div id="portfolio-projects" class="flex flex-col gap-4">
-                        <!-- Publication Item 1 -->
-                        <div
-                            class="group flex flex-col md:flex-row gap-6 p-6 rounded-xl bg-white dark:bg-[#1a1e2e] border border-slate-100 dark:border-[#232948] hover:border-primary/40 transition-all shadow-sm">
+                    <div id="portfolio-education" class="space-y-12">
+                        <!-- Education Item 1 -->
+                        <div class="group relative pl-10 border-l border-research-accent/30">
                             <div
-                                class="flex items-center justify-center rounded-lg bg-slate-100 dark:bg-[#232948] shrink-0 size-16 text-primary group-hover:scale-110 transition-transform">
-                                <span class="material-symbols-outlined text-3xl">description</span>
+                                class="absolute -left-[5px] top-0 size-2 bg-research-accent rounded-full shadow-[0_0_10px_#ff5a1f]">
                             </div>
-                            <div class="flex flex-1 flex-col gap-2">
-                                <div class="flex flex-wrap items-center gap-2">
+                            <div class="flex flex-col md:flex-row justify-between gap-4">
+                                <div class="space-y-2">
                                     <h3
-                                        class="text-lg font-bold leading-tight group-hover:text-primary transition-colors">
-                                        Optimizing Sharding in Distributed Databases</h3>
+                                        class="text-2xl font-bold uppercase tracking-tight group-hover:text-research-accent transition-colors">
+                                        B.Tech in Electrical Engineering</h3>
+                                    <p class="text-slate-500 font-mono text-xs uppercase tracking-widest">ALIEIT
+                                        Institution • 2024 — 2027</p>
+                                </div>
+                                <div class="text-right">
+                                    <span
+                                        class="px-4 py-1.5 rounded-full border border-white/10 text-[10px] font-bold uppercase tracking-widest">EEE
+                                        Major</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section>
-                <!-- Footer Info -->
-                <footer
-                    class="mt-10 py-10 border-t border-slate-200 dark:border-[#232948] flex flex-col md:flex-row justify-between items-center gap-6">
-                    <p class="text-slate-500 text-sm italic">© 2024. All rights reserved.</p>
-                    <div class="flex gap-6">
-                        <a id="social-email" class="text-slate-500 hover:text-primary transition-colors" href="#"><span
-                                class="material-symbols-outlined">alternate_email</span></a>
-                        <a id="social-github" class="text-slate-500 hover:text-primary transition-colors" href="#"><span
-                                class="material-symbols-outlined">hub</span></a>
-                        <a id="social-linkedin" class="text-slate-500 hover:text-primary transition-colors"
-                            href="#"><span class="material-symbols-outlined">article</span></a>
-                    </div>
-                </footer>
+                </div>
+            </section>
 
-                <!-- ZestFolio Credits & CTA -->
-                <div
-                    class="w-full border-t border-slate-200 dark:border-[#232948] bg-background-light dark:bg-[#0a0a0f] py-8 px-6 mt-10">
-                    <div class="max-w-[1200px] mx-auto text-center space-y-4">
-                        <p class="text-slate-500 dark:text-slate-400 text-sm">
-                            Portfolio created with <span class="text-primary font-bold">ZestFolio</span>
-                        </p>
-                        <div class="space-y-3">
-                            <p class="text-slate-900 dark:text-white text-lg font-semibold">
-                                Want to create your portfolio right now?
-                            </p>
-                            <a href="https://zestfolio.vercel.app/" target="_blank" rel="noopener noreferrer"
-                                class="inline-flex items-center justify-center px-8 py-3 bg-primary text-white text-sm font-bold rounded-lg hover:opacity-90 transition-all duration-300 shadow-lg">
-                                Click Here Now
-                            </a>
+            <!-- 3. PROJECTS: SELECTED MODULES -->
+            <section id="projects" class="px-8 md:px-16 lg:px-24 py-32 max-w-7xl">
+                <span class="section-label">Module_Archives</span>
+                <div class="flex justify-between items-end mb-16">
+                    <h2 id="portfolio-projects-header" class="text-5xl italic font-medium">Selected Case Studies</h2>
+                </div>
+
+                <div id="portfolio-projects" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project 1: ColorOhm -->
+                    <div class="group flex flex-col p-8 glass-inset hover:bg-white/[0.04] transition-all">
+                        <div class="flex justify-between items-start mb-10">
+                            <div
+                                class="size-12 rounded-xl bg-research-accent flex items-center justify-center text-midnight group-hover:-rotate-6 transition-transform">
+                                <i data-lucide="zap"></i>
+                            </div>
+                            <a href="https://colorohm.rsmk.me" target="_blank"
+                                class="text-slate-600 hover:text-research-accent"><i data-lucide="external-link"
+                                    class="size-5"></i></a>
+                        </div>
+                        <h3 class="text-2xl mb-4 tracking-tighter uppercase">ColorOhm</h3>
+                        <p class="text-sm font-light leading-relaxed mb-10 min-h-[80px]">High-precision resistor color
+                            code calculator optimized for hardware designers. Validated UX with zero-latency logic.</p>
+                        <div
+                            class="mt-auto pt-6 border-t border-white/5 flex gap-3 text-[9px] font-mono uppercase font-bold tracking-widest">
+                            <span class="text-research-accent">Status: Live</span>
+                            <span class="text-slate-600">// Web App</span>
+                        </div>
+                    </div>
+
+                    <!-- Project 2: Smart Exhaust -->
+                    <div class="group flex flex-col p-8 glass-inset hover:bg-white/[0.04] transition-all">
+                        <div class="flex justify-between items-start mb-10">
+                            <div
+                                class="size-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+                                <i data-lucide="wind"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl mb-4 tracking-tighter uppercase">Automated Exhaust</h3>
+                        <p class="text-sm font-light leading-relaxed mb-10 min-h-[80px]">Autonomous fan control system
+                            using MQ-2 sensors and Arduino UNO. Integrated safety-critical auto-off timer and manual
+                            override.</p>
+                        <div
+                            class="mt-auto pt-6 border-t border-white/5 flex gap-3 text-[9px] font-mono uppercase font-bold tracking-widest">
+                            <span class="text-research-accent">Status: Finalized</span>
+                            <span class="text-slate-600">// Hardware</span>
+                        </div>
+                    </div>
+
+                    <!-- Project 3: Autonomous Grids -->
+                    <div
+                        class="group flex flex-col p-8 glass-inset hover:bg-white/[0.04] transition-all border-dashed border-research-accent/30">
+                        <div class="flex justify-between items-start mb-10">
+                            <div
+                                class="size-12 rounded-xl bg-research-accent/10 border border-research-accent/20 flex items-center justify-center text-research-accent">
+                                <i data-lucide="activity"></i>
+                            </div>
+                            <span
+                                class="animate-pulse text-[10px] font-mono text-research-accent uppercase">Active_R&D</span>
+                        </div>
+                        <h3 class="text-2xl mb-4 tracking-tighter uppercase">Decentralized Grids</h3>
+                        <p class="text-sm font-light leading-relaxed mb-10 min-h-[80px]">Research into self-healing
+                            energy networks. Focusing on control algorithm design for smart municipal microgrids.</p>
+                        <div
+                            class="mt-auto pt-6 border-t border-white/5 flex gap-3 text-[9px] font-mono uppercase font-bold tracking-widest">
+                            <span class="text-slate-500 italic">Conceptual Phase</span>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
+
+            <!-- 4. SKILLS & STACK -->
+            <section id="skills" class="px-8 md:px-16 lg:px-24 py-32 bg-midnight border-t border-white/5">
+                <span class="section-label">Technical_Ecosystem</span>
+                <h2 id="portfolio-skills-header" class="text-3xl italic mb-16">The Specialized Stack</h2>
+                <div id="portfolio-skills" class="grid grid-cols-2 md:grid-cols-4 gap-y-16 gap-x-8">
+                    <!-- Skill Column -->
+                    <div class="space-y-6">
+                        <h4 class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.3em]">Language_Logic</h4>
+                        <ul class="text-white space-y-3 text-sm font-light">
+                            <li class="flex items-center gap-3"><span class="size-1 bg-research-accent"></span> Python
+                            </li>
+                            <li class="flex items-center gap-3"><span class="size-1 bg-research-accent"></span> C++ /
+                                Embedded C</li>
+                            <li class="flex items-center gap-3"><span class="size-1 bg-research-accent"></span> MATLAB
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="space-y-6">
+                        <h4 class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.3em]">Hardware_Nodes</h4>
+                        <ul class="text-white space-y-3 text-sm font-light">
+                            <li class="flex items-center gap-3"><span class="size-1 bg-research-accent"></span> Arduino
+                                UNO</li>
+                            <li class="flex items-center gap-3"><span class="size-1 bg-research-accent"></span> MQ-2
+                                Sensors</li>
+                            <li class="flex items-center gap-3"><span class="size-1 bg-research-accent"></span> Circuit
+                                Synthesis</li>
+                        </ul>
+                    </div>
+                    <div class="space-y-6">
+                        <h4 class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.3em]">Simulation</h4>
+                        <ul class="text-white space-y-3 text-sm font-light">
+                            <li class="flex items-center gap-3"><span class="size-1 bg-research-accent"></span> Simulink
+                            </li>
+                            <li class="flex items-center gap-3"><span class="size-1 bg-research-accent"></span> Power
+                                Systems</li>
+                            <li class="flex items-center gap-3"><span class="size-1 bg-research-accent"></span> Control
+                                Theory</li>
+                        </ul>
+                    </div>
+                    <div class="space-y-6">
+                        <h4 class="font-mono text-[10px] text-slate-500 uppercase tracking-[0.3em]">Web_Architecture
+                        </h4>
+                        <ul class="text-white space-y-3 text-sm font-light">
+                            <li class="flex items-center gap-3"><span class="size-1 bg-research-accent"></span> Tailwind
+                                CSS</li>
+                            <li class="flex items-center gap-3"><span class="size-1 bg-research-accent"></span> React
+                                (ColorOhm)</li>
+                            <li class="flex items-center gap-3"><span class="size-1 bg-research-accent"></span> UI
+                                Architecture</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. CERTIFICATES -->
+            <section id="certificates" class="px-8 md:px-16 lg:px-24 py-32 border-t border-white/5">
+                <span class="section-label">Validation_Logs</span>
+                <h2 id="portfolio-certifications-header" class="text-3xl italic mb-12">Verified Credentials</h2>
+                <div id="portfolio-certifications" class="grid md:grid-cols-2 gap-6">
+                    <div
+                        class="p-8 border border-white/5 rounded-2xl group hover:border-research-accent/30 transition-all flex items-center gap-6">
+                        <i data-lucide="award"
+                            class="size-8 text-research-accent opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                        <div>
+                            <h4 class="text-xl font-medium italic">Advanced Systems Certification</h4>
+                            <p class="text-[10px] font-mono uppercase tracking-widest text-slate-600 mt-1 italic">
+                                Issued: 2025 // [Placeholder]</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. CONTACT: DIRECT ACTION -->
+            <section id="contact"
+                class="px-8 md:px-16 lg:px-24 py-40 border-t border-white/5 bg-slate-panel/20 text-center">
+                <div class="max-w-3xl mx-auto space-y-20">
+                    <div class="space-y-6">
+                        <h2 class="text-6xl md:text-8xl font-medium leading-none italic uppercase">Establish <br />
+                            <span class="text-research-accent">Link.</span>
+                        </h2>
+                        <p class="text-lg font-light text-slate-400 max-w-xl mx-auto leading-relaxed">
+                            Direct access point for research partnerships, engineering strategy, or philosophical
+                            discussions on the future of energy.
+                        </p>
+                    </div>
+
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/5 rounded-3xl overflow-hidden bg-midnight">
+                        <!-- EMAIL -->
+                        <a href="mailto:hello@example.com"
+                            class="p-12 border-b md:border-b-0 md:border-r border-white/5 hover:bg-research-accent hover:text-midnight transition-all duration-500 group">
+                            <i data-lucide="send"
+                                class="size-8 mx-auto mb-6 text-research-accent group-hover:text-midnight transition-colors"></i>
+                            <h4 class="text-[11px] font-black uppercase tracking-[0.3em] mb-2">Electronic Mail</h4>
+                            <p class="text-[10px] opacity-40 font-mono italic">transmit@elias.sys</p>
+                        </a>
+                        <!-- LINKEDIN -->
+                        <a href="#"
+                            class="p-12 border-b md:border-b-0 md:border-r border-white/5 hover:bg-research-accent hover:text-midnight transition-all duration-500 group">
+                            <i data-lucide="linkedin"
+                                class="size-8 mx-auto mb-6 text-research-accent group-hover:text-midnight transition-colors"></i>
+                            <h4 class="text-[11px] font-black uppercase tracking-[0.3em] mb-2">Technical Network</h4>
+                            <p class="text-[10px] opacity-40 font-mono italic">in/elias-thorne</p>
+                        </a>
+                        <!-- GITHUB -->
+                        <a href="#"
+                            class="p-12 hover:bg-research-accent hover:text-midnight transition-all duration-500 group">
+                            <i data-lucide="github"
+                                class="size-8 mx-auto mb-6 text-research-accent group-hover:text-midnight transition-colors"></i>
+                            <h4 class="text-[11px] font-black uppercase tracking-[0.3em] mb-2">Project Source</h4>
+                            <p class="text-[10px] opacity-40 font-mono italic">repo/archives</p>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
         </main>
     </div>
+
+    <!-- ZestFolio CTA -->
+    <div class="w-full border-t border-white/5 bg-slate-panel py-12 px-4">
+        <div class="max-w-[960px] mx-auto text-center space-y-4">
+            <p class="text-slate-500 text-sm">
+                Portfolio created with <span class="text-research-accent font-bold font-mono uppercase">ZestFolio</span>
+            </p>
+            <div class="space-y-3">
+                <p class="text-white text-lg font-semibold">
+                    Want to create your portfolio right now?
+                </p>
+                <a href="https://zestfolio.vercel.app/" target="_blank" rel="noopener noreferrer"
+                    class="inline-flex items-center justify-center px-8 py-3 bg-research-accent text-white font-mono font-bold uppercase text-xs tracking-widest rounded-lg hover:bg-research-accent/80 transition-all">
+                    Click Here Now
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global Footer -->
+    <footer class="py-8 border-t border-white/5 bg-midnight text-center">
+        <p class="font-mono text-[9px] uppercase tracking-[0.6em] text-slate-800">
+            © 2026 All Rights Reserved
+        </p>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+    </script>
 </body>
 
 </html>

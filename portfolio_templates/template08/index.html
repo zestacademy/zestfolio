@@ -1,229 +1,508 @@
 <!DOCTYPE html>
-<html class="dark" lang="en">
+<html lang="en" class="scroll-smooth">
 
 <head>
     <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Senior Engineering Executive Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schematic Archive | Your Name</title>
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet" />
+
+    <!-- Fonts: Syne for bold headlines, JetBrains Mono for that "Deep Work" code feel -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Syne:wght@700;800&display=swap"
         rel="stylesheet" />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <script id="tailwind-config">
         tailwind.config = {
-            darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#135bec",
-                        "background-light": "#f6f6f8",
-                        "background-dark": "#101622",
+                        "photon": "#ffcc33", // Golden Photon
+                        "ink": "#0a0a0a",    // Deepest Black
+                        "slate-tech": "#1a1a1a",
+                        "cyan-pulse": "#00f2ff",
                     },
                     fontFamily: {
-                        "display": ["Inter"]
+                        "mono": ["JetBrains Mono", "monospace"],
+                        "header": ["Syne", "sans-serif"]
                     },
-                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
                 },
             },
         }
     </script>
-    <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+
+    <style type="text/tailwindcss">
+        @layer base {
+            body { @apply bg-ink text-stone-400 font-mono selection:bg-photon selection:text-ink overflow-x-hidden; }
+            h1, h2, h3 { @apply font-header uppercase text-white tracking-tighter; }
+        }
+        @layer utilities {
+            .scanline {
+                background: linear-gradient(to bottom, transparent 50%, rgba(255, 204, 51, 0.02) 50%);
+                background-size: 100% 4px;
+            }
+            .gold-border { border: 1px solid rgba(255, 204, 51, 0.2); }
+            .gold-glow { box-shadow: 0 0 30px rgba(255, 204, 51, 0.1); }
+            .vertical-text { writing-mode: vertical-rl; }
+            
+            /* Custom Animation for schematic lines */
+            @keyframes slide {
+                from { transform: translateX(-100%); }
+                to { transform: translateX(100%); }
+            }
+            .animate-slide { animation: slide 3s linear infinite; }
         }
     </style>
 </head>
 
-<body
-    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 selection:bg-primary/30">
-    <header
-        class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
-        <div class="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="size-8 bg-primary rounded flex items-center justify-center text-white">
-                    <span class="material-symbols-outlined">architecture</span>
-                </div>
-                <h2 id="portfolio-name" class="text-lg font-bold tracking-tight">Alex Sterling</h2>
-            </div>
-            <nav class="hidden md:flex items-center gap-8">
-                <a class="text-sm font-medium hover:text-primary transition-colors" href="#experience">Experience</a>
-                <a class="text-sm font-medium hover:text-primary transition-colors" href="#stack">Tech Stack</a>
-                <a class="text-sm font-medium hover:text-primary transition-colors" href="#projects">Projects</a>
-                <button
-                    class="group flex items-center gap-2 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800/50 hover:bg-slate-50 dark:hover:bg-slate-800 px-4 py-2 rounded-lg text-sm font-bold transition-all shadow-sm">
-                    <span class="material-symbols-outlined text-primary text-lg">picture_as_pdf</span>
-                    Download Resume
-                </button>
-            </nav>
+<body class="scanline">
+
+    <!-- 1. DECORATIVE SIDEBARS (The Schematic Frame) -->
+    <div class="fixed inset-0 pointer-events-none z-50">
+        <div class="absolute top-0 left-0 w-1 bg-photon/20 h-full"></div>
+        <div class="absolute top-0 right-0 w-1 bg-photon/20 h-full"></div>
+        <div
+            class="absolute top-10 left-6 text-[10px] text-photon/40 font-bold tracking-[0.5em] uppercase vertical-text">
+            System_Type: INFJ // Protocol: Deep_Work
         </div>
-    </header>
-    <main class="max-w-[1200px] mx-auto px-6">
-        <section class="py-16 md:py-24">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="order-2 md:order-1 flex flex-col gap-8">
-                    <div class="flex flex-col gap-4">
-                        <span id="portfolio-title"
-                            class="text-primary font-bold tracking-widest text-xs uppercase">Staff Software
-                            Engineer</span>
-                        <h1 class="text-4xl md:text-6xl font-black leading-tight tracking-tight">
-                            Architecting Scalable <span class="text-primary">Global Systems</span>
-                        </h1>
-                        <p id="portfolio-bio"
-                            class="text-lg text-slate-600 dark:text-slate-400 max-w-lg leading-relaxed">
-                            Specializing in distributed systems, cloud infrastructure, and technical leadership for
-                            high-growth engineering organizations. Driving efficiency through architectural excellence.
+        <div
+            class="absolute bottom-10 right-6 text-[10px] text-photon/40 font-bold tracking-[0.5em] uppercase vertical-text rotate-180">
+            © 2026 // Archive_ID: 80-20_Logic
+        </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav class="fixed top-0 w-full z-40 bg-ink/90 backdrop-blur-md border-b border-photon/10">
+        <div class="max-w-7xl mx-auto px-10 h-24 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <div
+                    class="size-12 bg-photon text-ink flex items-center justify-center font-black text-xl italic brutal-shadow">
+                    YN.
+                </div>
+                <div class="hidden sm:block">
+                    <p class="text-[10px] font-bold text-white leading-none tracking-widest uppercase">System Architect
+                    </p>
+                    <p class="text-[9px] text-photon/60 leading-none mt-1 uppercase">Autonomous_Grid.v1</p>
+                </div>
+            </div>
+
+            <div class="hidden md:flex gap-12 text-[10px] font-black uppercase tracking-[0.3em]">
+                <a href="#about" class="hover:text-photon transition-all flex items-center gap-2">
+                    <span class="size-1 bg-photon rounded-full"></span> Philosophy
+                </a>
+                <a href="#projects" class="hover:text-photon transition-all flex items-center gap-2">
+                    <span class="size-1 bg-photon rounded-full"></span> Modules
+                </a>
+                <a href="#skills" class="hover:text-photon transition-all flex items-center gap-2">
+                    <span class="size-1 bg-photon rounded-full"></span> Stack
+                </a>
+                <a href="#contact"
+                    class="px-6 py-2 border border-photon text-photon hover:bg-photon hover:text-ink transition-all">
+                    Initiate Link
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-10">
+
+        <!-- 2. HERO SECTION -->
+        <section id="home" class="min-h-screen flex flex-col lg:flex-row items-center justify-center gap-20 pt-24">
+            <div class="flex-1 space-y-12 order-2 lg:order-1">
+                <div class="space-y-4">
+                    <div
+                        class="inline-flex items-center gap-4 text-[10px] font-bold text-photon/80 tracking-[0.4em] uppercase">
+                        <div class="h-[1px] w-12 bg-photon/40"></div> Focus: High-Concentration Flow
+                    </div>
+                    <!-- EDIT YOUR NAME -->
+                    <h1 id="portfolio-name" class="text-7xl md:text-[120px] leading-[0.8] tracking-tighter">
+                        Your <br />
+                        <span class="text-photon italic underline decoration-white/10 underline-offset-8">Name.</span>
+                    </h1>
+                    <!-- EDIT TAGLINE -->
+                    <p id="portfolio-title"
+                        class="text-xl md:text-3xl text-stone-500 font-light leading-snug max-w-2xl">
+                        Architecting <span class="text-white border-b-2 border-photon/40">Autonomous Grids</span> &
+                        self-healing systems for a resilient infrastructure.
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap gap-8 items-center">
+                    <a href="#projects"
+                        class="group relative px-12 py-5 bg-white text-ink font-header font-black uppercase text-sm hover:translate-x-1 hover:-translate-y-1 transition-transform">
+                        <div
+                            class="absolute -bottom-2 -right-2 w-full h-full border border-photon pointer-events-none group-hover:translate-x-1 group-hover:translate-y-1 transition-transform">
+                        </div>
+                        Access Work Archives
+                    </a>
+                    <a href="#contact"
+                        class="text-xs font-black uppercase tracking-[0.5em] text-photon border-b-2 border-photon/20 pb-2 hover:border-photon transition-all">
+                        Establish Connection
+                    </a>
+                </div>
+            </div>
+
+            <!-- HERO PHOTO (Creative Schematic Frame) -->
+            <div class="flex-1 order-1 lg:order-2 relative group">
+                <div class="absolute -inset-10 border border-photon/10 rounded-full animate-[spin_30s_linear_infinite]">
+                </div>
+                <div
+                    class="absolute -inset-20 border border-cyan-pulse/5 rounded-full animate-[spin_20s_linear_infinite_reverse]">
+                </div>
+
+                <div class="relative w-72 h-96 md:w-[450px] md:h-[550px] mx-auto">
+                    <!-- EDIT YOUR PHOTO URL HERE -->
+                    <div class="relative h-full w-full bg-stone-900 overflow-hidden gold-border gold-glow">
+                        <img id="portfolio-main-image"
+                            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=800&q=80"
+                            class="h-full w-full object-cover grayscale brightness-50 contrast-125 group-hover:grayscale-0 group-hover:brightness-90 transition duration-1000"
+                            alt="Profile">
+                        <!-- Data Overlay Effect -->
+                        <div
+                            class="absolute top-0 left-0 w-full h-full pointer-events-none flex flex-col justify-between p-6">
+                            <div class="flex justify-between text-[10px] text-photon font-bold">
+                                <span>INFJ_CORE_ACTIVE</span>
+                                <span>REC_77%</span>
+                            </div>
+                            <div class="h-1 bg-white/5 relative overflow-hidden">
+                                <div class="absolute inset-0 bg-photon/40 animate-slide"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Frame details -->
+                    <div
+                        class="absolute -bottom-4 -right-4 bg-photon text-ink px-4 py-2 text-[10px] font-black uppercase italic">
+                        Input: Your_Name.sys
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. ABOUT / PHILOSOPHY (The Technical Perspective) -->
+        <section id="about" class="py-40 border-t border-photon/10">
+            <div class="grid lg:grid-cols-12 gap-16">
+                <div class="lg:col-span-5 space-y-8">
+                    <h2 class="text-5xl md:text-7xl leading-none">The <br /> <span class="text-photon">Deep Work</span>
+                        <br /> Protocol.</h2>
+                    <div class="flex flex-wrap gap-4">
+                        <div
+                            class="px-5 py-2 bg-photon/5 border border-photon/20 text-photon text-[10px] font-bold uppercase tracking-widest">
+                            Type: INFJ-A</div>
+                        <div
+                            class="px-5 py-2 bg-white/5 border border-white/10 text-stone-500 text-[10px] font-bold uppercase tracking-widest">
+                            Method: 80/20 Principle</div>
+                    </div>
+                </div>
+                <div class="lg:col-span-7 space-y-10 text-xl text-stone-400 font-light leading-relaxed">
+                    <!-- EDIT YOUR BIO -->
+                    <p id="portfolio-bio">
+                        I approach engineering as a form of <span
+                            class="text-white font-medium italic">high-concentration problem solving</span>. Inspired by
+                        the rules of Cal Newport, I dedicate my focus to deep architectural challenges rather than
+                        shallow technical output.
+                    </p>
+                    <div class="pt-6 grid grid-cols-2 gap-8 text-[10px] font-black uppercase text-photon/60">
+                        <div class="space-y-2">
+                            <p class="text-white">Personal Directive</p>
+                            <p>"Purposeful Success through intentional relationships and 80/20 leverage."</p>
+                        </div>
+                        <div class="space-y-2">
+                            <p class="text-white">Technical Directive</p>
+                            <p>"Decentralize the grid. Automate the safety. Focus the mind."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. EDUCATION (Timeline Schematic) -->
+        <section id="education" class="py-40 border-t border-photon/10 relative overflow-hidden">
+            <h2 id="portfolio-education-header" class="text-3xl mb-24 tracking-[0.5em] text-center text-white/40">
+                Formation_Timeline</h2>
+            <div id="portfolio-education" class="max-w-4xl mx-auto space-y-20 relative">
+                <!-- Vertical Line -->
+                <div
+                    class="absolute left-0 sm:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-photon/40 to-transparent">
+                </div>
+
+                <!-- EDIT EDUCATION ITEM -->
+                <div class="relative flex flex-col sm:flex-row items-center group">
+                    <div class="flex-1 w-full sm:text-right sm:pr-16 mb-6 sm:mb-0">
+                        <h3 class="text-2xl text-white group-hover:text-photon transition-colors">B.Tech in Electrical
+                            Engineering</h3>
+                        <p class="text-stone-500 font-light mt-2 italic">University Name, India</p>
+                    </div>
+                    <div
+                        class="size-6 bg-ink border-4 border-photon rounded-full z-10 relative group-hover:scale-150 transition-transform">
+                    </div>
+                    <div class="flex-1 w-full sm:pl-16 mt-6 sm:mt-0">
+                        <p class="text-photon font-black tracking-widest text-xs">2021 — 2025</p>
+                        <p class="text-stone-600 text-[10px] mt-2 uppercase">Focus: Power Electronics & Sensor Networks
                         </p>
                     </div>
-                    <div class="flex flex-wrap gap-4">
-                        <button
-                            class="bg-primary text-white px-8 py-4 rounded-lg font-bold hover:opacity-90 transition-opacity flex items-center gap-2">
-                            View Recent Work
-                        </button>
-                        <button
-                            class="group flex items-center gap-3 border-2 border-slate-200 dark:border-slate-800 bg-transparent hover:border-primary dark:hover:border-primary px-8 py-4 rounded-lg font-bold transition-all">
-                            <span class="material-symbols-outlined text-primary">picture_as_pdf</span>
-                            Download Resume
-                        </button>
-                        <button
-                            class="text-slate-600 dark:text-slate-400 px-8 py-4 rounded-lg font-bold hover:text-primary dark:hover:text-primary transition-colors">
-                            Get In Touch
-                        </button>
-                    </div>
-                </div>
-                <div class="order-1 md:order-2 flex justify-center">
-                    <div id="portfolio-hero-image"
-                        class="relative w-full max-w-[480px] aspect-square rounded-2xl overflow-hidden shadow-2xl grayscale hover:grayscale-0 transition-all duration-500 border border-slate-800"
-                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCyZPgUegJYoKgP429jyZmQ6kGJg0Vk1gGhFeqzb4kvbm-29KWliZYCSnoFwcQqApEFoGBbPjJy-yxCmmxSBPuxu0C7vA9B1CwoKnuhWCrNz2q0GfHUarvvqQk8zzXCTT_daPvGJvHp59Zc5lYf7IMN9GzuBua8TDGkZiSawUGUAlR6icmHv79zxnGI3UYpXdqyVhWC9gPum9uALmxXFYfR18UMIu_UhFf7nxRm-qoZuhu3Z_dguvrbnfb9qgdw5Hh5HGbKy-YLxS_9")'>
-                        <div class="absolute inset-0 bg-gradient-to-t from-background-dark/80 to-transparent"></div>
-                    </div>
                 </div>
             </div>
         </section>
-        <section class="py-12 border-y border-slate-200 dark:border-slate-800">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div
-                    class="p-8 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 flex flex-col gap-2">
-                    <span class="text-primary material-symbols-outlined text-3xl">speed</span>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm font-medium uppercase tracking-wider">Latency
-                        Reduction</p>
-                    <div class="flex items-baseline gap-2">
-                        <span class="text-3xl font-bold">40%</span>
-                        <span class="text-emerald-500 text-sm font-bold">Reduction</span>
-                    </div>
-                </div>
-                <div
-                    class="p-8 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 flex flex-col gap-2">
-                    <span class="text-primary material-symbols-outlined text-3xl">groups</span>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm font-medium uppercase tracking-wider">
-                        Engineering Leadership</p>
-                    <div class="flex items-baseline gap-2">
-                        <span class="text-3xl font-bold">25+</span>
-                        <span class="text-emerald-500 text-sm font-bold">Engineers</span>
-                    </div>
-                </div>
-                <div
-                    class="p-8 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 flex flex-col gap-2">
-                    <span class="text-primary material-symbols-outlined text-3xl">database</span>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm font-medium uppercase tracking-wider">System
-                        Throughput</p>
-                    <div class="flex items-baseline gap-2">
-                        <span class="text-3xl font-bold">2M+</span>
-                        <span class="text-emerald-500 text-sm font-bold">Requests/min</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="py-20" id="experience">
-            <div class="flex flex-col gap-12">
-                <div class="flex items-end justify-between">
-                    <div class="flex flex-col gap-2">
-                        <h2 class="text-3xl font-bold tracking-tight">Career Milestones</h2>
-                        <p class="text-slate-500 max-w-md">Chronological overview of leadership roles and major
-                            technical contributions.</p>
-                    </div>
-                </div>
-                <div class="grid grid-cols-[40px_1fr] gap-x-6">
-                    <!-- Static milestones -->
-                </div>
-            </div>
-        </section>
-        <section class="py-20 border-t border-slate-200 dark:border-slate-800" id="stack">
-            <div class="flex flex-col gap-10">
-                <div class="text-center max-w-2xl mx-auto flex flex-col gap-3">
-                    <h2 id="portfolio-skills-header" class="text-3xl font-bold">Technical Ecosystem</h2>
-                    <p class="text-slate-500">A refined selection of tools and languages I leverage to build
-                        production-grade infrastructure.</p>
-                </div>
-                <div id="portfolio-skills" class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    <!-- Skills injected here -->
-                    <div
-                        class="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/30">
-                        <h4 class="font-bold mb-4 flex items-center gap-2">
-                            <span class="material-symbols-outlined text-primary">terminal</span> Backend
-                        </h4>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="py-20 border-t border-slate-200 dark:border-slate-800" id="projects">
-            <div class="flex flex-col gap-12">
-                <div class="flex flex-col gap-2">
-                    <h2 id="portfolio-projects-header" class="text-3xl font-bold tracking-tight">Featured Architectural
-                        Projects</h2>
-                    <p class="text-slate-500 max-w-xl">Deep dives into complex systems where I led the design and
-                        implementation phases.</p>
-                </div>
-                <div id="portfolio-projects" class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Projects injected here -->
-                </div>
-            </div>
-        </section>
-        <section class="py-20 border-t border-slate-200 dark:border-slate-800 text-center">
-            <div class="max-w-xl mx-auto flex flex-col gap-8">
-                <h2 class="text-4xl font-bold">Interested in collaborating?</h2>
-                <p class="text-slate-500">I am currently open to advisor roles and senior technical leadership
-                    opportunities.</p>
-                <div class="flex justify-center flex-wrap gap-6">
-                    <a id="portfolio-email"
-                        class="flex items-center gap-2 font-bold hover:text-primary transition-colors" href="#">
-                        <span class="material-symbols-outlined">mail</span> Email Me
-                    </a>
-                    <a id="social-linkedin"
-                        class="flex items-center gap-2 font-bold hover:text-primary transition-colors" href="#">
-                        <span class="material-symbols-outlined">link</span> LinkedIn
-                    </a>
-                    <a id="social-github" class="flex items-center gap-2 font-bold hover:text-primary transition-colors"
-                        href="#">
-                        <span class="material-symbols-outlined">code</span> GitHub
-                    </a>
-                </div>
-            </div>
-        </section>
-    </main>
-    <footer class="bg-slate-100 dark:bg-slate-900/50 py-12 border-t border-slate-200 dark:border-slate-800">
-        <div class="max-w-[1200px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-            <p class="text-sm text-slate-500">© 2024 Alex Sterling. Built with Focus &amp; Precision.</p>
-        </div>
-    </footer>
 
-    <!-- ZestFolio Credits & CTA -->
-    <div class="w-full bg-slate-50 dark:bg-[#0a0a0f] py-8 px-4 border-t border-slate-200 dark:border-slate-800">
-        <div class="max-w-[1200px] mx-auto text-center space-y-4">
-            <p class="text-slate-600 dark:text-slate-400 text-sm">
-                Portfolio created with <span class="text-primary font-bold">ZestFolio</span>
+        <!-- 5. PROJECTS (The Technical Module Grid) -->
+        <section id="projects" class="py-40 border-t border-photon/10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
+                <h2 id="portfolio-projects-header"
+                    class="text-6xl md:text-9xl font-black italic tracking-tighter text-white/10 uppercase leading-none">
+                    Archives</h2>
+                <div class="max-w-xs text-right space-y-2">
+                    <p class="text-[10px] font-bold text-photon uppercase tracking-[0.3em]">Module Index</p>
+                    <p class="text-stone-500 text-sm font-light italic">Detailed summaries of hardware prototypes and
+                        production-grade tools.</p>
+                </div>
+            </div>
+
+            <div id="portfolio-projects"
+                class="grid md:grid-cols-2 lg:grid-cols-3 gap-1px bg-photon/10 border border-photon/10">
+
+                <!-- PROJECT 1: COLOROHM -->
+                <div
+                    class="bg-ink p-12 hover:bg-slate-tech transition duration-700 group border-b border-r border-photon/10">
+                    <div class="flex justify-between items-start mb-16">
+                        <div class="text-photon group-hover:rotate-12 transition-transform">
+                            <i data-lucide="calculator" class="size-10"></i>
+                        </div>
+                        <a href="https://colorohm.rsmk.me" target="_blank"
+                            class="text-white opacity-0 group-hover:opacity-100 transition-opacity"><i
+                                data-lucide="external-link"></i></a>
+                    </div>
+                    <h3 class="text-2xl mb-4 text-white">ColorOhm</h3>
+                    <p class="text-stone-500 text-sm leading-relaxed mb-12 min-h-[80px]">A precision web utility for
+                        resistor identification. Zero-friction UX designed for hardware engineers.</p>
+                    <div class="flex flex-wrap gap-2 pt-4 border-t border-white/5">
+                        <span class="text-[9px] font-bold text-photon tracking-widest uppercase">LIVE_APP</span>
+                        <span class="text-[9px] font-bold text-stone-600 tracking-widest uppercase">//
+                            REACT_LOGIC</span>
+                    </div>
+                </div>
+
+                <!-- PROJECT 2: SMART EXHAUST -->
+                <div
+                    class="bg-ink p-12 hover:bg-slate-tech transition duration-700 group border-b border-r border-photon/10">
+                    <div class="flex justify-between items-start mb-16">
+                        <div class="text-photon group-hover:rotate-12 transition-transform">
+                            <i data-lucide="wind" class="size-10"></i>
+                        </div>
+                        <span
+                            class="text-cyan-pulse text-[9px] font-bold uppercase tracking-widest">Hardware_Locked</span>
+                    </div>
+                    <h3 class="text-2xl mb-4 text-white">Smart Exhaust</h3>
+                    <p class="text-stone-500 text-sm leading-relaxed mb-12 min-h-[80px]">Autonomous MQ-2 sensor
+                        integration with Arduino. Featuring safety timers and manual override logic.</p>
+                    <div class="flex flex-wrap gap-2 pt-4 border-t border-white/5">
+                        <span class="text-[9px] font-bold text-photon tracking-widest uppercase">ARDUINO_UNO</span>
+                        <span class="text-[9px] font-bold text-stone-600 tracking-widest uppercase">//
+                            IOT_AUTOMATION</span>
+                    </div>
+                </div>
+
+                <!-- PROJECT 3: AUTONOMOUS GRIDS -->
+                <div class="bg-ink p-12 hover:bg-slate-tech transition duration-700 group border-b border-photon/10">
+                    <div class="flex justify-between items-start mb-16">
+                        <div class="text-photon group-hover:rotate-12 transition-transform">
+                            <i data-lucide="zap" class="size-10"></i>
+                        </div>
+                        <div class="flex gap-2">
+                            <div class="size-2 bg-photon rounded-full animate-ping"></div>
+                            <span
+                                class="text-photon text-[9px] font-bold uppercase tracking-widest italic">Researching</span>
+                        </div>
+                    </div>
+                    <h3 class="text-2xl mb-4 text-white">Autonomous Grids</h3>
+                    <p class="text-stone-500 text-sm leading-relaxed mb-12 min-h-[80px]">Research into self-healing,
+                        decentralized energy systems. Designing resilient city-scale infrastructure.</p>
+                    <div class="flex flex-wrap gap-2 pt-4 border-t border-white/5">
+                        <span class="text-[9px] font-bold text-photon tracking-widest uppercase">SCHEMATIC</span>
+                        <span class="text-[9px] font-bold text-stone-600 tracking-widest uppercase">// SIMULINK</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 6. SKILLS (Schematic Text Slider) -->
+        <section id="skills" class="py-40 border-t border-photon/10">
+            <h2 id="portfolio-skills-header" class="text-3xl mb-20 tracking-widest text-white/40">Technical_Stack</h2>
+            <div id="portfolio-skills" class="grid grid-cols-2 md:grid-cols-4 gap-16">
+                <!-- COLUMN 1 -->
+                <div class="space-y-6">
+                    <h4 class="text-photon font-black text-xs tracking-[0.3em]">Language_Logic</h4>
+                    <ul class="space-y-3 text-stone-400 text-sm">
+                        <li class="flex items-center gap-2"><span class="size-1 bg-photon"></span> Python</li>
+                        <li class="flex items-center gap-2"><span class="size-1 bg-photon"></span> C++ / Embedded C</li>
+                        <li class="flex items-center gap-2"><span class="size-1 bg-photon"></span> JavaScript</li>
+                    </ul>
+                </div>
+                <!-- COLUMN 2 -->
+                <div class="space-y-6">
+                    <h4 class="text-photon font-black text-xs tracking-[0.3em]">Simulation_Systems</h4>
+                    <ul class="space-y-3 text-stone-400 text-sm">
+                        <li class="flex items-center gap-2"><span class="size-1 bg-photon"></span> MATLAB</li>
+                        <li class="flex items-center gap-2"><span class="size-1 bg-photon"></span> Simulink</li>
+                        <li class="flex items-center gap-2"><span class="size-1 bg-photon"></span> Power Electronics
+                        </li>
+                    </ul>
+                </div>
+                <!-- COLUMN 3 -->
+                <div class="space-y-6">
+                    <h4 class="text-photon font-black text-xs tracking-[0.3em]">Hardware_Nodes</h4>
+                    <ul class="space-y-3 text-stone-400 text-sm">
+                        <li class="flex items-center gap-2"><span class="size-1 bg-photon"></span> Arduino / ESP32</li>
+                        <li class="flex items-center gap-2"><span class="size-1 bg-photon"></span> Gas Sensors (MQ-2)
+                        </li>
+                        <li class="flex items-center gap-2"><span class="size-1 bg-photon"></span> PCB Fabrication</li>
+                    </ul>
+                </div>
+                <!-- COLUMN 4 -->
+                <div class="space-y-6">
+                    <h4 class="text-photon font-black text-xs tracking-[0.3em]">Web_Architecture</h4>
+                    <ul class="space-y-3 text-stone-400 text-sm">
+                        <li class="flex items-center gap-2"><span class="size-1 bg-photon"></span> Tailwind CSS</li>
+                        <li class="flex items-center gap-2"><span class="size-1 bg-photon"></span> React Ecosystem</li>
+                        <li class="flex items-center gap-2"><span class="size-1 bg-photon"></span> Git / VS Code</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. CERTIFICATES -->
+        <section id="certificates" class="py-40 border-t border-photon/10">
+            <h2 id="portfolio-certifications-header"
+                class="text-3xl mb-16 text-center text-white italic tracking-tighter uppercase">Verified Credentials
+            </h2>
+            <div id="portfolio-certifications" class="grid md:grid-cols-2 gap-10">
+                <div
+                    class="p-10 gold-border bg-white/5 group hover:bg-photon hover:text-ink transition-all duration-500">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="text-xl font-header tracking-tight">Smart Grid Specialization</h4>
+                        <i data-lucide="award" class="text-photon group-hover:text-ink transition-colors"></i>
+                    </div>
+                    <p class="text-[10px] font-black uppercase tracking-widest opacity-60">Issued by Coursera // 2024
+                    </p>
+                </div>
+                <div
+                    class="p-10 gold-border bg-white/5 group hover:bg-photon hover:text-ink transition-all duration-500">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="text-xl font-header tracking-tight">Industrial Automation</h4>
+                        <i data-lucide="shield-check" class="text-photon group-hover:text-ink transition-colors"></i>
+                    </div>
+                    <p class="text-[10px] font-black uppercase tracking-widest opacity-60">IEEE Student Chapter // 2023
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. CONTACT SECTION (THE TERMINAL) -->
+        <section id="contact" class="py-40 border-t border-photon/10 text-center">
+            <div class="max-w-4xl mx-auto space-y-24">
+                <div class="space-y-6">
+                    <h2 class="text-7xl md:text-[160px] italic leading-[0.8] tracking-tighter uppercase font-header">
+                        Reach_ <br /> <span class="text-photon">Signal.</span>
+                    </h2>
+                    <p class="text-stone-500 text-lg font-light max-w-xl mx-auto leading-relaxed">
+                        Signal access available for engineering research, system logic strategy, or technical leadership
+                        inquiries.
+                    </p>
+                </div>
+
+                <!-- CONTACT CHANNELS -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-0 gold-border bg-photon/5">
+                    <!-- EMAIL -->
+                    <a id="social-email" href="mailto:hello@example.com"
+                        class="p-16 border-b md:border-b-0 md:border-r border-photon/10 group hover:bg-photon hover:text-ink transition-all duration-500">
+                        <i data-lucide="mail"
+                            class="size-8 mx-auto mb-6 text-photon group-hover:text-ink transition-all"></i>
+                        <h4 class="text-[11px] font-black uppercase tracking-[0.3em] mb-2">Electronic Mail</h4>
+                        <p class="text-[10px] opacity-60 italic truncate">establish_contact@you.com</p>
+                    </a>
+
+                    <!-- LINKEDIN -->
+                    <a id="social-linkedin" href="#"
+                        class="p-16 border-b md:border-b-0 md:border-r border-photon/10 group hover:bg-photon hover:text-ink transition-all duration-500">
+                        <i data-lucide="linkedin"
+                            class="size-8 mx-auto mb-6 text-photon group-hover:text-ink transition-all"></i>
+                        <h4 class="text-[11px] font-black uppercase tracking-[0.3em] mb-2">Technical Network</h4>
+                        <p class="text-[10px] opacity-60 italic truncate">linkedin.com/in/yourname</p>
+                    </a>
+
+                    <!-- GITHUB -->
+                    <a id="social-github" href="#"
+                        class="p-16 border-b md:border-b-0 md:border-r border-photon/10 group hover:bg-photon hover:text-ink transition-all duration-500">
+                        <i data-lucide="github"
+                            class="size-8 mx-auto mb-6 text-photon group-hover:text-ink transition-all"></i>
+                        <h4 class="text-[11px] font-black uppercase tracking-[0.3em] mb-2">Source Control</h4>
+                        <p class="text-[10px] opacity-60 italic truncate">github.com/yourname</p>
+                    </a>
+
+                    <!-- TWITTER -->
+                    <a id="social-twitter" href="#"
+                        class="p-16 border-b md:border-b-0 md:border-r border-photon/10 group hover:bg-photon hover:text-ink transition-all duration-500">
+                        <i data-lucide="twitter"
+                            class="size-8 mx-auto mb-6 text-photon group-hover:text-ink transition-all"></i>
+                        <h4 class="text-[11px] font-black uppercase tracking-[0.3em] mb-2">Social Network</h4>
+                        <p class="text-[10px] opacity-60 italic truncate">twitter.com/yourname</p>
+                    </a>
+
+                    <!-- WEBSITE -->
+                    <a id="social-website" href="#"
+                        class="p-16 group hover:bg-photon hover:text-ink transition-all duration-500">
+                        <i data-lucide="globe"
+                            class="size-8 mx-auto mb-6 text-photon group-hover:text-ink transition-all"></i>
+                        <h4 class="text-[11px] font-black uppercase tracking-[0.3em] mb-2">Portfolio Site</h4>
+                        <p class="text-[10px] opacity-60 italic truncate">yourwebsite.com</p>
+                    </a>
+                </div>
+
+                <div class="pt-10 flex flex-col items-center gap-6">
+                    <div class="h-24 w-[1px] bg-gradient-to-b from-photon to-transparent"></div>
+                    <a href="mailto:hello@example.com"
+                        class="text-[10px] font-black uppercase tracking-[1em] text-photon hover:tracking-[1.2em] transition-all">
+                        Launch_Connection_Protocol
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ZestFolio CTA -->
+    <div class="w-full border-t border-photon/10 bg-slate-tech py-12 px-4">
+        <div class="max-w-[960px] mx-auto text-center space-y-4">
+            <p class="text-stone-500 text-sm">
+                Portfolio created with <span class="text-photon font-bold font-header uppercase">ZestFolio</span>
             </p>
             <div class="space-y-3">
-                <p class="text-slate-900 dark:text-white text-lg font-semibold">
+                <p class="text-white text-lg font-semibold">
                     Want to create your portfolio right now?
                 </p>
                 <a href="https://zestfolio.vercel.app/" target="_blank" rel="noopener noreferrer"
-                    class="inline-flex items-center justify-center px-8 py-3 bg-primary text-white text-sm font-bold rounded-lg hover:opacity-90 transition-all duration-300 shadow-lg">
+                    class="inline-flex items-center justify-center px-8 py-3 bg-photon text-ink font-header font-black uppercase text-xs tracking-widest hover:translate-x-1 hover:-translate-y-1 transition-transform">
                     Click Here Now
                 </a>
             </div>
         </div>
     </div>
+
+    <footer class="py-10 border-t border-photon/10 text-center">
+        <p class="text-[9px] font-black uppercase tracking-[1em] text-stone-700">
+            © 2026 All Rights Reserved
+        </p>
+    </footer>
+
+    <script>
+        // Start Lucide Icons
+        lucide.createIcons();
+    </script>
 </body>
 
 </html>

@@ -1,235 +1,350 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio | Tech Showcase</title>
 
-
-  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
-  <link as="style"
-    href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Space+Grotesk%3Awght%40400%3B500%3B700&amp;family=JetBrains+Mono%3Awght%40700"
-    onload="this.rel='stylesheet'" rel="stylesheet" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
   <link
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700;900&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@700&display=swap"
     rel="stylesheet" />
-  <title>TechNexus | Systems Portfolio</title>
-  <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
   <style type="text/tailwindcss">
     @layer utilities {
         .neon-glow {
-          box-shadow: 0 0 10px rgba(13, 242, 13, 0.5), inset 0 0 5px rgba(13, 242, 13, 0.2);
-          border: 1px solid rgba(13, 242, 13, 0.8);
+          box-shadow: 0 0 10px rgba(13, 242, 13, 0.4);
+          border: 1px solid rgba(13, 242, 13, 0.6);
         }
         .neon-glow:hover {
-          box-shadow: 0 0 20px rgba(13, 242, 13, 0.8), inset 0 0 8px rgba(13, 242, 13, 0.4);
-          background-color: rgba(13, 242, 13, 0.1);
+          box-shadow: 0 0 20px rgba(13, 242, 13, 0.7);
+          background-color: rgba(13, 242, 13, 0.05);
         }
-        .neon-icon-glow {
-          filter: drop-shadow(0 0 5px rgba(13, 242, 13, 0.8));
+        .text-neon {
+          color: #0df20d;
+          text-shadow: 0 0 5px rgba(13, 242, 13, 0.5);
         }
-      }
-    </style>
+        .bg-neon { background-color: #0df20d; }
+        .border-neon { border-color: #0df20d; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #111811; }
+        ::-webkit-scrollbar-thumb { background: #283928; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0df20d; }
+    }
+  </style>
 </head>
 
-<body>
-  <div class="relative flex h-auto min-h-screen w-full flex-col bg-[#111811] dark group/design-root overflow-x-hidden"
-    style='font-family: "Space Grotesk", "Noto Sans", sans-serif;'>
-    <div class="layout-container flex h-full grow flex-col">
-      <header
-        class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#283928] px-10 py-3">
-        <div class="flex items-center gap-4 text-white">
-          <div class="size-4">
-            <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-              <path clip-rule="evenodd"
-                d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z"
-                fill="currentColor" fill-rule="evenodd"></path>
-              <path clip-rule="evenodd"
-                d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z"
-                fill="currentColor" fill-rule="evenodd"></path>
-            </svg>
-          </div>
-          <h2 id="portfolio-name" class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">TechNexus</h2>
+<body class="bg-[#111811] text-white overflow-x-hidden" style='font-family: "Space Grotesk", sans-serif;'>
+
+  <!-- NAVIGATION -->
+  <header
+    class="fixed top-0 w-full z-50 flex items-center justify-between border-b border-[#283928] bg-[#111811]/90 backdrop-blur-md px-6 md:px-10 py-4">
+    <div class="flex items-center gap-3">
+      <div class="text-neon">
+        <span class="material-symbols-outlined text-3xl">terminal</span>
+      </div>
+      <!-- EDIT YOUR LOGO NAME HERE -->
+      <h2 class="text-white text-xl font-bold tracking-tighter">TechNexus</h2>
+    </div>
+
+    <nav class="hidden md:flex items-center gap-8">
+      <a class="text-sm font-medium hover:text-neon transition" href="#home">Home</a>
+      <a class="text-sm font-medium hover:text-neon transition" href="#about">About</a>
+      <a class="text-sm font-medium hover:text-neon transition" href="#education">Education</a>
+      <a class="text-sm font-medium hover:text-neon transition" href="#projects">Projects</a>
+      <a class="text-sm font-medium hover:text-neon transition" href="#skills">Skills</a>
+      <a class="text-sm font-medium hover:text-neon transition" href="#contact">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-4">
+      <!-- EDIT YOUR SMALL AVATAR HERE -->
+      <div class="size-9 rounded-full border border-neon overflow-hidden">
+        <img id="portfolio-hero-image"
+          src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=100"
+          alt="Avatar">
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-[1100px] mx-auto px-6 pt-24">
+
+    <!-- HERO SECTION -->
+    <section id="home" class="py-16 md:py-24 flex flex-col md:flex-row items-center gap-12">
+      <div class="flex-1 space-y-6">
+        <div
+          class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-neon/30 bg-neon/5 text-neon text-xs font-bold uppercase tracking-widest">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-neon"></span>
+          </span>
+          Available for Projects
         </div>
-        <div class="flex flex-1 justify-end gap-8">
-          <div class="flex items-center gap-9">
-            <a class="text-white text-sm font-medium leading-normal" href="#home">Home</a>
-            <a class="text-white text-sm font-medium leading-normal" href="#projects">Projects</a>
-            <a class="text-white text-sm font-medium leading-normal" href="#skills">Skills</a>
-            <a class="text-white text-sm font-medium leading-normal" href="#contact">Contact</a>
-          </div>
-          <button
-            class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#283928] text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-            <div class="text-white" data-icon="List" data-size="20px" data-weight="regular">
-              <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z">
-                </path>
-              </svg>
-            </div>
+
+        <!-- EDIT YOUR NAME & TAGLINE HERE -->
+        <h1 id="portfolio-name" class="text-5xl md:text-7xl font-black leading-none uppercase">
+          I'm <span class="text-neon">Your Name</span>
+        </h1>
+        <p id="portfolio-title" class="text-lg md:text-xl text-[#9cba9c] max-w-lg leading-relaxed">
+          Specializing in <span class="text-white font-bold underline decoration-neon">Autonomous Grids</span> and
+          building decentralized, self-healing smart energy networks.
+        </p>
+
+        <div class="flex flex-wrap gap-4 pt-4">
+          <a href="#projects"
+            class="bg-neon text-[#111811] px-8 py-3 rounded-lg font-bold hover:opacity-90 transition shadow-[0_0_15px_rgba(13,242,13,0.3)]">
+            VIEW PROJECTS
+          </a>
+          <button class="neon-glow text-neon px-8 py-3 rounded-lg font-bold flex items-center gap-2 transition">
+            <span class="material-symbols-outlined text-sm">download</span> GET RESUME
           </button>
-          <div id="portfolio-hero-image" class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAQOUCPwo_Oof0pOAbP6fCtZI-kLYlwyuwgsGkoW-zqtsMbV6uqbleSNaYmGebCeECb-OAWAJkPegc1OSisQ831OZ20GT3537vOZAqkG6Xnxfdj0sOWw9cnkLqjhqZZauT4DV8gKAFwvbhMdmS78J0PVAb-_p4IQrSJBc-5UR2b7mLhwFt_oEQEIWSyFPCHfyFkTBvl2WKAjfYoPKGcoBvLVnwQeJBEJd_zvk8EVfq-269LTsk7EdZ-oen_VlCm80YMHc3aecNM_FaO");'>
-          </div>
         </div>
-      </header>
-      <div class="px-40 flex flex-1 justify-center py-5">
-        <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-          <div id="home" class="@container">
-            <div class="flex flex-col gap-6 px-4 py-10 @[480px]:gap-8 @[864px]:flex-row">
-              <div id="portfolio-main-image"
-                class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg @[480px]:h-auto @[480px]:min-w-[400px] @[864px]:w-full"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAmNVspZRRKibfB3YjEha5TXyb8zIIiW-FWYWnynXgr0JVygsS_Fttv71UcEXEjqqwXqnBmFEyeZGRZKw2I2M2Qtty5PFizUlwePFSgBV-zjOXymbuklcmnLd1z33oFKiXTXjWJKu1IZhFJVHnUCZ3uKwgFhdI5FJywPiOGcM6szO9imcxjiifztmZS_DYD5WMSV6x3vZ5hGYiKhz_cYp3sOBLnfElKDEby3lCStm7KtBYYgyUymTXp5RS4MI-rRncZRthhFDxC6TiC");'>
-              </div>
-              <div class="flex flex-col gap-6 @[480px]:min-w-[400px] @[480px]:gap-8 @[864px]:justify-center">
-                <div class="flex flex-col gap-2 text-left">
-                  <h1 id="portfolio-title"
-                    class="text-white text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em]">
-                    SENIOR SYSTEMS ENGINEER
-                  </h1>
-                  <h2 id="portfolio-bio"
-                    class="text-white text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal">
-                    A seasoned systems engineer with a passion for innovation and a proven track record in designing,
-                    implementing, and maintaining complex systems. Adept at
-                    problem-solving and optimizing performance, I thrive in challenging environments where I can
-                    leverage my technical expertise to drive success.
-                  </h2>
-                </div>
-                <div class="flex flex-col gap-6">
-                  <div class="flex items-center gap-4">
-                    <button
-                      class="flex min-w-[140px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#0df20d] text-[#111811] text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em]">
-                      <span class="truncate">View Projects</span>
-                    </button>
-                    <button
-                      class="neon-glow flex min-w-[140px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-transparent text-[#0df20d] text-sm leading-normal tracking-[0.05em] transition-all duration-300"
-                      style='font-family: "JetBrains Mono", monospace;'>
-                      <span class="material-symbols-outlined text-[18px]">download</span>
-                      <span class="truncate font-bold">GET RESUME</span>
-                    </button>
-                  </div>
-                  <div class="flex items-center gap-6 pt-2">
-                    <a id="social-github" class="text-[#0df20d] neon-icon-glow transition-transform hover:scale-110"
-                      href="#" title="GitHub">
-                      <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4">
-                        </path>
-                        <path d="M9 18c-4.51 2-5-2-7-2"></path>
-                      </svg>
-                    </a>
-                    <a id="social-linkedin" class="text-[#0df20d] neon-icon-glow transition-transform hover:scale-110"
-                      href="#" title="LinkedIn">
-                      <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                        <rect height="12" width="4" x="2" y="9"></rect>
-                        <circle cx="4" cy="4" r="2"></circle>
-                      </svg>
-                    </a>
-                    <a id="social-twitter" class="text-[#0df20d] neon-icon-glow transition-transform hover:scale-110"
-                      href="#" title="X / Twitter">
-                      <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z">
-                        </path>
-                      </svg>
-                    </a>
-                    <a id="social-website" class="text-[#0df20d] neon-icon-glow transition-transform hover:scale-110"
-                      href="#" title="Personal Blog">
-                      <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="2" x2="22" y1="12" y2="12"></line>
-                        <path
-                          d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
-                        </path>
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
+      </div>
+
+      <!-- HERO PHOTO -->
+      <div class="relative group">
+        <div class="absolute -inset-1 bg-neon rounded-2xl blur opacity-20 group-hover:opacity-40 transition"></div>
+        <div
+          class="relative w-72 h-72 md:w-[400px] md:h-[400px] rounded-2xl overflow-hidden border-2 border-neon/50 bg-[#1b271b]">
+          <!-- EDIT YOUR LARGE PHOTO URL HERE -->
+          <img id="portfolio-main-image"
+            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=800&q=80"
+            class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-500" alt="Your Name">
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT ME SECTION -->
+    <section id="about" class="py-20 border-t border-[#283928]">
+      <div class="grid md:grid-cols-3 gap-10">
+        <h2 class="text-3xl font-bold uppercase tracking-tighter text-neon">About Me</h2>
+        <div class="md:col-span-2 space-y-6 text-[#9cba9c] text-lg leading-relaxed">
+          <!-- EDIT YOUR BIO HERE -->
+          <p id="portfolio-bio">
+            I am an <span class="text-white font-bold italic text-sm">INFJ</span> driven by purposeful work and deep
+            focus. I approach engineering with the mindset that technology should be as efficient as it is impactful.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION SECTION -->
+    <section id="education" class="py-20 border-t border-[#283928]">
+      <h2 id="portfolio-education-header" class="text-3xl font-bold uppercase tracking-tighter text-neon mb-12">
+        Education</h2>
+      <div id="portfolio-education" class="grid gap-6">
+        <!-- EDIT YOUR EDUCATION 1 -->
+        <div class="p-8 rounded-2xl bg-[#1b271b] border border-[#283928] group hover:border-neon/50 transition">
+          <div class="flex flex-col md:flex-row justify-between mb-4">
+            <h3 class="text-xl font-bold text-white">B.Tech in Electrical Engineering</h3>
+            <span class="text-neon font-mono">2021 — 2025</span>
           </div>
-          <h2 id="portfolio-projects-header"
-            class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
-            <span id="projects"></span>Featured Projects
-          </h2>
-          <div id="portfolio-projects"
-            class="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden">
-            <div class="flex items-stretch p-4 gap-3">
-              <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-60">
-                <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg flex flex-col"
-                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCZs3e1DJ61cmh1EhiYNekWwHW7QG-cfIgGKLQ2IZMlBmPOALGRRpNPkZ4_F4EVuIcei1hI1FEVMiF-jdFBtDN2z5S4ERWVWby1rTwyiv6VBp0_lbVbuRSTNu0GeMOj2eVwfc2F9ZjnkWepvXMW1RK1-zEaf0ydwlbHWSNmtzypX6ucS31Trs_xbX_3YDBIz7UZM6NQhOTbY784ZVkOy_Twq5FlioRf-JqYabmcNA8OGBtgx3iGqcntSiT4LKIhfN8vqagPlhe5PiwX");'>
-                </div>
-                <div>
-                  <p class="text-white text-base font-medium leading-normal">Project Chimera</p>
-                  <p class="text-[#9cba9c] text-sm font-normal leading-normal">A cutting-edge system architecture for a
-                    next-generation smart city.</p>
-                </div>
-              </div>
-            </div>
+          <p class="text-[#9cba9c]">University Name, Location</p>
+          <p class="text-sm mt-2 text-neon/60">Focus: Power Systems & Automation</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section id="projects" class="py-20 border-t border-[#283928]">
+      <h2 id="portfolio-projects-header" class="text-3xl font-bold uppercase tracking-tighter text-neon mb-12">Featured
+        Projects</h2>
+      <div id="portfolio-projects" class="grid md:grid-cols-2 gap-8">
+
+        <!-- PROJECT 1: COLOROHM -->
+        <div class="group relative">
+          <div
+            class="aspect-video rounded-xl bg-[#283928] overflow-hidden mb-4 border border-[#283928] group-hover:border-neon/50 transition">
+            <!-- EDIT PROJECT IMAGE -->
+            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800"
+              class="w-full h-full object-cover opacity-50 group-hover:opacity-80 transition">
           </div>
-          <h2 id="portfolio-skills-header"
-            class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Skills</h2>
-          <div id="portfolio-skills" class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
-            <div class="flex flex-1 gap-3 rounded-lg border border-[#3b543b] bg-[#1b271b] p-4 items-center">
-              <h2 class="text-white text-base font-bold leading-tight">System Design</h2>
-            </div>
+          <h3 class="text-xl font-bold mb-2">ColorOhm</h3>
+          <p class="text-[#9cba9c] mb-4">A high-precision resistor color code calculator built for electronics
+            professionals.</p>
+          <a href="https://colorohm.rsmk.me" target="_blank"
+            class="text-neon flex items-center gap-2 font-bold text-sm">
+            LIVE PREVIEW <span class="material-symbols-outlined text-sm">open_in_new</span>
+          </a>
+        </div>
+
+        <!-- PROJECT 2: SMART EXHAUST -->
+        <div class="group relative">
+          <div
+            class="aspect-video rounded-xl bg-[#283928] overflow-hidden mb-4 border border-[#283928] group-hover:border-neon/50 transition">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800"
+              class="w-full h-full object-cover opacity-50 group-hover:opacity-80 transition">
           </div>
-          <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
-            <span id="contact"></span>Contact
-          </h2>
-          <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
-            <label class="flex flex-col min-w-40 flex-1">
-              <p class="text-white text-base font-medium leading-normal pb-2">Email</p>
-              <input id="portfolio-email"
-                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-0 border-none bg-[#283928] focus:border-none h-14 placeholder:text-[#9cba9c] p-4 text-base font-normal leading-normal"
-                placeholder="your.email@example.com" value="" />
-            </label>
-          </div>
-          <div class="flex px-4 py-3 justify-start">
-            <button
-              class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#0df20d] text-[#111811] text-sm font-bold leading-normal tracking-[0.015em]">
-              <span class="truncate">Send</span>
-            </button>
-          </div>
+          <h3 class="text-xl font-bold mb-2">Smart Exhaust System</h3>
+          <p class="text-[#9cba9c] mb-4">Autonomous fan control using MQ-2 sensor and Arduino with safety timers and
+            manual override.</p>
+          <span class="text-neon/50 font-mono text-xs uppercase tracking-widest">Hardware Prototype</span>
         </div>
 
       </div>
-    </div>
+    </section>
 
-    <!-- ZestFolio Credits & CTA -->
-    <div class="w-full border-t border-[#283928] bg-[#0a0f0a] py-8 px-4 mt-10">
-      <div class="max-w-[960px] mx-auto text-center space-y-4">
-        <p class="text-[#9cba9c] text-sm">
-          Portfolio created with <span class="text-[#0df20d] font-bold">ZestFolio</span>
-        </p>
-        <div class="space-y-3">
-          <p class="text-white text-lg font-semibold">
-            Want to create your portfolio right now?
-          </p>
-          <a href="https://zestfolio.vercel.app/" target="_blank" rel="noopener noreferrer"
-            class="inline-flex items-center justify-center px-8 py-3 bg-[#0df20d] text-[#111811] text-sm font-bold rounded-lg hover:bg-[#0bf00b] transition-all duration-300 shadow-lg hover:shadow-[0_0_20px_rgba(13,242,13,0.5)]">
-            Click Here Now
-          </a>
+    <!-- SKILLS SECTION -->
+    <section id="skills" class="py-20 border-t border-[#283928]">
+      <h2 id="portfolio-skills-header" class="text-3xl font-bold uppercase tracking-tighter text-neon mb-12">Skills</h2>
+      <div id="portfolio-skills" class="flex flex-wrap gap-3">
+        <!-- EDIT SKILLS LIST HERE -->
+        <span
+          class="px-5 py-2 rounded-lg bg-[#1b271b] border border-[#283928] font-mono text-sm hover:border-neon transition">C++</span>
+        <span
+          class="px-5 py-2 rounded-lg bg-[#1b271b] border border-[#283928] font-mono text-sm hover:border-neon transition">Python</span>
+        <span
+          class="px-5 py-2 rounded-lg bg-[#1b271b] border border-[#283928] font-mono text-sm hover:border-neon transition">Arduino</span>
+        <span
+          class="px-5 py-2 rounded-lg bg-[#1b271b] border border-[#283928] font-mono text-sm hover:border-neon transition">MATLAB</span>
+        <span
+          class="px-5 py-2 rounded-lg bg-[#1b271b] border border-[#283928] font-mono text-sm hover:border-neon transition">Simulink</span>
+        <span
+          class="px-5 py-2 rounded-lg bg-[#1b271b] border border-[#283928] font-mono text-sm hover:border-neon transition">Tailwind
+          CSS</span>
+      </div>
+    </section>
+
+    <!-- CERTIFICATES SECTION -->
+    <section id="certificates" class="py-20 border-t border-[#283928]">
+      <h2 id="portfolio-certifications-header" class="text-3xl font-bold uppercase tracking-tighter text-neon mb-12">
+        Certificates</h2>
+      <div id="portfolio-certifications" class="grid md:grid-cols-2 gap-4">
+        <!-- EDIT CERTIFICATE 1 -->
+        <div class="flex items-center gap-4 p-5 bg-[#1b271b] rounded-xl border border-[#283928]">
+          <span class="material-symbols-outlined text-neon">verified</span>
+          <div>
+            <h4 class="font-bold">Smart Grid Technologies</h4>
+            <p class="text-xs text-[#9cba9c]">Issued by Coursera • 2024</p>
+          </div>
         </div>
+        <!-- EDIT CERTIFICATE 2 -->
+        <div class="flex items-center gap-4 p-5 bg-[#1b271b] rounded-xl border border-[#283928]">
+          <span class="material-symbols-outlined text-neon">verified</span>
+          <div>
+            <h4 class="font-bold">Embedded Systems Specialist</h4>
+            <p class="text-xs text-[#9cba9c]">IEEE Student Chapter • 2023</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="py-20 border-t border-[#283928]">
+      <div class="grid md:grid-cols-2 gap-16">
+        <div>
+          <h2 class="text-4xl font-black uppercase text-neon mb-6 leading-tight">Let's build<br>the future.</h2>
+          <p class="text-[#9cba9c] mb-8">Currently exploring opportunities in Autonomous Grids and Smart Energy systems.
+          </p>
+
+          <div class="space-y-4">
+            <div class="flex items-center gap-4 text-[#9cba9c]">
+              <span class="material-symbols-outlined text-neon">mail</span>
+              <!-- EDIT EMAIL HERE -->
+              <a id="social-email" href="mailto:hello@yourdomain.com"
+                class="hover:text-neon transition">hello@yourdomain.com</a>
+            </div>
+            <div class="flex items-center gap-4 text-[#9cba9c]">
+              <span class="material-symbols-outlined text-neon">location_on</span>
+              <span id="portfolio-location">Location, Country</span>
+            </div>
+          </div>
+        </div>
+
+        <form class="space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <input type="text" placeholder="NAME"
+              class="bg-[#1b271b] border-[#283928] rounded-lg p-4 text-white focus:border-neon focus:ring-0 w-full transition uppercase text-xs font-bold tracking-widest">
+            <input type="email" placeholder="EMAIL"
+              class="bg-[#1b271b] border-[#283928] rounded-lg p-4 text-white focus:border-neon focus:ring-0 w-full transition uppercase text-xs font-bold tracking-widest">
+          </div>
+          <textarea placeholder="MESSAGE" rows="4"
+            class="bg-[#1b271b] border-[#283928] rounded-lg p-4 text-white focus:border-neon focus:ring-0 w-full transition uppercase text-xs font-bold tracking-widest"></textarea>
+          <button
+            class="w-full bg-neon text-[#111811] py-4 rounded-lg font-black uppercase tracking-widest hover:opacity-90 transition shadow-[0_0_20px_rgba(13,242,13,0.2)]">
+            Send Message
+          </button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- SOCIAL LINKS SECTION -->
+  <div class="py-8 border-t border-[#283928]">
+    <div class="max-w-[1100px] mx-auto px-6 flex justify-center gap-6">
+      <a id="social-github" href="https://github.com" target="_blank" rel="noopener noreferrer"
+        class="text-[#9cba9c] hover:text-neon transition">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path
+            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+        </svg>
+      </a>
+      <a id="social-linkedin" href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
+        class="text-[#9cba9c] hover:text-neon transition">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path
+            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+        </svg>
+      </a>
+      <a id="social-twitter" href="https://twitter.com" target="_blank" rel="noopener noreferrer"
+        class="text-[#9cba9c] hover:text-neon transition">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path
+            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+        </svg>
+      </a>
+      <a id="social-website" href="https://yourwebsite.com" target="_blank" rel="noopener noreferrer"
+        class="text-[#9cba9c] hover:text-neon transition">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- ZestFolio CTA Section -->
+  <div class="w-full border-t border-[#283928] bg-[#0a0f0a] py-8 px-4">
+    <div class="max-w-[960px] mx-auto text-center space-y-4">
+      <p class="text-[#9cba9c] text-sm">
+        Portfolio created with <span class="text-neon font-bold">ZestFolio</span>
+      </p>
+      <div class="space-y-3">
+        <p class="text-white text-lg font-semibold">
+          Want to create your portfolio right now?
+        </p>
+        <a href="https://zestfolio.vercel.app/" target="_blank" rel="noopener noreferrer"
+          class="inline-flex items-center justify-center px-8 py-3 bg-neon text-[#111811] text-sm font-bold rounded-lg hover:opacity-90 transition-all duration-300 shadow-[0_0_20px_rgba(13,242,13,0.2)]">
+          Click Here Now
+        </a>
       </div>
     </div>
   </div>
+
+  <footer class="py-6 text-center bg-[#0a0f0a]">
+    <p class="text-[#9cba9c] text-xs font-mono">
+      © 2026 All Rights Reserved
+    </p>
+  </footer>
 
   <!-- Smooth Scroll Script -->
   <script>
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const targetId = this.getAttribute('href');
-        if (targetId === '#') return;
-        const target = document.querySelector(targetId);
+        const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          window.scrollTo({
+            top: target.offsetTop - 80,
+            behavior: 'smooth'
+          });
         }
       });
     });

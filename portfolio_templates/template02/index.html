@@ -1,180 +1,289 @@
-<html>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
 
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio | Your Name</title>
 
+  <!-- Google Fonts: Playfair Display for Serifs & Inter for Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap"
+    rel="stylesheet">
 
-  <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
-  <link as="style"
-    href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Space+Grotesk%3Awght%40400%3B500%3B700"
-    onload="this.rel='stylesheet'" rel="stylesheet" />
-  <title>Stitch Design</title>
-  <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon" />
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
   <style type="text/tailwindcss">
-    @layer utilities {
-        .neon-border-glow {
-          box-shadow: 0 0 5px rgba(13, 242, 13, 0.3), inset 0 0 2px rgba(13, 242, 13, 0.3);
-        }
-        .neon-border-glow:hover {
-          box-shadow: 0 0 12px rgba(13, 242, 13, 0.6), inset 0 0 4px rgba(13, 242, 13, 0.4);
-        }
-        .social-icon-glow:hover {
-          filter: drop-shadow(0 0 8px #0df20d);
-          color: #0df20d;
-        }
+    @layer base {
+      body {
+        @apply bg-[#fcfaf7] text-[#1a1a1a] font-['Inter'];
       }
-    </style>
+      h1, h2, h3 {
+        @apply font-['Playfair_Display'] tracking-tight;
+      }
+    }
+    @layer utilities {
+      .bg-emerald-deep { background-color: #064e3b; }
+      .text-emerald-deep { color: #064e3b; }
+      .border-emerald-soft { border-color: #d1fae5; }
+      .card-shadow { box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.1); }
+    }
+  </style>
 </head>
 
-<body>
-  <div class="relative flex h-auto min-h-screen w-full flex-col bg-[#102310] dark group/design-root overflow-x-hidden"
-    style='font-family: "Space Grotesk", "Noto Sans", sans-serif;'>
-    <div class="layout-container flex h-full grow flex-col">
-      <div class="px-4 md:px-40 flex flex-1 justify-center py-5">
-        <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-          <div class="flex p-4 @container">
-            <div class="flex w-full flex-col gap-4 items-center">
-              <div class="flex gap-4 flex-col items-center">
-                <div id="portfolio-hero-image"
-                  class="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-32 w-32"
-                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD4BNRz5cjIbUh2BzRDtbN2bviiX03AhP1uX7XSgvw1z-AMy0Ko2UYrEszDZTJG1T5QIUs2m1RRX11z0XDiFvNiMJz-o7ZbPV_5Xs46T2CauQciAaKWiBvqiP9TLkalR1Gcy87iSzALH3kLhAI6igkl3F_hSuT5CYCm1xMLy5ljfLAidW2EEC_22L3XhQJVSbrbJQ3M17YHq5sbUQmABVPOw5NwkBr3c1a6B0IOgRfUA0i4fdddVdQvRuSe6QEQN7FakWOQ99xaPEic");'>
-                </div>
-                <div class="flex flex-col items-center justify-center">
-                  <p id="portfolio-name"
-                    class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] text-center">Ethan Walker
-                  </p>
-                  <p id="portfolio-title" class="text-[#90cb90] text-base font-normal leading-normal text-center">
-                    Systems Engineer</p>
-                  <p class="text-[#90cb90] text-base font-normal leading-normal text-center">STATUS: ONLINE</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="flex flex-wrap gap-3 px-4 py-3">
-            <div
-              class="flex min-w-[111px] flex-1 basis-[fit-content] flex-col gap-2 rounded-lg border border-[#316831] p-3 items-center text-center">
-              <p class="text-white tracking-light text-2xl font-bold leading-tight">12</p>
-              <div class="flex items-center gap-2">
-                <p class="text-[#90cb90] text-sm font-normal leading-normal">Years of Experience</p>
-              </div>
-            </div>
-            <div
-              class="flex min-w-[111px] flex-1 basis-[fit-content] flex-col gap-2 rounded-lg border border-[#316831] p-3 items-center text-center">
-              <p class="text-white tracking-light text-2xl font-bold leading-tight">4</p>
-              <div class="flex items-center gap-2">
-                <p class="text-[#90cb90] text-sm font-normal leading-normal">Projects Completed</p>
-              </div>
-            </div>
-            <div
-              class="flex min-w-[111px] flex-1 basis-[fit-content] flex-col gap-2 rounded-lg border border-[#316831] p-3 items-center text-center">
-              <p class="text-white tracking-light text-2xl font-bold leading-tight">20</p>
-              <div class="flex items-center gap-2">
-                <p class="text-[#90cb90] text-sm font-normal leading-normal">Skills</p>
-              </div>
-            </div>
-          </div>
-          <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">About Me</h2>
-          <p id="portfolio-bio" class="text-white text-base font-normal leading-normal pb-3 pt-1 px-4">
-            I'm Ethan Walker, a systems engineer with over a decade of experience in designing and implementing complex
-            systems. My expertise spans across various domains,
-            including cloud computing, network infrastructure, and cybersecurity. I'm passionate about leveraging
-            technology to solve real-world problems and drive innovation.
-          </p>
-          <h2 id="portfolio-skills-header"
-            class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Skills</h2>
-          <div id="portfolio-skills" class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
-            <div class="flex flex-1 gap-3 rounded-lg border border-[#316831] bg-[#183418] p-4 items-center">
-              <h2 class="text-white text-base font-bold leading-tight">Cloud Computing</h2>
-            </div>
-          </div>
-          <h2 id="portfolio-projects-header"
-            class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Projects</h2>
-          <div id="portfolio-projects" class="p-4">
-            <!-- Projects will be injected here -->
-          </div>
-          <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Contact</h2>
-          <p class="text-white text-base font-normal leading-normal pb-3 pt-1 px-4">
-            Feel free to reach out to me via email or connect with me on professional networking platforms.
-          </p>
-          <div class="flex justify-center">
-            <div class="flex flex-1 gap-4 max-w-[480px] flex-col items-stretch px-4 py-3">
-              <a id="portfolio-email" href="#"
-                class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#0df20d] text-[#102310] text-sm font-bold leading-normal tracking-[0.015em] w-full hover:bg-[#0bc10b] transition-colors no-underline">
-                <span class="truncate">Email Me</span>
-              </a>
-              <button
-                class="flex min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-12 px-4 bg-transparent border-2 border-[#0df20d] text-[#0df20d] text-sm font-bold leading-normal tracking-[0.015em] w-full neon-border-glow transition-all">
-                <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                  stroke-width="2" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                  <polyline points="7 10 12 15 17 10"></polyline>
-                  <line x1="12" x2="12" y1="15" y2="3"></line>
-                </svg>
-                <span class="truncate uppercase tracking-widest">Download Resume</span>
-              </button>
-              <div class="flex items-center justify-center gap-6 py-2">
-                <a id="social-github" class="text-[#90cb90] transition-all social-icon-glow" href="#">
-                  <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                    stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4">
-                    </path>
-                    <path d="M9 18c-4.51 2-5-2-7-2"></path>
-                  </svg>
-                </a>
-                <a id="social-linkedin" class="text-[#90cb90] transition-all social-icon-glow" href="#">
-                  <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                    stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                    <rect height="12" width="4" x="2" y="9"></rect>
-                    <circle cx="4" cy="4" r="2"></circle>
-                  </svg>
-                </a>
-                <a id="social-twitter" class="text-[#90cb90] transition-all social-icon-glow" href="#">
-                  <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                    stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z">
-                    </path>
-                  </svg>
-                </a>
-                <a id="social-website" class="text-[#90cb90] transition-all social-icon-glow" href="#">
-                  <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                    stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="9" cy="12" r="1"></circle>
-                    <circle cx="15" cy="12" r="1"></circle>
-                    <path
-                      d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z">
-                    </path>
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </div>
+<body class="selection:bg-emerald-100 selection:text-emerald-900">
 
-          <!-- ZestFolio Credits & CTA -->
-          <div class="w-full border-t border-[#316831] bg-[#0a0f0a] py-8 px-4 mt-10">
-            <div class="max-w-[960px] mx-auto text-center space-y-4">
-              <p class="text-[#90cb90] text-sm">
-                Portfolio created with <span class="text-[#0df20d] font-bold">ZestFolio</span>
-              </p>
-              <div class="space-y-3">
-                <p class="text-white text-lg font-semibold">
-                  Want to create your portfolio right now?
-                </p>
-                <a href="https://zestfolio.vercel.app/" target="_blank" rel="noopener noreferrer"
-                  class="inline-flex items-center justify-center px-8 py-3 bg-[#0df20d] text-[#102310] text-sm font-bold rounded-lg hover:bg-[#0bf00b] transition-all duration-300 shadow-lg hover:shadow-[0_0_20px_rgba(13,242,13,0.5)]">
-                  Click Here Now
-                </a>
-              </div>
-            </div>
+  <!-- NAVIGATION -->
+  <nav class="fixed top-0 w-full z-50 bg-[#fcfaf7]/90 backdrop-blur-md border-b border-stone-200">
+    <div class="max-w-6xl mx-auto px-6 h-20 flex justify-between items-center">
+      <div class="text-xl font-black italic tracking-tighter text-emerald-deep">
+        <!-- EDIT YOUR INITIALS -->
+        Y.NAME
+      </div>
+      <div class="hidden md:flex gap-10 text-[11px] font-bold uppercase tracking-[0.2em] text-stone-500">
+        <a href="#about" class="hover:text-emerald-deep transition-colors">About</a>
+        <a href="#education" class="hover:text-emerald-deep transition-colors">Path</a>
+        <a href="#projects" class="hover:text-emerald-deep transition-colors">Work</a>
+        <a href="#skills" class="hover:text-emerald-deep transition-colors">Expertise</a>
+        <a href="#contact" class="hover:text-emerald-deep transition-colors underline underline-offset-8">Let's Talk</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-6xl mx-auto px-6">
+
+    <!-- 1. HERO SECTION -->
+    <section id="home" class="min-h-screen flex flex-col md:flex-row items-center justify-center gap-16 pt-20">
+      <div class="flex-1 space-y-8 order-2 md:order-1">
+        <div class="space-y-4">
+          <p class="text-emerald-deep font-semibold tracking-widest uppercase text-xs">Engineering & Design</p>
+          <!-- EDIT YOUR NAME -->
+          <h1 id="portfolio-name" class="text-6xl md:text-8xl leading-[0.9]">
+            Your <span class="italic text-stone-400">Name</span>
+          </h1>
+          <!-- EDIT YOUR TAGLINE -->
+          <p id="portfolio-title" class="text-xl text-stone-500 max-w-md font-light leading-relaxed">
+            Developing <span class="text-emerald-deep font-semibold">Autonomous Grids</span> and intelligent power
+            systems for a sustainable tomorrow.
+          </p>
+        </div>
+        <div class="flex gap-6 items-center">
+          <a href="#projects"
+            class="px-10 py-4 bg-emerald-deep text-white text-xs font-bold uppercase tracking-widest rounded-full hover:bg-emerald-900 transition shadow-xl">
+            View Case Studies
+          </a>
+          <a href="#contact"
+            class="text-xs font-bold uppercase tracking-widest border-b-2 border-emerald-deep pb-1">Connect</a>
+        </div>
+      </div>
+
+      <!-- PHOTO SECTION -->
+      <div class="flex-1 order-1 md:order-2">
+        <div class="relative w-full aspect-[4/5] max-w-md mx-auto">
+          <!-- Decorative element -->
+          <div class="absolute -top-6 -right-6 w-32 h-32 border-2 border-emerald-deep/10 rounded-full"></div>
+          <!-- EDIT YOUR PHOTO URL -->
+          <div
+            class="relative h-full w-full rounded-2xl overflow-hidden grayscale hover:grayscale-0 transition duration-1000">
+            <img id="portfolio-main-image"
+              src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=1000"
+              class="h-full w-full object-cover" alt="Profile Photo">
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- 2. ABOUT ME -->
+    <section id="about" class="py-32">
+      <div class="grid md:grid-cols-2 gap-20 items-center">
+        <h2 class="text-4xl md:text-5xl leading-tight">
+          A focus on <br />
+          <span class="italic text-emerald-deep">purposeful</span> engineering.
+        </h2>
+        <div class="space-y-6 text-stone-500 text-lg leading-relaxed">
+          <!-- EDIT YOUR BIO -->
+          <p id="portfolio-bio">
+            As an <span class="font-bold text-stone-900">INFJ</span>, I am driven by deep work and the desire to build
+            systems that matter. My expertise lies at the intersection of power electronics and software automation.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. EDUCATION -->
+    <section id="education" class="py-32 border-t border-stone-200">
+      <div class="flex flex-col md:flex-row justify-between gap-12">
+        <div class="md:w-1/3">
+          <h2 id="portfolio-education-header" class="text-4xl">Education</h2>
+          <p class="text-stone-400 mt-4 italic">The academic foundation.</p>
+        </div>
+        <div id="portfolio-education" class="md:w-2/3 space-y-12">
+          <!-- EDUCATION ITEM -->
+          <div class="group cursor-default">
+            <span
+              class="text-[10px] font-bold uppercase tracking-widest text-emerald-deep bg-emerald-50 px-3 py-1 rounded-full">2021
+              — 2025</span>
+            <h3 class="text-2xl mt-4 group-hover:text-emerald-deep transition">B.Tech in Electrical Engineering</h3>
+            <p class="text-stone-500 mt-2">University Name • Specializing in Automation</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. PROJECTS -->
+    <section id="projects" class="py-32">
+      <h2 id="portfolio-projects-header" class="text-4xl mb-16">Selected Work</h2>
+      <div id="portfolio-projects" class="grid md:grid-cols-2 gap-12">
+
+        <!-- PROJECT card -->
+        <div class="group">
+          <div class="relative overflow-hidden rounded-3xl bg-stone-100 aspect-video mb-6">
+            <!-- EDIT PROJECT IMAGE -->
+            <img src="https://images.unsplash.com/photo-1555664424-778a1e5e1b48?auto=format&fit=crop&q=80&w=800"
+              class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+            <div
+              class="absolute inset-0 bg-emerald-deep/80 opacity-0 group-hover:opacity-100 transition duration-500 flex items-center justify-center">
+              <a href="https://colorohm.rsmk.me" target="_blank"
+                class="px-8 py-3 border border-white text-white text-[10px] uppercase font-bold tracking-widest">Explore
+                ColorOhm</a>
+            </div>
+          </div>
+          <h3 class="text-2xl">ColorOhm Calculator</h3>
+          <p class="text-stone-500 mt-2">Web-based precision tool for electronic component identification.</p>
+        </div>
+
+        <!-- PROJECT card -->
+        <div class="group">
+          <div class="relative overflow-hidden rounded-3xl bg-stone-100 aspect-video mb-6">
+            <img src="https://images.unsplash.com/photo-1581092334651-ddf26d9a1930?auto=format&fit=crop&q=80&w=800"
+              class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+          </div>
+          <h3 class="text-2xl">Smart Exhaust System</h3>
+          <p class="text-stone-500 mt-2">Embedded sensor project for automated industrial safety ventilation.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5. SKILLS -->
+    <section id="skills" class="py-32 bg-emerald-deep text-white rounded-[3rem] px-12 md:px-24">
+      <div class="max-w-4xl">
+        <h2 id="portfolio-skills-header" class="text-4xl md:text-5xl mb-12 italic">Technical <br />Capabilities</h2>
+        <div id="portfolio-skills" class="grid grid-cols-2 md:grid-cols-3 gap-y-12 gap-x-8">
+          <!-- SKILL BOX -->
+          <div>
+            <h4 class="text-xs uppercase font-bold tracking-widest text-emerald-200 mb-4">Software</h4>
+            <ul class="space-y-2 text-lg font-light opacity-80">
+              <li>Python / C++</li>
+              <li>MATLAB</li>
+              <li>Simulink</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-xs uppercase font-bold tracking-widest text-emerald-200 mb-4">Hardware</h4>
+            <ul class="space-y-2 text-lg font-light opacity-80">
+              <li>Arduino</li>
+              <li>ESP32</li>
+              <li>PCB Design</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-xs uppercase font-bold tracking-widest text-emerald-200 mb-4">Web Stack</h4>
+            <ul class="space-y-2 text-lg font-light opacity-80">
+              <li>Tailwind CSS</li>
+              <li>React Context</li>
+              <li>HTML5 / CSS3</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. CERTIFICATES -->
+    <section id="certificates" class="py-32">
+      <h2 id="portfolio-certifications-header" class="text-4xl mb-12">Credentials</h2>
+      <div id="portfolio-certifications" class="border-y border-stone-200">
+        <div class="flex flex-col md:flex-row justify-between py-10 border-b border-stone-100 group">
+          <span class="text-stone-400 group-hover:text-emerald-deep transition">01. Smart Grid Specialization</span>
+          <span class="text-[10px] font-bold uppercase text-stone-300">Coursera Certified</span>
+        </div>
+        <div class="flex flex-col md:flex-row justify-between py-10 group">
+          <span class="text-stone-400 group-hover:text-emerald-deep transition">02. Advanced Embedded Systems</span>
+          <span class="text-[10px] font-bold uppercase text-stone-300">IEEE Institution</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. CONTACT -->
+    <section id="contact" class="py-32">
+      <div class="text-center space-y-12">
+        <h2 class="text-6xl md:text-8xl italic">Let's <span class="text-emerald-deep">talk</span> about <br />the
+          future.</h2>
+        <div class="flex flex-col md:flex-row justify-center items-center gap-10">
+          <a id="social-email" href="mailto:hello@example.com"
+            class="text-xl font-light hover:text-emerald-deep underline underline-offset-8 transition">hello@yourname.com</a>
+          <div class="hidden md:block w-2 h-2 bg-stone-200 rounded-full"></div>
+          <div class="flex gap-6">
+            <a id="social-linkedin" href="#" class="text-stone-400 hover:text-emerald-deep transition"><i
+                data-lucide="linkedin"></i></a>
+            <a id="social-github" href="#" class="text-stone-400 hover:text-emerald-deep transition"><i
+                data-lucide="github"></i></a>
+            <a id="social-twitter" href="#" class="text-stone-400 hover:text-emerald-deep transition"><i
+                data-lucide="twitter"></i></a>
+            <a id="social-website" href="#" class="text-stone-400 hover:text-emerald-deep transition"><i
+                data-lucide="globe"></i></a>
+          </div>
+        </div>
+
+        <form class="max-w-xl mx-auto space-y-6 pt-16 text-left">
+          <div class="grid md:grid-cols-2 gap-6">
+            <input type="text" placeholder="Name"
+              class="w-full bg-transparent border-b border-stone-200 py-4 focus:outline-none focus:border-emerald-deep transition">
+            <input type="email" placeholder="Email"
+              class="w-full bg-transparent border-b border-stone-200 py-4 focus:outline-none focus:border-emerald-deep transition">
+          </div>
+          <textarea placeholder="Tell me about your project" rows="3"
+            class="w-full bg-transparent border-b border-stone-200 py-4 focus:outline-none focus:border-emerald-deep transition"></textarea>
+          <button
+            class="w-full py-5 bg-emerald-deep text-white text-xs font-bold uppercase tracking-widest rounded-full hover:bg-emerald-900 transition">Send
+            Inquiry</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ZestFolio CTA -->
+  <div class="w-full border-t border-stone-200 bg-stone-50 py-12 px-4">
+    <div class="max-w-[960px] mx-auto text-center space-y-4">
+      <p class="text-stone-500 text-sm">
+        Portfolio created with <span class="text-emerald-deep font-bold">ZestFolio</span>
+      </p>
+      <div class="space-y-3">
+        <p class="text-stone-900 text-lg font-semibold">
+          Want to create your portfolio right now?
+        </p>
+        <a href="https://zestfolio.vercel.app/" target="_blank" rel="noopener noreferrer"
+          class="inline-flex items-center justify-center px-8 py-3 bg-emerald-deep text-white text-xs font-bold uppercase tracking-widest rounded-full hover:bg-emerald-900 transition-all duration-300 shadow-xl">
+          Click Here Now
+        </a>
       </div>
     </div>
   </div>
 
+  <footer class="py-6 text-center text-[10px] font-bold uppercase tracking-widest text-stone-400">
+    © 2026 All Rights Reserved
+  </footer>
+
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+  </script>
 </body>
 
 </html>

@@ -1,172 +1,343 @@
-<html>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
 
 <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio | Systems & Data</title>
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
-  <link rel="stylesheet" as="style" onload="this.rel='stylesheet'"
-    href="https://fonts.googleapis.com/css2?display=swap&amp;family=Newsreader%3Awght%40400%3B500%3B700%3B800&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Noto+Sans:wght@400;500;700;900&display=swap"
+    rel="stylesheet" />
 
-  <title>Stitch Design</title>
-  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
-
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style type="text/tailwindcss">
+    @layer base {
+      body {
+        @apply bg-[#0a0b10] text-slate-300 font-['Noto_Sans'];
+      }
+      h1, h2, h3 {
+        @apply font-['Newsreader'] text-white tracking-tight;
+      }
+    }
+    @layer utilities {
+      .accent-indigo { color: #4f46e5; }
+      .bg-indigo-glow { background: radial-gradient(circle at center, rgba(79, 70, 229, 0.15) 0%, transparent 70%); }
+      .border-slate-custom { border-color: rgba(255, 255, 255, 0.1); }
+      .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    }
+  </style>
 </head>
 
-<body>
-  <div class="relative flex h-auto min-h-screen w-full flex-col bg-[#111218] dark group/design-root overflow-x-hidden"
-    style='font-family: Newsreader, "Noto Sans", sans-serif;'>
-    <div class="layout-container flex h-full grow flex-col">
-      <header
-        class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#282b39] px-10 py-3">
-        <div class="flex items-center gap-4 text-white">
-          <div class="size-4">
-            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M24 4C25.7818 14.2173 33.7827 22.2182 44 24C33.7827 25.7818 25.7818 33.7827 24 44C22.2182 33.7827 14.2173 25.7818 4 24C14.2173 22.2182 22.2182 14.2173 24 4Z"
-                fill="currentColor"></path>
-            </svg>
-          </div>
-          <h2 id="portfolio-name" class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">Data Portfolio
-          </h2>
-        </div>
-        <div class="flex flex-1 justify-end gap-8">
-          <div class="flex items-center gap-9">
-            <a class="text-white text-sm font-medium leading-normal" href="#about">About</a>
-            <a class="text-white text-sm font-medium leading-normal" href="#projects">Projects</a>
-            <a class="text-white text-sm font-medium leading-normal" href="#skills">Skills</a>
-            <a class="text-white text-sm font-medium leading-normal" href="#contact">Contact</a>
-          </div>
-          <div class="flex gap-2">
-            <a id="social-github" href="#"
-              class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#282b39] text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-              <div class="text-white" data-icon="GithubLogo" data-size="20px" data-weight="regular">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
-                  viewBox="0 0 256 256">
-                  <path
-                    d="M208.31,75.68A59.78,59.78,0,0,0,202.93,28,8,8,0,0,0,196,24a59.75,59.75,0,0,0-48,24H124A59.75,59.75,0,0,0,76,24a8,8,0,0,0-6.93,4,59.78,59.78,0,0,0-5.38,47.68A58.14,58.14,0,0,0,56,104v8a56.06,56.06,0,0,0,48.44,55.47A39.8,39.8,0,0,0,96,192v8H72a24,24,0,0,1-24-24A40,40,0,0,0,8,136a8,8,0,0,0,0,16,24,24,0,0,1,24,24,40,40,0,0,0,40,40H96v16a8,8,0,0,0,16,0V192a24,24,0,0,1,48,0v40a8,8,0,0,0,16,0V192a39.8,39.8,0,0,0-8.44-24.53A56.06,56.06,0,0,0,216,112v-8A58.14,58.14,0,0,0,208.31,75.68ZM200,112a40,40,0,0,1-40,40H112a40,40,0,0,1-40-40v-8a41.74,41.74,0,0,1,6.9-22.48A8,8,0,0,0,80,73.83a43.81,43.81,0,0,1,.79-33.58,43.88,43.88,0,0,1,32.32,20.06A8,8,0,0,0,119.82,64h32.35a8,8,0,0,0,6.74-3.69,43.87,43.87,0,0,1,32.32-20.06A43.81,43.81,0,0,1,192,73.83a8.09,8.09,0,0,0,1,7.65A41.72,41.72,0,0,1,200,104Z">
-                  </path>
-                </svg>
-              </div>
-            </a>
-            <a id="social-linkedin" href="#"
-              class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-[#282b39] text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-              <div class="text-white" data-icon="LinkedinLogo" data-size="20px" data-weight="regular">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor"
-                  viewBox="0 0 256 256">
-                  <path
-                    d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z">
-                  </path>
-                </svg>
-              </div>
-            </a>
-          </div>
-          <div id="portfolio-hero-image" class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDp8ca8d927nVoC03GSn1vPpkwCQUyc5k6Qg7YVoejh9AhgaopxyqJFgxEqjhjWRsPDvlwuXTawkXfAmrxc2t-VhwiJoTSttGj7Dzq4VOYaEKxHyF-PMpl18vxoyxIkppo3FbFxci2k0X7mZSBvMnQK__aXZSmalG69mcA7UMmGY8kgINndfT_BaS3KL2k1G7a9aivMlnnAFQp030hfZdWR3NTZy4cdjgw59Qh9S3QJ5g-dJtrKHhF524z7VH1MN3FyYVHaFKn7W7Vs");'>
-          </div>
-        </div>
-      </header>
-      <div class="px-40 flex flex-1 justify-center py-5">
-        <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-          <div id="about" class="@container">
-            <div class="flex flex-col gap-6 px-4 py-10 @[480px]:gap-8 @[864px]:flex-row">
-              <div
-                class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg @[480px]:h-auto @[480px]:min-w-[400px] @[864px]:w-full"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCKsxvfeZcOOowh6VyoyCmFZiFGA2lrl8E3eY9bDgoA4g_FQJyiOE3bEPmjui_tFSXqJnUkInHCaqkToTyzXsx9wwv1je5M4o1kUGbWKNQ6xbW_-0K8Pw6t0lYEti37QZjlBMq0JhuGHcokhr3d9lY04Agn8JojrN2naZH18JG79uu6YfdTpYzJwhcR_P-phiHY0RFZWS4UhK6H291ZD49fkKZeqM8mLawsbx_tWkJXJf_NBcgWbnao9TEz6A4GQ67OP6PEz0nqf5kD");'>
-              </div>
-              <div class="flex flex-col gap-6 @[480px]:min-w-[400px] @[480px]:gap-8 @[864px]:justify-center">
-                <div class="flex flex-col gap-2 text-left">
-                  <h1 id="portfolio-title"
-                    class="text-white text-4xl font-black leading-tight tracking-[-0.033em] @[480px]:text-5xl @[480px]:font-black @[480px]:leading-tight @[480px]:tracking-[-0.033em]">
-                    Data Analyst Portfolio
-                  </h1>
-                  <h2 id="portfolio-bio"
-                    class="text-white text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal">
-                    Showcase your data analysis projects, skills, and experience. This portfolio is designed for data
-                    analysts and engineers to present their work effectively.
-                  </h2>
-                </div>
-                <button
-                  class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#1337ec] text-white text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em]">
-                  <span class="truncate">View Projects</span>
-                </button>
-              </div>
-            </div>
-          </div>
-          <h2 id="portfolio-projects-header"
-            class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
-            <span id="projects"></span>Featured Projects
-          </h2>
-          <div id="portfolio-projects" class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
-            <!-- Projects will be injected here -->
-          </div>
-          <h2 id="portfolio-skills-header"
-            class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
-            <span id="skills"></span>Skills
-          </h2>
-          <div id="portfolio-skills" class="flex gap-3 p-3 flex-wrap pr-4">
-            <div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-[#282b39] pl-4 pr-4">
-              <p class="text-white text-sm font-medium leading-normal">Python</p>
-            </div>
-          </div>
-          <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Experience</h2>
-          <div class="grid grid-cols-[40px_1fr] gap-x-2 px-4">
-            <!-- Experience static content -->
-          </div>
-          <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Education</h2>
-          <div class="grid grid-cols-[40px_1fr] gap-x-2 px-4">
-            <!-- Education static content -->
-          </div>
-          <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">
-            <span id="contact"></span>Contact
-          </h2>
-          <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
-            <label class="flex flex-col min-w-40 flex-1">
-              <p class="text-white text-base font-medium leading-normal pb-2">Email</p>
-              <input id="portfolio-email" placeholder="your.email@example.com"
-                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-white focus:outline-0 focus:ring-0 border border-[#3b3f54] bg-[#1c1d27] focus:border-[#3b3f54] h-14 placeholder:text-[#9da1b9] p-[15px] text-base font-normal leading-normal"
-                value="" />
-            </label>
-          </div>
-          <div class="flex px-4 py-3 justify-start">
-            <button
-              class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#1337ec] text-white text-sm font-bold leading-normal tracking-[0.015em]">
-              <span class="truncate">Send</span>
-            </button>
-          </div>
+<body class="selection:bg-indigo-500/30 selection:text-white">
 
-          <!-- ZestFolio Credits & CTA -->
-          <div class="w-full border-t border-[#282b39] bg-[#0a0a0f] py-8 px-4 mt-10">
-            <div class="max-w-[960px] mx-auto text-center space-y-4">
-              <p class="text-[#9da1b9] text-sm">
-                Portfolio created with <span class="text-[#1337ec] font-bold">ZestFolio</span>
-              </p>
-              <div class="space-y-3">
-                <p class="text-white text-lg font-semibold">
-                  Want to create your portfolio right now?
-                </p>
-                <a href="https://zestfolio.vercel.app/" target="_blank" rel="noopener noreferrer"
-                  class="inline-flex items-center justify-center px-8 py-3 bg-[#1337ec] text-white text-sm font-bold rounded-lg hover:bg-[#1028c0] transition-all duration-300 shadow-lg hover:shadow-[0_0_20px_rgba(19,55,236,0.5)]">
-                  Click Here Now
-                </a>
-              </div>
-            </div>
+  <!-- NAVIGATION -->
+  <nav class="fixed top-0 w-full z-50 border-b border-slate-custom bg-[#0a0b10]/80 backdrop-blur-xl">
+    <div class="max-w-6xl mx-auto px-6 h-20 flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
+          <i data-lucide="cpu" class="w-5 h-5 text-white"></i>
+        </div>
+        <span class="font-bold text-white tracking-tighter text-lg uppercase">System.Log</span>
+      </div>
+      <div class="hidden md:flex gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500">
+        <a href="#about" class="hover:text-indigo-400 transition">Philosophy</a>
+        <a href="#projects" class="hover:text-indigo-400 transition">Archives</a>
+        <a href="#skills" class="hover:text-indigo-400 transition">Stack</a>
+        <a href="#contact"
+          class="px-4 py-2 bg-indigo-600/10 text-indigo-400 rounded-full border border-indigo-500/20 hover:bg-indigo-600 hover:text-white transition">Get
+          in Touch</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-6xl mx-auto px-6">
+
+    <!-- HERO SECTION -->
+    <section id="home"
+      class="min-h-screen flex flex-col md:flex-row items-center justify-center gap-16 pt-20 bg-indigo-glow">
+      <div class="flex-1 space-y-8 order-2 md:order-1 text-center md:text-left">
+        <div class="space-y-4">
+          <p class="text-indigo-400 font-mono tracking-widest uppercase text-xs">INFJ // Systems Engineer</p>
+          <!-- EDIT YOUR NAME -->
+          <h1 id="portfolio-name" class="text-6xl md:text-8xl font-medium leading-[0.9]">
+            Your <span class="italic text-indigo-500 font-light">Name</span>
+          </h1>
+          <!-- EDIT YOUR TAGLINE -->
+          <p id="portfolio-title" class="text-xl text-slate-400 max-w-md mx-auto md:mx-0 leading-relaxed font-light">
+            Architecting <span class="text-white border-b border-indigo-500/50">Autonomous Grids</span> and precision
+            tools for the hardware frontier.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+          <a href="#projects"
+            class="px-8 py-4 bg-indigo-600 text-white text-xs font-bold uppercase tracking-widest rounded-lg hover:bg-indigo-700 transition shadow-lg shadow-indigo-500/20">
+            View Projects
+          </a>
+          <a href="#"
+            class="px-8 py-4 border border-slate-700 text-white text-xs font-bold uppercase tracking-widest rounded-lg hover:bg-white/5 transition flex items-center gap-2">
+            <i data-lucide="download" class="w-4 h-4"></i> CV.pdf
+          </a>
+        </div>
+      </div>
+
+      <!-- HERO PHOTO -->
+      <div class="flex-1 order-1 md:order-2">
+        <div class="relative w-64 h-64 md:w-96 md:h-96 mx-auto">
+          <!-- Geometric Decor -->
+          <div class="absolute -top-4 -right-4 w-full h-full border border-indigo-500/30 rounded-2xl -rotate-6"></div>
+          <!-- EDIT PHOTO URL -->
+          <div class="relative h-full w-full rounded-2xl overflow-hidden border-2 border-slate-800 bg-slate-900">
+            <img id="portfolio-main-image"
+              src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=1000"
+              class="h-full w-full object-cover grayscale opacity-80 hover:opacity-100 hover:grayscale-0 transition duration-700"
+              alt="Profile">
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- ABOUT / PHILOSOPHY -->
+    <section id="about" class="py-32 border-t border-slate-custom">
+      <div class="grid md:grid-cols-2 gap-20">
+        <div class="space-y-6">
+          <h2 class="text-4xl">Driven by <br /><span class="italic text-indigo-500 font-light">Deep Work</span> and
+            focus.</h2>
+          <div class="flex gap-4">
+            <div
+              class="px-3 py-1 bg-white/5 border border-white/10 rounded text-[10px] font-bold uppercase tracking-widest">
+              INFJ-A</div>
+            <div
+              class="px-3 py-1 bg-white/5 border border-white/10 rounded text-[10px] font-bold uppercase tracking-widest">
+              Systems Thinker</div>
+          </div>
+        </div>
+        <div class="space-y-6 text-slate-400 text-lg leading-relaxed font-light">
+          <!-- EDIT BIO -->
+          <p id="portfolio-bio">
+            I thrive in the intersection of hardware and logic. Inspired by the principles of <span
+              class="text-white italic font-medium text-base">Cal Newport’s Deep Work</span>, I approach engineering
+            with a commitment to high-concentration problem solving.
+          </p>
+          <p>
+            Whether I'm developing a high-precision resistor calculator like <strong
+              class="text-white font-medium">ColorOhm</strong> or experimenting with decentralized, self-healing <strong
+              class="text-white font-medium italic">Autonomous Grids</strong>, my goal is to build tools that are as
+            reliable as they are innovative.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education" class="py-32 bg-white/5 rounded-[2rem] px-10 md:px-20 border border-white/5 mb-32">
+      <h2 id="portfolio-education-header" class="text-4xl mb-16">Academic Foundation</h2>
+      <div id="portfolio-education" class="space-y-12">
+        <!-- ITEM 1 -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 group">
+          <div class="flex items-center gap-6">
+            <div
+              class="w-12 h-12 rounded-xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400">
+              <i data-lucide="graduation-cap"></i>
+            </div>
+            <div>
+              <h3 class="text-2xl group-hover:text-indigo-400 transition">B.Tech in Electrical Engineering</h3>
+              <p class="text-slate-500 font-light">University Name, Year 2021 — 2025</p>
+            </div>
+          </div>
+          <div
+            class="text-xs font-bold uppercase tracking-widest text-indigo-500 bg-indigo-500/10 px-4 py-2 rounded-full h-fit">
+            Major: Systems & Automation</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS ARCHIVE -->
+    <section id="projects" class="py-32">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
+        <h2 id="portfolio-projects-header" class="text-5xl">Selected <span class="italic font-light">Archives</span>
+        </h2>
+        <p class="text-slate-500 max-w-xs text-sm italic">Hardware prototypes and software tools built for precision.
+        </p>
+      </div>
+
+      <div id="portfolio-projects" class="grid md:grid-cols-2 gap-10">
+        <!-- PROJECT 1 -->
+        <div class="glass-card p-8 rounded-3xl group hover:border-indigo-500/50 transition">
+          <div class="flex justify-between items-start mb-6">
+            <div class="p-3 bg-indigo-600 rounded-xl"><i data-lucide="calculator" class="text-white"></i></div>
+            <a href="https://colorohm.rsmk.me" target="_blank" class="text-slate-500 hover:text-white"><i
+                data-lucide="external-link"></i></a>
+          </div>
+          <h3 class="text-2xl mb-2">ColorOhm</h3>
+          <p class="text-slate-400 font-light mb-6">A precision resistor color code calculator designed for embedded
+            engineers and electronics hobbyists.</p>
+          <div class="flex gap-3">
+            <span class="text-[10px] font-bold text-indigo-400 border border-indigo-400/20 px-2 py-1 rounded">WEB</span>
+            <span class="text-[10px] font-bold text-indigo-400 border border-indigo-400/20 px-2 py-1 rounded">UI
+              DESIGN</span>
+          </div>
+        </div>
+
+        <!-- PROJECT 2 -->
+        <div class="glass-card p-8 rounded-3xl group hover:border-indigo-500/50 transition">
+          <div class="flex justify-between items-start mb-6">
+            <div class="p-3 bg-indigo-600 rounded-xl"><i data-lucide="wind" class="text-white"></i></div>
+          </div>
+          <h3 class="text-2xl mb-2">Smart Exhaust System</h3>
+          <p class="text-slate-400 font-light mb-6">Autonomous fan control utilizing an MQ-2 sensor and Arduino with
+            manual overrides and safety timers.</p>
+          <div class="flex gap-3">
+            <span
+              class="text-[10px] font-bold text-indigo-400 border border-indigo-400/20 px-2 py-1 rounded">ARDUINO</span>
+            <span class="text-[10px] font-bold text-indigo-400 border border-indigo-400/20 px-2 py-1 rounded">IOT</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS STACK -->
+    <section id="skills" class="py-32 border-t border-slate-custom">
+      <h2 id="portfolio-skills-header" class="text-4xl mb-16 italic">Technical Stack</h2>
+      <div id="portfolio-skills" class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <!-- EDIT SKILL CATEGORY -->
+        <div class="space-y-4">
+          <h4 class="text-indigo-400 font-bold uppercase tracking-widest text-[10px]">Languages</h4>
+          <ul class="space-y-2 text-white font-light">
+            <li>Python</li>
+            <li>C / C++</li>
+            <li>JavaScript</li>
+          </ul>
+        </div>
+        <div class="space-y-4">
+          <h4 class="text-indigo-400 font-bold uppercase tracking-widest text-[10px]">Simulation</h4>
+          <ul class="space-y-2 text-white font-light">
+            <li>MATLAB</li>
+            <li>Simulink</li>
+            <li>NI Multisim</li>
+          </ul>
+        </div>
+        <div class="space-y-4">
+          <h4 class="text-indigo-400 font-bold uppercase tracking-widest text-[10px]">Hardware</h4>
+          <ul class="space-y-2 text-white font-light">
+            <li>Arduino UNO</li>
+            <li>ESP32 / IoT</li>
+            <li>Sensors Integration</li>
+          </ul>
+        </div>
+        <div class="space-y-4">
+          <h4 class="text-indigo-400 font-bold uppercase tracking-widest text-[10px]">Frontend</h4>
+          <ul class="space-y-2 text-white font-light">
+            <li>Tailwind CSS</li>
+            <li>HTML5 / CSS3</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICATES -->
+    <section id="certificates" class="py-32 border-t border-slate-custom">
+      <h2 id="portfolio-certifications-header" class="text-4xl mb-12">Certifications</h2>
+      <div id="portfolio-certifications" class="space-y-4">
+        <!-- ITEM -->
+        <div
+          class="flex items-center justify-between p-6 bg-white/5 rounded-xl hover:bg-white/10 transition border border-transparent hover:border-white/10">
+          <div class="flex items-center gap-4">
+            <i data-lucide="award" class="text-indigo-500"></i>
+            <span class="text-white font-medium">Smart Grid Technologies Specialization</span>
+          </div>
+          <span class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Coursera</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-32 text-center border-t border-slate-custom">
+      <div class="max-w-3xl mx-auto space-y-16">
+        <div class="space-y-4">
+          <h2 class="text-6xl italic">Ready to <span class="text-indigo-500">collaborate?</span></h2>
+          <p class="text-slate-400 font-light text-lg max-w-lg mx-auto leading-relaxed">
+            I am always open to discussing autonomous energy research, system engineering, or collaborative innovation.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center pt-8">
+          <!-- Direct Email Channel -->
+          <div class="p-8 glass-card rounded-2xl group hover:border-indigo-500/40 transition">
+            <i data-lucide="mail" class="w-8 h-8 mx-auto mb-4 text-indigo-400 group-hover:scale-110 transition"></i>
+            <h4 class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 mb-2">Electronic Mail</h4>
+            <a id="social-email" href="mailto:hello@example.com"
+              class="text-white hover:text-indigo-400 transition font-light">hello@yourname.com</a>
+          </div>
+
+          <!-- Professional Network Channel -->
+          <div class="p-8 glass-card rounded-2xl group hover:border-indigo-500/40 transition">
+            <i data-lucide="linkedin" class="w-8 h-8 mx-auto mb-4 text-indigo-400 group-hover:scale-110 transition"></i>
+            <h4 class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 mb-2">Professional Network</h4>
+            <a id="social-linkedin" href="#" class="text-white hover:text-indigo-400 transition font-light">LinkedIn /
+              YourName</a>
+          </div>
+
+          <!-- Project Archives Channel -->
+          <div class="p-8 glass-card rounded-2xl group hover:border-indigo-500/40 transition">
+            <i data-lucide="github" class="w-8 h-8 mx-auto mb-4 text-indigo-400 group-hover:scale-110 transition"></i>
+            <h4 class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 mb-2">Source Code</h4>
+            <a id="social-github" href="#" class="text-white hover:text-indigo-400 transition font-light">GitHub /
+              YourName</a>
+          </div>
+
+          <!-- Website Channel -->
+          <div class="p-8 glass-card rounded-2xl group hover:border-indigo-500/40 transition">
+            <i data-lucide="globe" class="w-8 h-8 mx-auto mb-4 text-indigo-400 group-hover:scale-110 transition"></i>
+            <h4 class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 mb-2">Website</h4>
+            <a id="social-website" href="#"
+              class="text-white hover:text-indigo-400 transition font-light">yourwebsite.com</a>
+          </div>
+        </div>
+
+        <div class="pt-8">
+          <a href="mailto:hello@example.com"
+            class="inline-flex items-center gap-3 px-10 py-5 bg-indigo-600 text-white font-bold uppercase tracking-[0.3em] rounded-full hover:bg-indigo-700 transition shadow-xl shadow-indigo-600/20">
+            <i data-lucide="send" class="w-4 h-4"></i> Establish Connection
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ZestFolio CTA -->
+  <div class="w-full border-t border-slate-custom bg-[#050610] py-12 px-4">
+    <div class="max-w-[960px] mx-auto text-center space-y-4">
+      <p class="text-slate-500 text-sm">
+        Portfolio created with <span class="text-indigo-400 font-bold">ZestFolio</span>
+      </p>
+      <div class="space-y-3">
+        <p class="text-white text-lg font-semibold">
+          Want to create your portfolio right now?
+        </p>
+        <a href="https://zestfolio.vercel.app/" target="_blank" rel="noopener noreferrer"
+          class="inline-flex items-center justify-center px-8 py-3 bg-indigo-600 text-white text-xs font-bold uppercase tracking-widest rounded-lg hover:bg-indigo-700 transition-all duration-300 shadow-lg shadow-indigo-500/20">
+          Click Here Now
+        </a>
+      </div>
     </div>
   </div>
-  <!-- Smooth Scroll Script -->
+
+  <footer
+    class="py-6 border-t border-slate-custom text-center text-[10px] font-bold uppercase tracking-[0.4em] text-slate-600">
+    © 2026 All Rights Reserved
+  </footer>
+
   <script>
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href');
-        if (targetId === '#') return;
-        const target = document.querySelector(targetId);
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
+    // Initialize Icons
+    lucide.createIcons();
   </script>
 </body>
 
