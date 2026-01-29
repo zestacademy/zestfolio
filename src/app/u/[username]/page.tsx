@@ -1,49 +1,28 @@
 'use client';
 
-import { use, useEffect, useState } from 'react';
+import { use } from 'react';
 
 export default function PortfolioPage({ params }: { params: Promise<{ username: string }> }) {
     const { username } = use(params);
-    const [htmlContent, setHtmlContent] = useState<string>('');
-    const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchPortfolio = async () => {
-            try {
-                // Fetch the generated HTML from our robust API route
-                const response = await fetch(`/api/portfolio/${username}`);
-                if (response.ok) {
-                    const html = await response.text();
-                    setHtmlContent(html);
-                } else {
-                    console.error('Failed to load portfolio');
-                }
-            } catch (error) {
-                console.error('Error fetching portfolio:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        if (username) {
-            fetchPortfolio();
-        }
-    }, [username]);
-
-    if (loading) {
-        return (
-            <div className="flex items-center justify-center min-h-screen bg-black text-white">
-                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-green-500"></div>
-            </div>
-        );
-    }
-
-    if (!htmlContent) {
-        return <div className="text-white text-center pt-20">Portfolio not found</div>;
-    }
-
-    // Render the raw HTML from the API
+    // Use an iframe to render the complete HTML document 
+    // This allows the portfolio to have its own <html>, <head>, <body> context
+    // preserving all styles, scripts, and layout attributes correctly.
     return (
-        <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+        <iframe
+            src={`/api/portfolio/${username}`}
+            className="w-full h-screen border-none block"
+            title={`${username}'s Portfolio`}
+            // Use dark background to prevent white flash
+            style={{
+                width: '100vw',
+                height: '100vh',
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                zIndex: 0,
+                backgroundColor: '#111'
+            }}
+        />
     );
 }

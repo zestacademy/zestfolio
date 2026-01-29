@@ -91,7 +91,44 @@ export async function GET(
         const htmlContent = fs.readFileSync(templatePath, 'utf8');
         const $ = cheerio.load(htmlContent);
 
+        // 🔍 DIAGNOSTIC LOGGING - Remove after debugging
+        console.log('🎨 Template Debug:', {
+            template: portfolio.templateId,
+            hasStyleTag: $('style').length,
+            hasTailwindScript: $('script[src*="tailwindcss"]').length,
+            bodyClasses: $('body').attr('class'),
+            bodyStyle: $('body').attr('style'),
+            firstStyleContent: $('style').first().html()?.substring(0, 100) + '...'
+        });
+
         // 4. Inject Data (Robust ID-First Approach)
+
+        // 🎨 THEME ENFORCEMENT (Fix for missing styles/white background)
+        const templateTheme: Record<string, { bg: string, text: string }> = {
+            'template01': { bg: '#111811', text: '#ffffff' }, // Neon
+            'template02': { bg: '#f0fdf4', text: '#1c1917' }, // Emerald
+            'template03': { bg: '#0f172a', text: '#e2e8f0' }, // Glass
+            'template04': { bg: '#f8fafc', text: '#0f172a' }, // Blue
+            'template05': { bg: '#1a1810', text: '#d6d3d1' }, // Amber (Alex Smith)
+            'template06': { bg: '#0d0d0d', text: '#d6d3d1' }, // Systems (Elias)
+            'template07': { bg: '#ffffff', text: '#18181b' }, // Creative (Fallback)
+            'template08': { bg: '#ffffff', text: '#18181b' }, // Minimal
+            'template09': { bg: '#09090b', text: '#ffffff' }, // Gradient
+        };
+
+        const theme = templateTheme[portfolio.templateId] || { bg: '#ffffff', text: '#000000' };
+
+        // Force apply theme to body (Inline styles win over missing classes)
+        $('body').css({
+            'background-color': theme.bg,
+            'color': theme.text,
+            'min-height': '100vh'
+        });
+
+        // Ensure Tailwind is present
+        if ($('script[src*="tailwindcss"]').length === 0) {
+            $('head').append('<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>');
+        }
 
         // Title
         $('title').text(`${portfolio.fullName} | Portfolio`);
@@ -226,42 +263,57 @@ export async function GET(
             }
         });
 
-        // Projects
-        const projectsHeader = $('#portfolio-projects-header, h2:contains(\"Featured Projects\")');
+        // Projects - PRESERVE template structure, only inject data
         const projectsContainer = $('#portfolio-projects');
 
-        if (portfolio.projects && portfolio.projects.length > 0) {
+        if (portfolio.projects && portfolio.projects.length > 0 && projectsContainer.length) {
+            // Find the first project card template within the container
+            const firstCard = projectsContainer.children().first();
 
-            // If explicit container exists, use it
-            let container = projectsContainer.length ? projectsContainer : projectsHeader.next('div');
+            if (firstCard.length) {
+                // Clone the template styling
+                const cardClasses = firstCard.attr('class') || '';
+                const containerClasses = projectsContainer.attr('class') || '';
 
-            if (container.length) {
-                // Use neutral styling that works with any template theme
-                const projectsHTML = portfolio.projects.map((proj: any) => `
-                    <div class="flex flex-col gap-4 rounded-lg min-w-[300px] max-w-[320px] shrink-0 snap-center">
-                        <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg relative overflow-hidden group" 
-                             style="background-image: url('${proj.imageUrl || 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=2070&auto=format&fit=crop'}'); background-color: #333;">
-                             <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center backdrop-blur-sm">
-                                ${proj.link ? `<a href="${proj.link}" target="_blank" class="bg-white/90 text-black px-6 py-2 rounded-full font-bold text-sm transform scale-90 group-hover:scale-100 transition-transform hover:bg-white">View Project</a>` : ''}
-                             </div>
+                // Clear container
+                projectsContainer.empty();
+
+                // Create new cards using the template's structure and styling
+                portfolio.projects.forEach((proj: any) => {
+                    // Decide content: Image or Title Placeholder
+                    const imageClass = firstCard.find('img').attr('class') || 'w-full h-full object-cover';
+                    const imageContent = proj.imageUrl ?
+                        `<img src="${proj.imageUrl}" class="${imageClass}" alt="${proj.title}" />` :
+                        `<div class="${imageClass} flex items-center justify-center bg-gray-800 text-gray-400 p-4 text-center border-b border-white/10">
+                            <span class="font-bold text-lg opacity-80">${proj.title || 'Project'}</span>
+                        </div>`;
+
+                    const projectCard = `
+                        <div class="${cardClasses}">
+                            ${firstCard.find('img, [style*="background-image"]').length ?
+                            `<div class="${firstCard.find('img, [style*="background-image"]').parent().attr('class') || 'aspect-video'} relative overflow-hidden">
+                                    ${imageContent}
+                                 </div>` : ''
+                        }
+                            <div class="${firstCard.find('h3, .text-xl, .text-2xl').parent().attr('class') || 'p-6 space-y-4'}">
+                                <h3 class="${firstCard.find('h3, .text-xl, .text-2xl').attr('class') || 'text-xl font-bold'}">${proj.title || 'Untitled Project'}</h3>
+                                <p class="${firstCard.find('p').attr('class') || 'text-sm opacity-70'}">${proj.description || ''}</p>
+                                ${proj.link ? `<a href="${proj.link}" target="_blank" class="text-sm font-bold hover:underline inline-flex items-center gap-2">View Project →</a>` : ''}
+                                ${proj.technologies && proj.technologies.length ?
+                            `<div class="flex flex-wrap gap-2">
+                                        ${proj.technologies.map((tech: string) => `<span class="text-xs px-2 py-1 rounded opacity-60">${tech}</span>`).join('')}
+                                    </div>` : ''
+                        }
+                            </div>
                         </div>
-                        <div>
-                            <p class="text-lg font-bold leading-normal line-clamp-1 mb-1">${proj.title || 'Untitled Project'}</p>
-                            <p class="text-sm opacity-70 font-normal leading-relaxed line-clamp-2 hfont-normal leading-relaxed line-clamp-2 h-[40px]">${proj.description || ''}</p>
-                        </div>
-                    </div>
-                `).join('');
-
-                container.empty()
-                    .removeClass('flex-col grid')
-                    .addClass('flex overflow-x-auto pb-6 gap-6 px-4 snap-x') // Enhanced scroll container
-                    .html(projectsHTML);
+                    `;
+                    projectsContainer.append(projectCard);
+                });
             }
-        } else {
-            projectsHeader.remove();
-            if (projectsContainer.length) projectsContainer.remove();
-            // Legacy fallback removal
-            if (!projectsContainer.length) projectsHeader.next('div').remove();
+        } else if (!portfolio.projects || portfolio.projects.length === 0) {
+            // Remove section if no projects
+            $('#portfolio-projects-header').remove();
+            projectsContainer.remove();
         }
 
         // Skills
@@ -320,86 +372,108 @@ export async function GET(
             return '<svg viewBox="0 0 256 256" fill="currentColor"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128Z"></path></svg>';
         };
 
-        if (portfolio.skills && portfolio.skills.length > 0) {
-            let container = skillsContainer.length ? skillsContainer : skillsHeader.next('div');
+        // Skills - PRESERVE template structure and colors
+        if (portfolio.skills && portfolio.skills.length > 0 && skillsContainer.length) {
+            const firstSkill = skillsContainer.find('div, li, span').first();
 
-            if (container.length) {
-                container.empty();
-                const skillsHTML = portfolio.skills.map((skill: any) => {
+            if (firstSkill.length) {
+                // Clone template's classes to preserve colors and styling
+                const skillClasses = firstSkill.attr('class') || '';
+                const containerClasses = skillsContainer.attr('class') || '';
+
+                // Clear and preserve structure
+                skillsContainer.empty();
+
+                // Create skills using TEMPLATE styling
+                portfolio.skills.forEach((skill: any) => {
                     const skillName = typeof skill === 'string' ? skill : (skill.name || skill);
                     const icon = getSkillIcon(skillName);
-                    // Neutral styling that adapts to template theme
-                    return `
-                        <div class="flex items-center gap-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-800/50 px-4 py-3 min-w-[140px] backdrop-blur-sm">
-                            <div class="w-5 h-5 opacity-80">
-                                ${icon}
-                            </div>
-                            <span class="font-semibold">${skillName}</span>
+
+                    // Use template's original classes
+                    const skillHTML = `
+                        <div class="${skillClasses}">
+                            ${icon && firstSkill.find('svg, i, img').length ?
+                            `<div class="${firstSkill.find('svg, i, img').parent().attr('class') || 'w-5 h-5'}">
+                                    ${icon}
+                                </div>` : ''
+                        }
+                            <span class="${firstSkill.find('span, p').attr('class') || ''}">${skillName}</span>
                         </div>
                     `;
-                }).join('');
-                container.html(`<div class="flex flex-wrap gap-3 px-4">${skillsHTML}</div>`);
+                    skillsContainer.append(skillHTML);
+                });
             }
-        } else {
-            skillsHeader.remove();
-            if (skillsContainer.length) skillsContainer.remove();
+        } else if (!portfolio.skills || portfolio.skills.length === 0) {
+            $('#portfolio-skills-header').remove();
+            skillsContainer.remove();
         }
 
-        // Certifications
-        const certificationsHeader = $('#portfolio-certifications-header, h2:contains("Certifications")');
+        // Certifications - PRESERVE template structure and colors
         const certificationsContainer = $('#portfolio-certifications');
 
-        if (portfolio.certifications && portfolio.certifications.length > 0) {
-            let container = certificationsContainer.length ? certificationsContainer : certificationsHeader.next('div');
+        if (portfolio.certifications && portfolio.certifications.length > 0 && certificationsContainer.length) {
+            const firstCert = certificationsContainer.find('div, li').first();
 
-            if (container.length) {
-                container.empty();
-                const certificationsHTML = portfolio.certifications.map((cert: string) => {
-                    // Neutral styling that adapts to any template theme
-                    return `
-                        <div class="flex items-center gap-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 px-4 py-3 min-w-[180px]">
-                            <div class="opacity-70">
-                                <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px"><path d="M225.86,102.82c-3.77-3.94-7.67-8-9.14-11.57-1.36-3.27-1.44-8.69-1.52-13.94-.15-9.76-.31-20.82-8-28.51s-18.75-7.85-28.51-8c-5.25-.08-10.67-.16-13.94-1.52-3.56-1.47-7.63-5.37-11.57-9.14C146.28,23.51,138.44,16,128,16s-18.27,7.51-25.18,14.14c-3.94,3.77-8,7.67-11.57,9.14C88,40.64,82.56,40.72,77.31,40.8c-9.76.15-20.82.31-28.51,8S41,67.55,40.8,77.31c-.08,5.25-.16,10.67-1.52,13.94-1.47,3.56-5.37,7.63-9.14,11.57C23.51,109.72,16,117.56,16,128s7.51,18.27,14.14,25.18c3.77,3.94,7.67,8,9.14,11.57,1.36,3.27,1.44,8.69,1.52,13.94.15,9.76.31,20.82,8,28.51s18.75,7.85,28.51,8c5.25.08,10.67.16,13.94,1.52,3.56,1.47,7.63,5.37,11.57,9.14C109.72,232.49,117.56,240,128,240s18.27-7.51,25.18-14.14c3.94-3.77,8-7.67,11.57-9.14,3.27-1.36,8.69-1.44,13.94-1.52,9.76-.15,20.82-.31,28.51-8s7.85-18.75,8-28.51c.08-5.25.16-10.67,1.52-13.94,1.47-3.56,5.37-7.63,9.14-11.57C232.49,146.28,240,138.44,240,128S232.49,109.73,225.86,102.82Zm-52.2,6.84-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
-                            </div>
-                            <span class="font-semibold">${cert}</span>
+            if (firstCert.length) {
+                // Clone template's classes to preserve colors and styling
+                const certClasses = firstCert.attr('class') || '';
+
+                // Clear container
+                certificationsContainer.empty();
+
+                // Create certifications using TEMPLATE styling
+                portfolio.certifications.forEach((cert: string) => {
+                    const certHTML = `
+                        <div class="${certClasses}">
+                            ${firstCert.find('svg, i, [data-lucide]').length ?
+                            `<div class="${firstCert.find('svg, i, [data-lucide]').parent().attr('class') || ''}">
+                                    <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px"><path d="M225.86,102.82c-3.77-3.94-7.67-8-9.14-11.57-1.36-3.27-1.44-8.69-1.52-13.94-.15-9.76-.31-20.82-8-28.51s-18.75-7.85-28.51-8c-5.25-.08-10.67-.16-13.94-1.52-3.56-1.47-7.63-5.37-11.57-9.14C146.28,23.51,138.44,16,128,16s-18.27,7.51-25.18,14.14c-3.94,3.77-8,7.67-11.57,9.14C88,40.64,82.56,40.72,77.31,40.8c-9.76.15-20.82.31-28.51,8S41,67.55,40.8,77.31c-.08,5.25-.16,10.67-1.52,13.94-1.47,3.56-5.37,7.63-9.14,11.57C23.51,109.72,16,117.56,16,128s7.51,18.27,14.14,25.18c3.77,3.94,7.67,8,9.14,11.57,1.36,3.27,1.44,8.69,1.52,13.94.15,9.76.31,20.82,8,28.51s18.75,7.85,28.51,8c5.25.08,10.67.16,13.94,1.52,3.56,1.47,7.63,5.37,11.57,9.14C109.72,232.49,117.56,240,128,240s18.27-7.51,25.18-14.14c3.94-3.77,8-7.67,11.57-9.14,3.27-1.36,8.69-1.44,13.94-1.52,9.76-.15,20.82-.31,28.51-8s7.85-18.75,8-28.51c.08-5.25.16-10.67,1.52-13.94,1.47-3.56,5.37-7.63,9.14-11.57C232.49,146.28,240,138.44,240,128S232.49,109.73,225.86,102.82Zm-52.2,6.84-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"></path></svg>
+                                </div>` : ''
+                        }
+                            <span class="${firstCert.find('span, p').filter(':not(:has(svg))').attr('class') || ''}">${cert}</span>
                         </div>
                     `;
-                }).join('');
-                container.html(`<div class="flex flex-wrap gap-3 px-4">${certificationsHTML}</div>`);
+                    certificationsContainer.append(certHTML);
+                });
             }
-        } else {
-            certificationsHeader.remove();
-            if (certificationsContainer.length) certificationsContainer.remove();
+        } else if (!portfolio.certifications || portfolio.certifications.length === 0) {
+            $('#portfolio-certifications-header').remove();
+            certificationsContainer.remove();
         }
 
-        // Education (Insert dynamically if not present)
-        const eduHeader = $('h2:contains("Education")');
-        if (portfolio.education && portfolio.education.length > 0 && eduHeader.length === 0) {
-            // Use neutral styling that works across all templates
-            const educationHTML = `
-                <div class="education-section px-4 py-8">
-                    <h2 class="text-[22px] font-bold leading-tight tracking-[-0.015em] mb-6">Education</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        ${portfolio.education.map((edu: any) => `
-                            <div class="p-5 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 backdrop-blur-sm">
-                                <h3 class="text-lg font-bold">${edu.degree}</h3>
-                                <p class="font-medium text-lg opacity-80">${edu.institution}</p>
-                                <p class="text-sm mt-1 opacity-70">${edu.fieldOfStudy}</p>
-                                <p class="text-xs mt-3 font-mono uppercase tracking-widest opacity-60">${edu.startDate} - ${edu.current ? 'Present' : edu.endDate}</p>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
+        // Education - PRESERVE template structure if exists
+        const educationContainer = $('#portfolio-education');
 
-            // Insert before Projects section (moved from bottom to appear earlier)
-            const projectsHeaders = $('#portfolio-projects-header, h2:contains("Featured Projects"), h2:contains("Selected Work"), h2:contains("Projects")');
-            if (projectsHeaders.length) {
-                projectsHeaders.first().closest('section, div.flex.flex-col, div[class*="py-"]').before(educationHTML);
-            } else {
-                // Fallback: insert in main content area
-                $('.layout-content-container, main, body').append(educationHTML);
+        if (portfolio.education && portfolio.education.length > 0 && educationContainer.length) {
+            const firstEdu = educationContainer.find('div, li').first();
+
+            if (firstEdu.length) {
+                // Clone template's classes to preserve colors and styling
+                const eduClasses = firstEdu.attr('class') || '';
+
+                // Clear container
+                educationContainer.empty();
+
+                // Create education entries using TEMPLATE styling
+                portfolio.education.forEach((edu: any) => {
+                    const eduHTML = `
+                        <div class="${eduClasses}">
+                            ${firstEdu.find('h3').length ?
+                            `<h3 class="${firstEdu.find('h3').attr('class') || 'text-xl font-bold'}">${edu.degree}</h3>` :
+                            `<p class="font-bold text-lg">${edu.degree}</p>`
+                        }
+                            <p class="${firstEdu.find('p').eq(0).attr('class') || 'opacity-80'}">${edu.institution}</p>
+                            ${edu.fieldOfStudy ? `<p class="${firstEdu.find('p').eq(1).attr('class') || 'text-sm opacity-70 mt-1'}">${edu.fieldOfStudy}</p>` : ''}
+                            <p class="${firstEdu.find('p, span').filter(':last').attr('class') || 'text-xs opacity-60 mt-2'}">${edu.startDate} - ${edu.current ? 'Present' : edu.endDate}</p>
+                        </div>
+                    `;
+                    educationContainer.append(eduHTML);
+                });
             }
+        } else if (!portfolio.education || portfolio.education.length === 0) {
+            // Remove education section if no data
+            $('#portfolio-education-header').remove();
+            educationContainer.remove();
         }
 
         // Email
@@ -420,7 +494,40 @@ export async function GET(
             headers['Content-Disposition'] = `attachment; filename="${username}-portfolio.html"`;
         }
 
-        return new NextResponse($.html(), {
+        // 5. Cleanup & Styling Fixes
+
+        // Remove "Create with this template" floating button
+        $('a:contains("Create with this template")').remove();
+        $('a[href*="zestfolio.vercel.app/login"]').remove(); // specific target fallback
+
+        // Remove ZestFolio Promotional CTA Section (usually at bottom)
+        $('div:contains("Portfolio created with")').filter(function () {
+            return $(this).text().includes('ZestFolio');
+        }).closest('div[class*="border-t"], section').remove();
+
+        // INJECT NEW STANDARDIZED FOOTER
+        const footerHTML = `
+            <div class="w-full py-8 px-4 mt-10 border-t border-white/10 relative z-50">
+                <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+                    <p class="text-sm opacity-70">
+                        Created using <a href="https://zestfolio.vercel.app" target="_blank" class="font-bold hover:underline">Zestfolio</a>
+                    </p>
+                    <a href="https://zestfolio.vercel.app/login" target="_blank" 
+                       class="inline-flex items-center gap-2 px-5 py-2 rounded-full font-bold text-xs uppercase tracking-wider transition-transform hover:scale-105"
+                       style="background-color: var(--primary-color, #fff); color: var(--bg-color, #000); border: 1px solid rgba(255,255,255,0.2);">
+                       Create my portfolio
+                    </a>
+                </div>
+            </div>
+        `;
+
+        // Append to body (or main wrapper if exists)
+        $('body').append(footerHTML);
+
+        // 6. Final HTML Generation
+        const finalHtml = $.html();
+
+        return new NextResponse(finalHtml, {
             headers: headers,
         });
 
