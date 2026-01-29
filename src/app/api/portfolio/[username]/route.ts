@@ -130,8 +130,22 @@ export async function GET(
             $('head').append('<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>');
         }
 
-        // Title
-        $('title').text(`${portfolio.fullName} | Portfolio`);
+        // Title & Favicon
+        const browserTitle = portfolio.fullName || username;
+        $('title').text(browserTitle);
+
+        // Inject/Update Favicon (Browser Icon)
+        if (portfolio.profilePhoto) {
+            // Remove existing favicons to avoid conflicts
+            $('link[rel="icon"], link[rel="shortcut icon"], link[rel="apple-touch-icon"]').remove();
+
+            // Add new favicon links
+            $('head').append(`
+                <link rel="icon" type="image/png" href="${portfolio.profilePhoto}">
+                <link rel="shortcut icon" type="image/png" href="${portfolio.profilePhoto}">
+                <link rel="apple-touch-icon" href="${portfolio.profilePhoto}">
+            `);
+        }
 
         // Name
         const nameSelectors = ['#portfolio-name', 'h2:contains("TechNexus")', '.user-fullname', 'div.logo-text'];

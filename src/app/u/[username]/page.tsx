@@ -1,9 +1,46 @@
-'use client';
 
-import { use } from 'react';
+import { db } from '@/lib/firebase';
+import { collection, query, where, getDocs } from 'firebase/firestore';
+import { Metadata } from 'next';
 
-export default function PortfolioPage({ params }: { params: Promise<{ username: string }> }) {
-    const { username } = use(params);
+type Props = {
+    params: Promise<{ username: string }>;
+};
+
+// 1. Generate Metadata (Title & Favicon)
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+    const { username } = await params;
+
+    // Fetch user data to populate title and icon
+    const portfoliosRef = collection(db, 'portfolios');
+    const q = query(portfoliosRef, where('username', '==', username));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+        return {
+            title: 'Portfolio Not Found'
+        };
+    }
+
+    const data = querySnapshot.docs[0].data();
+    const fullName = data.fullName || username;
+    const title = data.professionalTitle || `Portfolio of ${fullName}`;
+    const profilePhoto = data.profilePhoto;
+
+    return {
+        title: fullName,
+        description: title,
+        icons: profilePhoto ? {
+            icon: profilePhoto,
+            shortcut: profilePhoto,
+            apple: profilePhoto,
+        } : undefined,
+    };
+}
+
+// 2. Server Component
+export default async function PortfolioPage({ params }: Props) {
+    const { username } = await params;
 
     // Use an iframe to render the complete HTML document 
     // This allows the portfolio to have its own <html>, <head>, <body> context
