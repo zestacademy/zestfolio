@@ -512,7 +512,7 @@ export async function GET(
 
         // Remove "Create with this template" floating button
         $('a:contains("Create with this template")').remove();
-        $('a[href*="zestfolio.vercel.app/login"]').remove(); // specific target fallback
+        $('a[href*="zestfolio.vercel.app/login"], a[href*="zestfolio.zestacademy.tech/login"]').remove(); // specific target fallback
 
         // Remove ZestFolio Promotional CTA Section (usually at bottom)
         $('div:contains("Portfolio created with")').filter(function () {
@@ -524,9 +524,9 @@ export async function GET(
             <div class="w-full py-8 px-4 mt-10 border-t border-white/10 relative z-50">
                 <div class="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
                     <p class="text-sm opacity-70">
-                        Created using <a href="https://zestfolio.vercel.app" target="_blank" class="font-bold hover:underline">Zestfolio</a>
+                        Created using <a href="https://zestfolio.zestacademy.tech" target="_blank" class="font-bold hover:underline">Zestfolio</a>
                     </p>
-                    <a href="https://zestfolio.vercel.app/login" target="_blank" 
+                    <a href="https://zestfolio.zestacademy.tech/login" target="_blank" 
                        class="inline-flex items-center gap-2 px-5 py-2 rounded-full font-bold text-xs uppercase tracking-wider transition-transform hover:scale-105"
                        style="background-color: var(--primary-color, #fff); color: var(--bg-color, #000); border: 1px solid rgba(255,255,255,0.2);">
                        Create my portfolio

@@ -76,7 +76,7 @@ export default function DashboardPage() {
                             )}
                         </div>
                         <p className="text-xs text-muted-foreground mt-2">
-                            {isLive ? `Accessible at zestfolio.vercel.app/u/${username}` : "Complete your profile to go live."}
+                            {isLive ? `Accessible at zestfolio.zestacademy.tech/u/${username}` : "Complete your profile to go live."}
                         </p>
                     </div>
                     {!isLive && (

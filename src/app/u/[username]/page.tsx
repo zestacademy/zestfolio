@@ -28,8 +28,33 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const profilePhoto = data.profilePhoto;
 
     return {
-        title: fullName,
-        description: title,
+        title: `${fullName} | ${title}`,
+        description: data.aboutMe || `Check out ${fullName}'s portfolio on Zestfolio.`,
+        metadataBase: new URL(`https://zestfolio.zestacademy.tech`),
+        alternates: {
+            canonical: `/u/${username}`,
+        },
+        openGraph: {
+            title: `${fullName} | ${title}`,
+            description: data.aboutMe || `Check out ${fullName}'s portfolio on Zestfolio.`,
+            url: `https://zestfolio.zestacademy.tech/u/${username}`,
+            siteName: "Zestfolio",
+            images: profilePhoto ? [
+                {
+                    url: profilePhoto,
+                    width: 800,
+                    height: 800,
+                    alt: `${fullName}'s Profile Photo`,
+                },
+            ] : undefined,
+            type: "profile",
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: fullName,
+            description: title,
+            images: profilePhoto ? [profilePhoto] : undefined,
+        },
         icons: profilePhoto ? {
             icon: profilePhoto,
             shortcut: profilePhoto,
