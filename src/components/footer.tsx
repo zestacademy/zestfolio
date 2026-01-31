@@ -13,7 +13,7 @@ export function Footer() {
                             Build your portfolio in 5 minutes
                         </p>
                     </div>
-                    
+
                     <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 text-sm">
                         <Link href="/features" className="text-muted-foreground hover:text-primary transition-colors">
                             Features
@@ -29,11 +29,17 @@ export function Footer() {
                         </Link>
                     </div>
                 </div>
-                
-                <div className="mt-6 pt-4 border-t border-border/50 flex flex-col md:flex-row items-center justify-between gap-2">
-                    <p className="text-xs text-center md:text-left text-muted-foreground">
-                        © 2024 Zest Academy. All rights reserved.
-                    </p>
+
+                <div className="mt-6 pt-4 border-t border-border/50 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
+                        <p className="text-xs text-center md:text-left text-muted-foreground">
+                            © {new Date().getFullYear()} Zest Academy. All rights reserved.
+                        </p>
+                        <div className="flex gap-4 text-xs text-muted-foreground">
+                            <Link href="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+                            <Link href="/terms-conditions" className="hover:text-primary transition-colors">Terms & Conditions</Link>
+                        </div>
+                    </div>
                     <p className="text-xs text-center md:text-right text-muted-foreground">
                         From the creators of{" "}
                         <Link
