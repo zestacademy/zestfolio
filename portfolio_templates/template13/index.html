@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Portfolio | Alex Rivera</title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Sora:wght@400;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#60a5fa",
+                        "ice-blue": "#93c5fd",
+                        "arctic": "#0f172a",
+                        "frost": "#1e293b",
+                    },
+                    fontFamily: {
+                        "display": ["Sora", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+            body { @apply bg-arctic text-slate-300 font-sans; }
+            h1, h2, h3, h4 { @apply font-display text-white; }
+        }
+        @layer utilities {
+            .frost-panel { @apply bg-frost/40 backdrop-blur-sm border border-slate-700/50; }
+            .glow-text { text-shadow: 0 0 30px rgba(96, 165, 250, 0.4); }
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #60a5fa; }
+    </style>
+</head>
+
+<body class="selection:bg-primary/30 selection:text-white">
+
+    <!-- NAVIGATION -->
+    <header class="sticky top-0 z-50 bg-arctic/90 backdrop-blur-md border-b border-slate-800">
+        <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+            <div class="flex items-center gap-3">
+                <div class="text-primary">
+                    <span class="material-symbols-outlined text-3xl">code</span>
+                </div>
+                <div class="flex flex-col">
+                    <h2 class="text-white text-xl font-bold leading-tight">Alex Rivera</h2>
+                    <span class="text-[10px] uppercase tracking-widest font-medium text-ice-blue">Full Stack
+                        Developer</span>
+                </div>
+            </div>
+
+            <nav class="hidden md:flex gap-8 items-center text-sm font-medium text-slate-400">
+                <a class="hover:text-primary transition-colors" href="#about">About</a>
+                <a class="hover:text-primary transition-colors" href="#education">Education</a>
+                <a class="hover:text-primary transition-colors" href="#projects">Projects</a>
+                <a class="hover:text-primary transition-colors" href="#skills">Skills</a>
+                <a class="hover:text-primary transition-colors" href="#contact">Contact</a>
+            </nav>
+
+            <a href="#contact"
+                class="px-6 py-2.5 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-ice-blue transition-all">
+                Get in Touch
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6">
+
+        <!-- HERO SECTION -->
+        <section id="home" class="min-h-[85vh] flex flex-col md:flex-row items-center gap-16 py-12 md:py-24">
+            <div class="flex-1 space-y-8 order-2 md:order-1 text-center md:text-left">
+                <div class="space-y-6">
+                    <div
+                        class="inline-block px-4 py-1.5 bg-primary/10 border border-primary/30 rounded-full text-primary text-xs font-semibold">
+                        Available for Projects
+                    </div>
+                    <h1 id="portfolio-name" class="text-5xl md:text-7xl font-bold leading-tight text-white">
+                        Building <span class="text-primary glow-text">Scalable</span> Web Solutions
+                    </h1>
+                    <p id="portfolio-title" class="text-lg text-slate-400 max-w-xl leading-relaxed">
+                        Specialized in creating high-performance applications with modern technologies and clean
+                        architecture.
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                    <a href="#projects"
+                        class="px-8 py-3.5 bg-white text-arctic text-sm font-semibold rounded-lg hover:bg-slate-100 transition-all shadow-lg">
+                        View Portfolio
+                    </a>
+                    <a href="#contact"
+                        class="px-8 py-3.5 border border-slate-700 text-white text-sm font-semibold rounded-lg hover:bg-frost transition-all">
+                        Contact Me
+                    </a>
+                </div>
+            </div>
+
+            <div class="flex-shrink-0 order-1 md:order-2 relative">
+                <div class="absolute -inset-6 bg-primary/20 rounded-3xl blur-2xl"></div>
+                <div
+                    class="w-64 h-80 md:w-96 md:h-[480px] rounded-2xl overflow-hidden shadow-2xl relative z-10 border border-slate-700">
+                    <img id="portfolio-main-image"
+                        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=1000"
+                        class="w-full h-full object-cover" alt="Profile Photo">
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT ME -->
+        <section id="about" class="py-32 border-t border-slate-800 scroll-mt-20">
+            <div class="grid md:grid-cols-2 gap-20">
+                <div class="space-y-6">
+                    <h2 class="text-4xl md:text-5xl font-bold">Passionate About <br /><span class="text-primary">Clean
+                            Code</span></h2>
+                    <div class="flex gap-3">
+                        <span
+                            class="px-4 py-1.5 bg-primary/10 text-primary border border-primary/30 rounded-full text-xs font-semibold">Problem
+                            Solver</span>
+                        <span
+                            class="px-4 py-1.5 bg-frost text-slate-300 border border-slate-700 rounded-full text-xs font-semibold">Team
+                            Player</span>
+                    </div>
+                </div>
+                <div class="space-y-6 text-slate-400 text-base leading-relaxed">
+                    <p id="portfolio-bio">
+                        With a strong foundation in computer science and years of hands-on experience, I transform
+                        complex problems into elegant solutions. My expertise spans the full development lifecycle from
+                        conception to deployment.
+                    </p>
+                    <p>
+                        I believe in writing code that's not just functional, but maintainable and scalable for the
+                        future.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- EDUCATION -->
+        <section id="education" class="py-32 border-t border-slate-800 scroll-mt-20">
+            <h2 id="portfolio-education-header" class="text-3xl font-bold mb-16 text-primary">Education</h2>
+            <div id="portfolio-education" class="space-y-8">
+                <div
+                    class="flex flex-col md:flex-row md:items-center justify-between gap-6 p-8 frost-panel rounded-2xl group hover:border-primary/50 transition-all">
+                    <div class="flex items-center gap-6">
+                        <div class="text-primary group-hover:scale-110 transition-transform">
+                            <i data-lucide="graduation-cap" class="size-12"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-semibold group-hover:text-primary transition-colors">B.S. in
+                                Computer Science</h3>
+                            <p class="text-slate-400 mt-1">Stanford University • 2018 — 2022</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">GPA: 3.9/4.0</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section id="projects" class="py-32 border-t border-slate-800 scroll-mt-20">
+            <div class="flex justify-between items-end mb-16">
+                <h2 id="portfolio-projects-header" class="text-4xl font-bold">Featured <span
+                        class="text-primary">Work</span></h2>
+            </div>
+            <div id="portfolio-projects" class="grid md:grid-cols-2 gap-10">
+                <!-- PROJECT 1 -->
+                <div class="group space-y-5">
+                    <div class="aspect-video frost-panel rounded-2xl overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800"
+                            class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-arctic via-arctic/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-8">
+                            <a href="#" class="px-6 py-2.5 bg-primary text-white font-semibold rounded-lg text-sm">View
+                                Project</a>
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-semibold">SaaS Analytics Platform</h3>
+                    <p class="text-slate-400 leading-relaxed">Real-time dashboard for business intelligence with
+                        advanced data visualization and AI insights.</p>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="px-3 py-1 bg-frost text-xs font-medium rounded-full text-slate-300">React</span>
+                        <span class="px-3 py-1 bg-frost text-xs font-medium rounded-full text-slate-300">Node.js</span>
+                        <span
+                            class="px-3 py-1 bg-frost text-xs font-medium rounded-full text-slate-300">PostgreSQL</span>
+                    </div>
+                </div>
+
+                <!-- PROJECT 2 -->
+                <div class="group space-y-5">
+                    <div class="aspect-video frost-panel rounded-2xl overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800"
+                            class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-arctic via-arctic/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-8">
+                            <a href="#" class="px-6 py-2.5 bg-primary text-white font-semibold rounded-lg text-sm">View
+                                Project</a>
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-semibold">E-Commerce Microservices</h3>
+                    <p class="text-slate-400 leading-relaxed">Distributed system architecture handling 1M+ daily
+                        transactions with 99.9% uptime.</p>
+                    <div class="flex gap-2 flex-wrap">
+                        <span class="px-3 py-1 bg-frost text-xs font-medium rounded-full text-slate-300">Docker</span>
+                        <span
+                            class="px-3 py-1 bg-frost text-xs font-medium rounded-full text-slate-300">Kubernetes</span>
+                        <span class="px-3 py-1 bg-frost text-xs font-medium rounded-full text-slate-300">GraphQL</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section id="skills" class="py-32 border-t border-slate-800 scroll-mt-20">
+            <h2 id="portfolio-skills-header" class="text-3xl font-bold mb-16 text-primary">Technical Skills</h2>
+            <div id="portfolio-skills" class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="space-y-4">
+                    <h4 class="text-ice-blue font-semibold uppercase tracking-wider text-xs">Frontend</h4>
+                    <ul class="text-slate-400 space-y-2.5">
+                        <li>React / Next.js</li>
+                        <li>TypeScript</li>
+                        <li>Tailwind CSS</li>
+                        <li>Vue.js</li>
+                    </ul>
+                </div>
+                <div class="space-y-4">
+                    <h4 class="text-ice-blue font-semibold uppercase tracking-wider text-xs">Backend</h4>
+                    <ul class="text-slate-400 space-y-2.5">
+                        <li>Node.js</li>
+                        <li>Python / Django</li>
+                        <li>PostgreSQL</li>
+                        <li>MongoDB</li>
+                    </ul>
+                </div>
+                <div class="space-y-4">
+                    <h4 class="text-ice-blue font-semibold uppercase tracking-wider text-xs">DevOps</h4>
+                    <ul class="text-slate-400 space-y-2.5">
+                        <li>Docker</li>
+                        <li>Kubernetes</li>
+                        <li>AWS / GCP</li>
+                        <li>CI/CD</li>
+                    </ul>
+                </div>
+                <div class="space-y-4">
+                    <h4 class="text-ice-blue font-semibold uppercase tracking-wider text-xs">Tools</h4>
+                    <ul class="text-slate-400 space-y-2.5">
+                        <li>Git / GitHub</li>
+                        <li>Figma</li>
+                        <li>Jest / Cypress</li>
+                        <li>Postman</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- CERTIFICATES -->
+        <section id="certificates" class="py-32 border-t border-slate-800 scroll-mt-20">
+            <h2 id="portfolio-certifications-header" class="text-3xl font-bold mb-12 text-primary">Certifications</h2>
+            <div id="portfolio-certifications" class="grid md:grid-cols-2 gap-6">
+                <div
+                    class="flex items-center gap-6 p-6 frost-panel rounded-2xl group hover:border-primary/50 transition-colors">
+                    <div class="text-primary group-hover:rotate-12 transition-transform">
+                        <i data-lucide="award" class="size-10"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-semibold">AWS Solutions Architect</h4>
+                        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider">Amazon Web Services • 2024</p>
+                    </div>
+                </div>
+                <div
+                    class="flex items-center gap-6 p-6 frost-panel rounded-2xl group hover:border-primary/50 transition-colors">
+                    <div class="text-primary group-hover:rotate-12 transition-transform">
+                        <i data-lucide="shield-check" class="size-10"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-semibold">Kubernetes Administrator</h4>
+                        <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider">CNCF • 2023</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact"
+            class="py-32 border-t border-slate-800 scroll-mt-20 text-center bg-frost/30 rounded-3xl mb-20 px-8">
+            <div class="max-w-2xl mx-auto space-y-12">
+                <div class="space-y-6">
+                    <h2 class="text-5xl md:text-6xl font-bold">Let's <span class="text-primary glow-text">Connect</span>
+                    </h2>
+                    <p class="text-slate-400 text-lg leading-relaxed">
+                        Open to new opportunities and collaborations. Let's build something amazing together.
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-6 pt-6">
+                    <a id="social-email" href="mailto:alex@example.com" class="group flex flex-col items-center gap-3">
+                        <div
+                            class="size-14 frost-panel rounded-xl flex items-center justify-center text-slate-400 group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all">
+                            <i data-lucide="mail" class="size-6"></i>
+                        </div>
+                        <span class="text-xs font-medium uppercase tracking-wider text-slate-500">Email</span>
+                    </a>
+                    <a id="social-linkedin" href="#" class="group flex flex-col items-center gap-3">
+                        <div
+                            class="size-14 frost-panel rounded-xl flex items-center justify-center text-slate-400 group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all">
+                            <i data-lucide="linkedin" class="size-6"></i>
+                        </div>
+                        <span class="text-xs font-medium uppercase tracking-wider text-slate-500">LinkedIn</span>
+                    </a>
+                    <a id="social-github" href="#" class="group flex flex-col items-center gap-3">
+                        <div
+                            class="size-14 frost-panel rounded-xl flex items-center justify-center text-slate-400 group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all">
+                            <i data-lucide="github" class="size-6"></i>
+                        </div>
+                        <span class="text-xs font-medium uppercase tracking-wider text-slate-500">GitHub</span>
+                    </a>
+                    <a id="social-twitter" href="#" class="group flex flex-col items-center gap-3">
+                        <div
+                            class="size-14 frost-panel rounded-xl flex items-center justify-center text-slate-400 group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all">
+                            <i data-lucide="twitter" class="size-6"></i>
+                        </div>
+                        <span class="text-xs font-medium uppercase tracking-wider text-slate-500">Twitter</span>
+                    </a>
+                </div>
+
+                <div class="pt-8">
+                    <a href="mailto:alex@example.com"
+                        class="inline-flex items-center gap-3 px-10 py-4 bg-primary text-white font-semibold rounded-lg hover:bg-ice-blue transition-all shadow-lg">
+                        Send Message
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="py-8 border-t border-slate-800 text-center text-sm text-slate-600">
+        © 2026 Alex Rivera. All Rights Reserved.
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

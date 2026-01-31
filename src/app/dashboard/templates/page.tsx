@@ -80,6 +80,54 @@ const TEMPLATES = [
         features: ["Publication lists", "Academic styling", "Research focus"],
         color: "from-blue-700 to-indigo-700",
         preview: "/api/templates/template09"
+    },
+    {
+        id: "template10",
+        name: "Sentinel Security",
+        description: "Cyberpunk-inspired security focused design with terminal aesthetics",
+        features: ["Security Focus", "Cyberpunk", "Terminal Aesthetics"],
+        color: "from-cyan-900 to-blue-900",
+        preview: "/api/templates/template10"
+    },
+    {
+        id: "template11",
+        name: "Systems Architect",
+        description: "Clean, grid-based layout designed for systems engineers and architects",
+        features: ["Grid Layout", "Minimalist", "Systems Engineering"],
+        color: "from-slate-700 to-zinc-700",
+        preview: "/api/templates/template11"
+    },
+    {
+        id: "template12",
+        name: "Terra Ledger",
+        description: "Sophisticated editorial feel with natural tones and paper textures",
+        features: ["Editorial Style", "Paper Texture", "Serif Fonts"],
+        color: "from-stone-500 to-amber-700",
+        preview: "/api/templates/template12"
+    },
+    {
+        id: "template13",
+        name: "Frost Developer",
+        description: "Modern dark theme with blue accents and subtle glassmorphism",
+        features: ["Blue Accents", "Glassmorphism", "Clean UI"],
+        color: "from-sky-400 to-blue-500",
+        preview: "/api/templates/template13"
+    },
+    {
+        id: "template14",
+        name: "Zenith Module",
+        description: "High-tech industrial design with technical borders and metadata details",
+        features: ["Industrial Design", "Technical Borders", "Monospace"],
+        color: "from-slate-800 to-indigo-900",
+        preview: "/api/templates/template14"
+    },
+    {
+        id: "template15",
+        name: "Warm Terracotta",
+        description: "Elegant design with warm tones and serif headings, perfect for designers",
+        features: ["Warm Tones", "Serif Headings", "Elegant"],
+        color: "from-orange-400 to-rose-400",
+        preview: "/api/templates/template15"
     }
 ];
 

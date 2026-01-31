@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elias Thorne | Systems Architect</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Fonts: Inter for that clean Swiss look -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'paper': '#fcfcfc',
+                        'ink': '#111111',
+                        'signal-red': '#ff0000',
+                        'slate-grey': '#777777',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer base {
+            body { @apply bg-paper text-ink font-sans antialiased selection:bg-signal-red selection:text-white; }
+            h1, h2, h3 { @apply font-black tracking-tighter uppercase leading-[0.9]; }
+        }
+        @layer utilities {
+            .section-divider { @apply border-t-4 border-ink pt-12; }
+            .vertical-text { writing-mode: vertical-rl; }
+            .hover-invert { @apply transition-all duration-500 hover:bg-ink hover:text-white; }
+            .nav-link { @apply text-[10px] font-bold uppercase tracking-[0.4em] hover:text-signal-red transition-colors; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR NAV (Desktop) -->
+    <nav
+        class="fixed top-0 md:left-0 md:h-full w-full md:w-20 bg-ink text-white z-[100] flex md:flex-col items-center justify-between py-10 px-4">
+        <div
+            class="font-black text-2xl tracking-tighter border-2 border-white size-12 flex items-center justify-center">
+            ET
+        </div>
+
+        <div class="hidden md:flex flex-col gap-12 vertical-text rotate-180 mb-12">
+            <a href="#about" class="nav-link">About</a>
+            <a href="#projects" class="nav-link">Projects</a>
+            <a href="#skills" class="nav-link">Stack</a>
+            <a href="#contact" class="nav-link text-signal-red">Contact</a>
+        </div>
+
+        <div class="md:hidden">
+            <i data-lucide="menu" class="size-6"></i>
+        </div>
+    </nav>
+
+    <!-- CONTENT WRAPPER -->
+    <main class="md:ml-20">
+
+        <!-- 1. HERO SECTION -->
+        <section id="home" class="min-h-screen flex flex-col justify-end p-8 md:p-20 relative overflow-hidden">
+            <div class="absolute top-10 right-10 text-[20vw] font-black text-ink/[0.03] leading-none select-none">
+                01
+            </div>
+
+            <div class="max-w-screen-2xl w-full">
+                <div class="grid lg:grid-cols-12 gap-12 items-end">
+                    <div class="lg:col-span-8 space-y-12">
+                        <div class="flex items-center gap-4">
+                            <div class="h-[2px] w-12 bg-signal-red"></div>
+                            <span class="font-mono text-xs uppercase tracking-widest font-bold">Systems Engineer //
+                                Portfolio 2026</span>
+                        </div>
+
+                        <h1 id="portfolio-name" class="text-[12vw] lg:text-[10vw]">
+                            Systems<br />Architect.
+                        </h1>
+
+                        <div class="grid md:grid-cols-2 gap-12 pt-8">
+                            <p id="portfolio-title"
+                                class="text-xl md:text-2xl font-medium leading-tight text-slate-grey">
+                                Designing <span class="text-ink">autonomous grids</span> and resilient hardware
+                                infrastructures through the lens of pure logic.
+                            </p>
+                            <div class="flex flex-col gap-4">
+                                <a href="#projects"
+                                    class="inline-flex items-center justify-between w-full border-b-2 border-ink py-4 group">
+                                    <span class="font-bold uppercase tracking-widest text-sm">Review Archives</span>
+                                    <i data-lucide="arrow-right"
+                                        class="size-5 group-hover:translate-x-2 transition-transform"></i>
+                                </a>
+                                <a href="#contact"
+                                    class="inline-flex items-center justify-between w-full border-b-2 border-ink py-4 group">
+                                    <span class="font-bold uppercase tracking-widest text-sm">Initiate Contact</span>
+                                    <i data-lucide="plus" class="size-5 group-hover:rotate-90 transition-transform"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. PHILOSOPHY SECTION -->
+        <section id="about" class="p-8 md:p-20 bg-ink text-white">
+            <div class="max-w-screen-2xl mx-auto">
+                <div class="grid lg:grid-cols-12 gap-16">
+                    <div class="lg:col-span-4">
+                        <span class="font-mono text-xs text-signal-red uppercase tracking-widest block mb-8 font-bold">#
+                            Philosophy</span>
+                        <h2 class="text-6xl italic">The Method.</h2>
+                    </div>
+                    <div class="lg:col-span-8 space-y-12">
+                        <p id="portfolio-bio" class="text-3xl md:text-5xl font-light leading-[1.1] text-white/80">
+                            I operate at the intersection of <span class="text-white font-bold">industrial
+                                resilience</span> and aesthetic clarity. My work is governed by the 80/20 principle of
+                            efficiency.
+                        </p>
+                        <div class="grid md:grid-cols-2 gap-12 pt-12 border-t border-white/10">
+                            <div class="space-y-4">
+                                <h4 class="font-bold uppercase text-xs tracking-widest">Protocol 01</h4>
+                                <p class="text-sm text-white/60 leading-relaxed">Deep work orientation. Zero distraction
+                                    environments. High-fidelity output over volume.</p>
+                            </div>
+                            <div class="space-y-4">
+                                <h4 class="font-bold uppercase text-xs tracking-widest">Protocol 02</h4>
+                                <p class="text-sm text-white/60 leading-relaxed">Decentralized thinking. Building
+                                    systems that are inherently self-healing and autonomous.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. PROJECT ARCHIVES (Grid based) -->
+        <section id="projects" class="p-8 md:p-20">
+            <div class="max-w-screen-2xl mx-auto">
+                <div class="mb-24 flex items-end justify-between">
+                    <h2 class="text-8xl md:text-[12vw]">Works</h2>
+                    <span class="font-mono text-xs uppercase tracking-widest text-slate-grey">Case Studies /
+                        2024-2026</span>
+                </div>
+
+                <div id="portfolio-projects" class="grid md:grid-cols-2 lg:grid-cols-3 gap-1">
+                    <!-- Project 1 -->
+                    <div
+                        class="bg-white border-2 border-ink p-10 flex flex-col justify-between aspect-square hover:bg-signal-red hover:text-white transition-colors duration-500 group">
+                        <div class="flex justify-between items-start">
+                            <span class="font-mono text-xs font-bold">01/</span>
+                            <i data-lucide="arrow-up-right"
+                                class="size-6 group-hover:rotate-45 transition-transform"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-5xl mb-4">ColorOhm</h3>
+                            <p class="text-sm opacity-70 leading-relaxed font-medium">A precision tool for electronic
+                                synthesis and component identification.</p>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div
+                        class="bg-white border-2 border-ink p-10 flex flex-col justify-between aspect-square hover:bg-ink hover:text-white transition-colors duration-500 group">
+                        <div class="flex justify-between items-start">
+                            <span class="font-mono text-xs font-bold">02/</span>
+                            <i data-lucide="zap" class="size-6 text-signal-red group-hover:text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-5xl mb-4">Aura_Fan</h3>
+                            <p class="text-sm opacity-70 leading-relaxed font-medium">Atmospheric automation using
+                                sensor-fusion and low-latency hardware logic.</p>
+                        </div>
+                    </div>
+
+                    <!-- Project 3 -->
+                    <div
+                        class="bg-white border-2 border-ink p-10 flex flex-col justify-between aspect-square hover-invert group">
+                        <div class="flex justify-between items-start">
+                            <span class="font-mono text-xs font-bold">03/</span>
+                            <span
+                                class="text-[10px] bg-ink text-white px-2 py-1 uppercase font-bold group-hover:bg-white group-hover:text-ink">Ongoing</span>
+                        </div>
+                        <div>
+                            <h3 class="text-5xl mb-4">GridMesh</h3>
+                            <p class="text-sm opacity-70 leading-relaxed font-medium">Decentralized municipal
+                                infrastructure modeling for self-healing grids.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. TECHNICAL STACK -->
+        <section id="skills" class="p-8 md:p-20 section-divider mx-8 md:mx-20">
+            <div class="max-w-screen-2xl mx-auto">
+                <h2 class="text-6xl mb-16 italic">Technical Arsenal</h2>
+                <div id="portfolio-skills" class="grid md:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-20">
+                    <div class="space-y-6">
+                        <h4 class="font-mono text-xs text-signal-red uppercase tracking-[0.3em] font-bold"># Embedded
+                        </h4>
+                        <ul class="space-y-4 text-2xl font-bold uppercase tracking-tighter">
+                            <li>C++ / Embedded</li>
+                            <li>Arduino Core</li>
+                            <li>RTOS Systems</li>
+                        </ul>
+                    </div>
+                    <div class="space-y-6">
+                        <h4 class="font-mono text-xs text-signal-red uppercase tracking-[0.3em] font-bold"># Software
+                        </h4>
+                        <ul class="space-y-4 text-2xl font-bold uppercase tracking-tighter">
+                            <li>Python ML</li>
+                            <li>MATLAB Sim</li>
+                            <li>Simulink</li>
+                        </ul>
+                    </div>
+                    <div class="space-y-6">
+                        <h4 class="font-mono text-xs text-signal-red uppercase tracking-[0.3em] font-bold"># Interface
+                        </h4>
+                        <ul class="space-y-4 text-2xl font-bold uppercase tracking-tighter">
+                            <li>Tailwind CSS</li>
+                            <li>React.js</li>
+                            <li>UI/UX Logic</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. CONTACT -->
+        <section id="contact" class="p-8 md:p-20 py-40 bg-ink text-white">
+            <div class="max-w-screen-2xl mx-auto text-center space-y-20">
+                <h2 class="text-[14vw] leading-none mb-12">Connect.</h2>
+
+                <div class="grid md:grid-cols-3 gap-1">
+                    <a id="social-email" href="mailto:hello@example.com"
+                        class="p-16 border-2 border-white/10 hover:border-signal-red transition-colors group">
+                        <i data-lucide="mail"
+                            class="size-8 mx-auto mb-6 text-signal-red group-hover:scale-125 transition-transform"></i>
+                        <p class="font-bold uppercase tracking-widest text-xs">Direct Mail</p>
+                    </a>
+                    <a id="social-linkedin" href="#"
+                        class="p-16 border-2 border-white/10 hover:border-signal-red transition-colors group">
+                        <i data-lucide="linkedin"
+                            class="size-8 mx-auto mb-6 text-signal-red group-hover:scale-125 transition-transform"></i>
+                        <p class="font-bold uppercase tracking-widest text-xs">Professional</p>
+                    </a>
+                    <a id="social-github" href="#"
+                        class="p-16 border-2 border-white/10 hover:border-signal-red transition-colors group">
+                        <i data-lucide="github"
+                            class="size-8 mx-auto mb-6 text-signal-red group-hover:scale-125 transition-transform"></i>
+                        <p class="font-bold uppercase tracking-widest text-xs">Repository</p>
+                    </a>
+                </div>
+
+                <div class="pt-12">
+                    <p class="font-mono text-xs text-white/30 uppercase tracking-[0.5em]">System Transmission Level:
+                        Secure</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER / BRANDING -->
+        <footer class="p-8 md:p-20 bg-paper text-ink border-t-2 border-ink">
+            <div
+                class="max-w-screen-2xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-12">
+                <div class="space-y-4">
+                    <p class="text-xs font-bold uppercase tracking-[0.4em]">Portfolio Engineered by ZestFolio</p>
+                    <a href="https://zestfolio.vercel.app/" target="_blank"
+                        class="inline-block bg-ink text-white px-8 py-3 font-bold uppercase text-[10px] tracking-widest hover:bg-signal-red transition-colors">
+                        Deploy Your Own Model
+                    </a>
+                </div>
+                <div class="text-right">
+                    <p class="text-8xl font-black italic opacity-10">2026</p>
+                    <p class="font-mono text-[9px] uppercase tracking-widest font-bold">Elias Thorne / Systems Architect
+                        / All Rights Reserved</p>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- Fixed Floating CTA -->
+    <a href="https://zestfolio.vercel.app/login" target="_blank"
+        class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[110] bg-signal-red text-white px-8 py-4 font-bold uppercase text-[10px] tracking-[0.3em] shadow-2xl hover:bg-ink transition-all flex items-center gap-3">
+        <i data-lucide="plus-circle" class="size-4"></i>
+        Generate with this template
+    </a>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

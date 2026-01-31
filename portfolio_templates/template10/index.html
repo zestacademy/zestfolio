@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Sentinel | Security & Systems Intelligence</title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=JetBrains+Mono:wght@300;400;700&display=swap"
+        rel="stylesheet" />
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "sentinel-accent": "#00f2ff", // Cyber Cyan
+                        "deep-void": "#05070a",
+                        "panel-dark": "#0d1117",
+                    },
+                    fontFamily: {
+                        "serif": ["Newsreader", "serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer base {
+            body { @apply bg-deep-void text-slate-400 font-serif selection:bg-sentinel-accent selection:text-black; }
+            h1, h2, h3, h4 { @apply text-white font-serif tracking-tight; }
+        }
+        @layer utilities {
+            .scanline-effect {
+                background: linear-gradient(to bottom, transparent 50%, rgba(0, 242, 255, 0.02) 50%);
+                background-size: 100% 4px;
+            }
+            .sidebar-border { @apply border-r border-sentinel-accent/10; }
+            .section-label { @apply font-mono text-[10px] uppercase tracking-[0.5em] text-sentinel-accent mb-4 block; }
+            .glass-card { @apply bg-white/[0.01] border border-white/5 rounded-none; }
+            .glow-text { text-shadow: 0 0 15px rgba(0, 242, 255, 0.3); }
+        }
+    </style>
+</head>
+
+<body class="antialiased overflow-x-hidden">
+    <div class="fixed inset-0 scanline-effect pointer-events-none z-[100] opacity-50"></div>
+
+    <div class="relative flex min-h-screen w-full flex-col lg:flex-row">
+
+        <aside class="w-full lg:w-[340px] shrink-0 sidebar-border bg-deep-void z-50">
+            <div class="sticky top-0 h-full lg:h-screen p-10 flex flex-col justify-between">
+                <div class="space-y-12">
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="size-10 border-2 border-sentinel-accent flex items-center justify-center text-sentinel-accent shadow-[0_0_15px_rgba(0,242,255,0.4)]">
+                            <i data-lucide="shield-check" class="size-5"></i>
+                        </div>
+                        <span
+                            class="font-mono text-[10px] font-bold tracking-[0.4em] uppercase text-white">Sentinel_OS_v4</span>
+                    </div>
+
+                    <div class="space-y-8">
+                        <div class="relative inline-block">
+                            <div class="absolute -inset-4 border-t-2 border-l-2 border-sentinel-accent/40 w-12 h-12">
+                            </div>
+                            <div
+                                class="absolute -bottom-4 -right-4 border-b-2 border-r-2 border-sentinel-accent/40 w-12 h-12">
+                            </div>
+                            <div
+                                class="size-36 bg-panel-dark overflow-hidden grayscale hover:grayscale-0 transition-all duration-700 relative z-10 border border-white/10">
+                                <img id="portfolio-hero-image"
+                                    src="https://images.unsplash.com/photo-1552058544-f2b08422138a?fit=crop&w=800&q=80"
+                                    alt="Identity" class="w-full h-full object-cover opacity-80">
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <h1 id="portfolio-name" class="text-4xl font-light leading-none glow-text">Marcus Vane</h1>
+                            <p id="portfolio-title"
+                                class="font-mono text-[10px] text-sentinel-accent uppercase tracking-[0.3em]">
+                                SecOps Engineer // INTJ-A</p>
+                        </div>
+                    </div>
+
+                    <nav
+                        class="flex flex-col gap-4 font-mono text-[11px] uppercase tracking-widest pt-8 border-t border-white/5">
+                        <a href="#intel"
+                            class="flex items-center gap-4 text-slate-500 hover:text-sentinel-accent transition-all group">
+                            <span
+                                class="size-1 bg-sentinel-accent scale-0 group-hover:scale-100 transition-transform"></span>
+                            Executive_Summary
+                        </a>
+                        <a href="#ops"
+                            class="flex items-center gap-4 text-slate-500 hover:text-sentinel-accent transition-all group">
+                            <span
+                                class="size-1 bg-sentinel-accent scale-0 group-hover:scale-100 transition-transform"></span>
+                            Active_Operations
+                        </a>
+                        <a href="#arsenal"
+                            class="flex items-center gap-4 text-slate-500 hover:text-sentinel-accent transition-all group">
+                            <span
+                                class="size-1 bg-sentinel-accent scale-0 group-hover:scale-100 transition-transform"></span>
+                            Technical_Arsenal
+                        </a>
+                    </nav>
+                </div>
+
+                <div class="hidden lg:block pt-10 font-mono text-[9px] text-slate-600 space-y-2 uppercase">
+                    <div class="flex justify-between"><span>Uptime:</span> <span
+                            class="text-sentinel-accent">99.98%</span></div>
+                    <div class="flex justify-between"><span>Location:</span> <span
+                            id="portfolio-location">Grid_Sector_7</span></div>
+                    <div class="flex justify-between"><span>Access:</span> <span
+                            class="text-green-500">Authorized</span></div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="flex-1 min-w-0 bg-[#080a0f]">
+
+            <section id="intel" class="px-8 md:px-16 lg:px-24 py-24 lg:py-40 max-w-6xl">
+                <span class="section-label">Executive_Summary</span>
+                <div class="space-y-12">
+                    <h2 class="text-6xl md:text-8xl font-light leading-tight">
+                        Defending <span class="italic text-sentinel-accent font-medium">Invisible</span> Borders.
+                    </h2>
+                    <p id="portfolio-bio"
+                        class="text-2xl md:text-3xl text-slate-300 font-light leading-relaxed max-w-4xl">
+                        Specializing in the <span class="border-b-2 border-sentinel-accent text-white">Hardening of
+                            Cloud Infrastructures</span> and high-stakes penetration testing for distributed systems.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-16 mt-32 pt-16 border-t border-sentinel-accent/10">
+                    <div class="space-y-6">
+                        <h3 class="text-xs font-mono uppercase tracking-[0.5em] text-white">The Doctrine</h3>
+                        <p class="text-base font-light leading-relaxed">
+                            In a world of automated threats, human intuition is the final firewall. I architect systems
+                            that don't just react to breaches—they anticipate them through behavioral modeling and
+                            zero-trust logic.
+                        </p>
+                    </div>
+                    <div class="space-y-6">
+                        <h3 class="text-xs font-mono uppercase tracking-[0.5em] text-white">Technical Reach</h3>
+                        <p class="text-base font-light leading-relaxed">
+                            From kernel-level debugging to global-scale AWS security protocols, my objective is absolute
+                            system integrity without sacrificing operational velocity.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="ops" class="px-8 md:px-16 lg:px-24 py-32 bg-panel-dark/50">
+                <span class="section-label">Active_Operations</span>
+                <h2 id="portfolio-projects-header" class="text-5xl italic mb-16">Security Archives</h2>
+
+                <div id="portfolio-projects" class="grid md:grid-cols-2 gap-10">
+                    <div
+                        class="group relative p-10 glass-card hover:border-sentinel-accent/40 transition-all duration-500">
+                        <div class="flex justify-between items-start mb-12">
+                            <i data-lucide="terminal" class="size-8 text-sentinel-accent"></i>
+                            <span class="text-[10px] font-mono text-slate-500">OP_CODE: PHANTOM</span>
+                        </div>
+                        <h3 class="text-3xl mb-6 font-medium">Ghost Protocol</h3>
+                        <p class="text-sm font-light leading-relaxed text-slate-400 mb-10">
+                            A custom-built automated red-teaming tool that simulates advanced persistent threats (APT)
+                            within isolated Docker environments.
+                        </p>
+                        <div class="flex gap-4 font-mono text-[9px] uppercase">
+                            <span class="text-sentinel-accent underline">Source Available</span>
+                            <span class="text-slate-600">// Go / Python</span>
+                        </div>
+                    </div>
+
+                    <div
+                        class="group relative p-10 glass-card hover:border-sentinel-accent/40 transition-all duration-500">
+                        <div class="flex justify-between items-start mb-12">
+                            <i data-lucide="cpu" class="size-8 text-sentinel-accent"></i>
+                            <span class="text-[10px] font-mono text-slate-500">OP_CODE: AEGIS</span>
+                        </div>
+                        <h3 class="text-3xl mb-6 font-medium">Aegis Cloud Sentry</h3>
+                        <p class="text-sm font-light leading-relaxed text-slate-400 mb-10">
+                            Real-time intrusion detection system for multi-cloud deployments utilizing machine learning
+                            for anomaly detection.
+                        </p>
+                        <div class="flex gap-4 font-mono text-[9px] uppercase">
+                            <span class="text-sentinel-accent underline">Case Study</span>
+                            <span class="text-slate-600">// Terraform / AWS</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="arsenal" class="px-8 md:px-16 lg:px-24 py-32 border-t border-white/5">
+                <span class="section-label">Technical_Arsenal</span>
+                <h2 id="portfolio-skills-header" class="text-4xl italic mb-16 text-white">Capabilities</h2>
+
+                <div id="portfolio-skills" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Template for Skills -->
+                    <div
+                        class="p-6 glass-card flex items-center gap-4 text-slate-400 hover:text-white transition-colors">
+                        <i data-lucide="chevron-right" class="size-4 text-sentinel-accent"></i>
+                        <span class="font-mono text-sm tracking-wide">Metasploit Framework</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="uplink" class="px-8 md:px-16 lg:px-24 py-40 bg-panel-dark text-center">
+                <h2 class="text-7xl md:text-9xl font-light italic text-white glow-text mb-12">UPLINK</h2>
+                <p class="font-mono text-xs text-sentinel-accent tracking-[0.8em] uppercase mb-20">Secure Communication
+                    Channel</p>
+
+                <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <a id="social-email" href="#"
+                        class="p-12 border border-white/5 hover:border-sentinel-accent transition-all group relative overflow-hidden">
+                        <div
+                            class="absolute inset-0 bg-sentinel-accent/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                        </div>
+                        <h4 class="relative z-10 font-mono text-sm">ENCRYPTED_MAIL</h4>
+                    </a>
+                    <a id="social-linkedin" href="#"
+                        class="p-12 border border-white/5 hover:border-sentinel-accent transition-all group relative overflow-hidden">
+                        <div
+                            class="absolute inset-0 bg-sentinel-accent/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                        </div>
+                        <h4 class="relative z-10 font-mono text-sm">SECURE_NODE (LI)</h4>
+                    </a>
+                    <a id="social-github" href="#"
+                        class="p-12 border border-white/5 hover:border-sentinel-accent transition-all group relative overflow-hidden">
+                        <div
+                            class="absolute inset-0 bg-sentinel-accent/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                        </div>
+                        <h4 class="relative z-10 font-mono text-sm">CODE_REPO</h4>
+                    </a>
+                    <a id="social-website" href="#"
+                        class="p-12 border border-white/5 hover:border-sentinel-accent transition-all group relative overflow-hidden">
+                        <div
+                            class="absolute inset-0 bg-sentinel-accent/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                        </div>
+                        <h4 class="relative z-10 font-mono text-sm">WEB_PORTAL</h4>
+                    </a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="py-12 bg-deep-void border-t border-white/5 text-center">
+        <p class="font-mono text-[10px] text-slate-700 tracking-[1em]">© 2026 SENTINEL INTELLIGENCE UNIT</p>
+    </footer>
+
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>

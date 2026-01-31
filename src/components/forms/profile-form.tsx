@@ -3,13 +3,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { db, storage } from '@/lib/firebase';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, Save, Camera, User } from 'lucide-react';
+import { Loader2, Save, Camera, User, CheckCircle2, XCircle } from 'lucide-react';
 import Image from 'next/image';
 
 export default function ProfileForm() {
@@ -19,6 +19,12 @@ export default function ProfileForm() {
     const [uploading, setUploading] = useState(false);
     const [profilePhotoURL, setProfilePhotoURL] = useState<string>('');
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    // Username handling
+    const [usernameError, setUsernameError] = useState('');
+    const [isCheckingUsername, setIsCheckingUsername] = useState(false);
+    const [isUsernameAvailable, setIsUsernameAvailable] = useState(false);
+
     const [formData, setFormData] = useState({
         username: '',
         fullName: '',
@@ -48,6 +54,9 @@ export default function ProfileForm() {
                     if (data.profilePhoto) {
                         setProfilePhotoURL(data.profilePhoto);
                     }
+                    if (data.username) {
+                        setIsUsernameAvailable(true); // Assuming their current one is valid
+                    }
                 } else {
                     setFormData(prev => ({ ...prev, fullName: user.displayName || '', email: user.email || '' }));
                 }
@@ -60,9 +69,68 @@ export default function ProfileForm() {
         fetchProfile();
     }, [user]);
 
+    // Check Username Availability
+    useEffect(() => {
+        if (!initialized || !user) return;
+
+        const checkUsername = async () => {
+            const username = formData.username;
+
+            // Basic validation
+            if (!username) {
+                setUsernameError('Username is required');
+                setIsUsernameAvailable(false);
+                return;
+            }
+            if (username.length < 3) {
+                setUsernameError('Username must be at least 3 characters');
+                setIsUsernameAvailable(false);
+                return;
+            }
+            if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
+                setUsernameError('Only letters, numbers, hyphens and underscores allowed');
+                setIsUsernameAvailable(false);
+                return;
+            }
+
+            setIsCheckingUsername(true);
+            try {
+                // Check if username exists in OTHER portfolios
+                const portfoliosRef = collection(db, 'portfolios');
+                const q = query(portfoliosRef, where('username', '==', username));
+                const querySnapshot = await getDocs(q);
+
+                let isTaken = false;
+                querySnapshot.forEach((doc) => {
+                    if (doc.id !== user.uid) {
+                        isTaken = true;
+                    }
+                });
+
+                if (isTaken) {
+                    setUsernameError('This username is already taken');
+                    setIsUsernameAvailable(false);
+                } else {
+                    setUsernameError('');
+                    setIsUsernameAvailable(true);
+                }
+            } catch (error) {
+                console.error("Error checking username:", error);
+            } finally {
+                setIsCheckingUsername(false);
+            }
+        };
+
+        const timer = setTimeout(checkUsername, 500); // 500ms debounce
+        return () => clearTimeout(timer);
+    }, [formData.username, user, initialized]);
+
     // Auto-save effect
     useEffect(() => {
         if (!initialized || !user) return;
+
+        // Prevent saving if username has error
+        if (usernameError || !isUsernameAvailable) return;
 
         const timer = setTimeout(async () => {
             setSaving(true);
@@ -83,7 +151,7 @@ export default function ProfileForm() {
         }, 2000); // 2 second debounce
 
         return () => clearTimeout(timer);
-    }, [formData, user, initialized]);
+    }, [formData, user, initialized, usernameError, isUsernameAvailable]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -221,21 +289,32 @@ export default function ProfileForm() {
                 <CardContent className="space-y-4">
                     <div className="space-y-2">
                         <Label htmlFor="username">Username (URL)</Label>
-                        <div className="flex">
-                            <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-input bg-muted text-muted-foreground text-sm">
-                                zestfolio.zestacademy.tech/u/
-                            </span>
-                            <Input
-                                id="username"
-                                name="username"
-                                value={formData.username}
-                                onChange={handleChange}
-                                placeholder="john.doe"
-                                className="rounded-l-none"
-                                required
-                            />
+                        <div className="relative">
+                            <div className="flex">
+                                <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-input bg-muted text-muted-foreground text-sm">
+                                    zestfolio.zestacademy.tech/u/
+                                </span>
+                                <Input
+                                    id="username"
+                                    name="username"
+                                    value={formData.username}
+                                    onChange={handleChange}
+                                    placeholder="john.doe"
+                                    className={`rounded-l-none ${usernameError ? 'border-red-500 focus-visible:ring-red-500' : isUsernameAvailable ? 'border-green-500 focus-visible:ring-green-500' : ''}`}
+                                    required
+                                />
+                                <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                                    {isCheckingUsername && <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />}
+                                    {!isCheckingUsername && usernameError && <XCircle className="w-4 h-4 text-red-500" />}
+                                    {!isCheckingUsername && isUsernameAvailable && <CheckCircle2 className="w-4 h-4 text-green-500" />}
+                                </div>
+                            </div>
                         </div>
-                        <p className="text-xs text-muted-foreground">This will be your unique portfolio link.</p>
+                        {usernameError ? (
+                            <p className="text-xs text-red-500 font-medium">{usernameError}</p>
+                        ) : (
+                            <p className="text-xs text-muted-foreground">This will be your unique portfolio link.</p>
+                        )}
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

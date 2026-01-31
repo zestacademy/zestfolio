@@ -69,5 +69,47 @@ export const PORTFOLIO_TEMPLATES: Template[] = [
         description: 'Modern design with dynamic gradients and contemporary aesthetic.',
         thumbnail: '/images/templates/template09.png',
         features: ['Gradient Design', 'Modern Look', 'Dynamic Colors', 'Contemporary']
+    },
+    {
+        id: 'template10',
+        name: 'Sentinel Security',
+        description: 'Cyberpunk-inspired security focused design with terminal aesthetics.',
+        thumbnail: '/images/templates/template10.png',
+        features: ['Security Focus', 'Cyberpunk', 'Terminal Aesthetics', 'Dark Mode']
+    },
+    {
+        id: 'template11',
+        name: 'Systems Architect',
+        description: 'Clean, grid-based layout designed for systems engineers and architects.',
+        thumbnail: '/images/templates/template11.png',
+        features: ['Grid Layout', 'Minimalist', 'Systems Engineering', 'Clean Typography']
+    },
+    {
+        id: 'template12',
+        name: 'Terra Ledger',
+        description: 'Sophisticated editorial feel with natural tones and paper textures.',
+        thumbnail: '/images/templates/template12.png',
+        features: ['Editorial Style', 'Paper Texture', 'Serif Fonts', 'Natural Tones']
+    },
+    {
+        id: 'template13',
+        name: 'Frost Developer',
+        description: 'Modern dark theme with blue accents and subtle glassmorphism.',
+        thumbnail: '/images/templates/template13.png',
+        features: ['Blue Accents', 'Glassmorphism', 'Clean UI', 'Developer Focused']
+    },
+    {
+        id: 'template14',
+        name: 'Zenith Module',
+        description: 'High-tech industrial design with technical borders and metadata details.',
+        thumbnail: '/images/templates/template14.png',
+        features: ['Industrial Design', 'Technical Borders', 'Monospace', 'High-Tech']
+    },
+    {
+        id: 'template15',
+        name: 'Warm Terracotta',
+        description: 'Elegant design with warm tones and serif headings, perfect for designers.',
+        thumbnail: '/images/templates/template15.png',
+        features: ['Warm Tones', 'Serif Headings', 'Elegant', 'Designer Focus']
     }
 ];

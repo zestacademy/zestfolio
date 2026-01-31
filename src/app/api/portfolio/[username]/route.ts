@@ -114,6 +114,12 @@ export async function GET(
             'template07': { bg: '#ffffff', text: '#18181b' }, // Creative (Fallback)
             'template08': { bg: '#ffffff', text: '#18181b' }, // Minimal
             'template09': { bg: '#09090b', text: '#ffffff' }, // Gradient
+            'template10': { bg: '#05070a', text: '#cbd5e1' }, // Sentinel
+            'template11': { bg: '#fcfcfc', text: '#111111' }, // Systems Architect
+            'template12': { bg: '#f7f4f0', text: '#1a1a1a' }, // Terra Ledger
+            'template13': { bg: '#0f172a', text: '#cbd5e1' }, // Frost
+            'template14': { bg: '#0f172a', text: '#cbd5e1' }, // Zenith
+            'template15': { bg: '#fef8f3', text: '#2c2520' }, // Terracotta
         };
 
         const theme = templateTheme[portfolio.templateId] || { bg: '#ffffff', text: '#000000' };
@@ -492,8 +498,9 @@ export async function GET(
 
         // Email
         if (portfolio.publicEmail) {
-            $('input[type="text"][placeholder*="email"], input[type="email"]').val(portfolio.publicEmail);
             $('#portfolio-email, #social-email, a[href^="mailto:"]').attr('href', `mailto:${portfolio.publicEmail}`);
+            // Also update the visible text for specific email elements
+            $('#portfolio-email, #social-email').text(portfolio.publicEmail);
         }
 
         // Check for download query param

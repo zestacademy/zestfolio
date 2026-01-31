@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio | Your Name</title>
+
+  <!-- Google Fonts: DM Serif Display for Headings & Inter for Body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style type="text/tailwindcss">
+    @layer base {
+      body {
+        @apply bg-[#fef8f3] text-[#2c2520] font-['Inter'];
+      }
+      h1, h2, h3 {
+        @apply font-['DM_Serif_Display'] tracking-tight;
+      }
+    }
+    @layer utilities {
+      .bg-terracotta { background-color: #d4735e; }
+      .text-terracotta { color: #d4735e; }
+      .bg-sand { background-color: #f5e6d3; }
+      .border-warm { border-color: #e8d5c4; }
+      .warm-shadow { box-shadow: 0 20px 40px -15px rgba(212, 115, 94, 0.15); }
+    }
+  </style>
+</head>
+
+<body class="selection:bg-orange-100 selection:text-orange-900">
+
+  <!-- NAVIGATION -->
+  <nav class="fixed top-0 w-full z-50 bg-[#fef8f3]/95 backdrop-blur-sm border-b border-warm">
+    <div class="max-w-6xl mx-auto px-6 h-20 flex justify-between items-center">
+      <div class="text-2xl font-bold italic tracking-tight text-terracotta">
+        <!-- EDIT YOUR INITIALS -->
+        YN
+      </div>
+      <div class="hidden md:flex gap-10 text-[11px] font-semibold uppercase tracking-[0.15em] text-stone-600">
+        <a href="#about" class="hover:text-terracotta transition-colors">About</a>
+        <a href="#education" class="hover:text-terracotta transition-colors">Journey</a>
+        <a href="#projects" class="hover:text-terracotta transition-colors">Portfolio</a>
+        <a href="#skills" class="hover:text-terracotta transition-colors">Skills</a>
+        <a href="#contact" class="hover:text-terracotta transition-colors underline underline-offset-4">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-6xl mx-auto px-6">
+
+    <!-- 1. HERO SECTION -->
+    <section id="home" class="min-h-screen flex flex-col md:flex-row items-center justify-center gap-16 pt-20">
+      <div class="flex-1 space-y-10 order-2 md:order-1">
+        <div class="space-y-6">
+          <div class="inline-block px-4 py-2 bg-sand text-terracotta font-semibold text-xs uppercase tracking-wider rounded-full">
+            Creative Professional
+          </div>
+          <!-- EDIT YOUR NAME -->
+          <h1 id="portfolio-name" class="text-6xl md:text-8xl leading-[0.95]">
+            Your <span class="italic text-stone-400">Name</span>
+          </h1>
+          <!-- EDIT YOUR TAGLINE -->
+          <p id="portfolio-title" class="text-xl text-stone-600 max-w-lg font-light leading-relaxed">
+            Crafting <span class="text-terracotta font-medium">Digital Experiences</span> that blend aesthetics with 
+            functionality for meaningful impact.
+          </p>
+        </div>
+        <div class="flex gap-6 items-center flex-wrap">
+          <a href="#projects"
+            class="px-10 py-4 bg-terracotta text-white text-xs font-bold uppercase tracking-wider rounded-lg hover:bg-[#c5624e] transition-all warm-shadow">
+            Explore Work
+          </a>
+          <a href="#contact"
+            class="text-xs font-semibold uppercase tracking-wider text-terracotta border-b-2 border-terracotta pb-1 hover:border-[#c5624e] transition">
+            Get in Touch
+          </a>
+        </div>
+      </div>
+
+      <!-- PHOTO SECTION -->
+      <div class="flex-1 order-1 md:order-2">
+        <div class="relative w-full aspect-[4/5] max-w-md mx-auto">
+          <!-- Decorative elements -->
+          <div class="absolute -bottom-8 -left-8 w-40 h-40 bg-sand rounded-3xl -z-10"></div>
+          <div class="absolute -top-4 -right-4 w-24 h-24 border-4 border-terracotta/20 rounded-full"></div>
+          <!-- EDIT YOUR PHOTO URL -->
+          <div class="relative h-full w-full rounded-3xl overflow-hidden warm-shadow">
+            <img id="portfolio-main-image"
+              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=1000"
+              class="h-full w-full object-cover" alt="Profile Photo">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. ABOUT ME -->
+    <section id="about" class="py-32 border-t border-warm">
+      <div class="grid md:grid-cols-2 gap-20 items-center">
+        <h2 class="text-5xl md:text-6xl leading-tight">
+          Design with <br />
+          <span class="italic text-terracotta">intention</span> & purpose.
+        </h2>
+        <div class="space-y-6 text-stone-600 text-lg leading-relaxed font-light">
+          <!-- EDIT YOUR BIO -->
+          <p id="portfolio-bio">
+            I believe in creating work that resonates. As a <span class="font-semibold text-stone-900">thoughtful creator</span>, 
+            I approach every project with curiosity and dedication to meaningful solutions.
+          </p>
+          <p>
+            My background spans visual design, development, and user experience—allowing me to bridge creativity 
+            with technical execution seamlessly.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. EDUCATION -->
+    <section id="education" class="py-32 bg-sand rounded-[3rem] px-12 md:px-20">
+      <div class="flex flex-col md:flex-row justify-between gap-12">
+        <div class="md:w-1/3">
+          <h2 id="portfolio-education-header" class="text-5xl">Education</h2>
+          <p class="text-stone-500 mt-6 italic font-light">Building the foundation.</p>
+        </div>
+        <div id="portfolio-education" class="md:w-2/3 space-y-12">
+          <!-- EDUCATION ITEM -->
+          <div class="group">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 bg-terracotta/10 rounded-full flex items-center justify-center">
+                <i data-lucide="graduation-cap" class="w-6 h-6 text-terracotta"></i>
+              </div>
+              <span class="text-xs font-semibold uppercase tracking-wider text-terracotta">2021 — 2025</span>
+            </div>
+            <h3 class="text-3xl group-hover:text-terracotta transition-colors">Bachelor of Design</h3>
+            <p class="text-stone-600 mt-2 font-light">University Name • Visual Communication Design</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. PROJECTS -->
+    <section id="projects" class="py-32">
+      <div class="mb-16">
+        <h2 id="portfolio-projects-header" class="text-5xl mb-4">Featured Projects</h2>
+        <p class="text-stone-500 italic font-light">A selection of my recent work</p>
+      </div>
+      <div id="portfolio-projects" class="grid md:grid-cols-2 gap-16">
+
+        <!-- PROJECT card -->
+        <div class="group">
+          <div class="relative overflow-hidden rounded-2xl bg-stone-100 aspect-[4/3] mb-6 warm-shadow">
+            <!-- EDIT PROJECT IMAGE -->
+            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=800"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-terracotta/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-start p-8">
+              <a href="#" target="_blank"
+                class="px-6 py-3 bg-white text-terracotta text-xs uppercase font-bold tracking-wider rounded-lg">
+                View Project
+              </a>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 mb-3">
+            <span class="text-xs font-semibold uppercase tracking-wider text-terracotta">Web Design</span>
+            <span class="text-stone-300">•</span>
+            <span class="text-xs font-light text-stone-500">2024</span>
+          </div>
+          <h3 class="text-3xl mb-3">Brand Refresh</h3>
+          <p class="text-stone-600 font-light leading-relaxed">Complete visual identity redesign for a sustainable fashion startup.</p>
+        </div>
+
+        <!-- PROJECT card -->
+        <div class="group">
+          <div class="relative overflow-hidden rounded-2xl bg-stone-100 aspect-[4/3] mb-6 warm-shadow">
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-terracotta/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-start p-8">
+              <a href="#" target="_blank"
+                class="px-6 py-3 bg-white text-terracotta text-xs uppercase font-bold tracking-wider rounded-lg">
+                View Project
+              </a>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 mb-3">
+            <span class="text-xs font-semibold uppercase tracking-wider text-terracotta">UX/UI</span>
+            <span class="text-stone-300">•</span>
+            <span class="text-xs font-light text-stone-500">2024</span>
+          </div>
+          <h3 class="text-3xl mb-3">Mobile App Design</h3>
+          <p class="text-stone-600 font-light leading-relaxed">Intuitive meditation app focusing on mindful user journeys.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5. SKILLS -->
+    <section id="skills" class="py-32 bg-terracotta text-white rounded-[3rem] px-12 md:px-24">
+      <div class="max-w-4xl">
+        <h2 id="portfolio-skills-header" class="text-5xl md:text-6xl mb-16 italic">What I Bring <br />to the Table</h2>
+        <div id="portfolio-skills" class="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <!-- SKILL BOX -->
+          <div>
+            <h4 class="text-sm uppercase font-semibold tracking-wider text-orange-100 mb-5">Design</h4>
+            <ul class="space-y-3 text-lg font-light opacity-90">
+              <li>UI/UX Design</li>
+              <li>Figma</li>
+              <li>Adobe Creative Suite</li>
+              <li>Prototyping</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-sm uppercase font-semibold tracking-wider text-orange-100 mb-5">Development</h4>
+            <ul class="space-y-3 text-lg font-light opacity-90">
+              <li>HTML/CSS</li>
+              <li>JavaScript</li>
+              <li>React</li>
+              <li>Tailwind CSS</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-sm uppercase font-semibold tracking-wider text-orange-100 mb-5">Strategy</h4>
+            <ul class="space-y-3 text-lg font-light opacity-90">
+              <li>Brand Identity</li>
+              <li>User Research</li>
+              <li>Wireframing</li>
+              <li>Design Systems</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. CERTIFICATES -->
+    <section id="certificates" class="py-32">
+      <h2 id="portfolio-certifications-header" class="text-5xl mb-12">Certifications</h2>
+      <div id="portfolio-certifications" class="space-y-6">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center py-8 border-b border-warm group">
+          <div class="flex items-center gap-4 mb-4 md:mb-0">
+            <div class="w-3 h-3 bg-terracotta rounded-full"></div>
+            <span class="text-xl font-light group-hover:text-terracotta transition">Google UX Design Professional</span>
+          </div>
+          <span class="text-xs font-semibold uppercase text-stone-400 tracking-wider">Coursera • 2024</span>
+        </div>
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center py-8 border-b border-warm group">
+          <div class="flex items-center gap-4 mb-4 md:mb-0">
+            <div class="w-3 h-3 bg-terracotta rounded-full"></div>
+            <span class="text-xl font-light group-hover:text-terracotta transition">Advanced Figma Masterclass</span>
+          </div>
+          <span class="text-xs font-semibold uppercase text-stone-400 tracking-wider">Designlab • 2023</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. CONTACT -->
+    <section id="contact" class="py-32 border-t border-warm">
+      <div class="text-center space-y-16">
+        <h2 class="text-6xl md:text-8xl italic leading-tight">
+          Let's create <br />
+          <span class="text-terracotta">something great</span> together.
+        </h2>
+        
+        <div class="flex flex-col items-center gap-8">
+          <a id="social-email" href="mailto:hello@example.com"
+            class="text-2xl font-light hover:text-terracotta underline underline-offset-8 transition">
+            hello@yourname.com
+          </a>
+          <div class="flex gap-6">
+            <a id="social-linkedin" href="#" class="w-12 h-12 rounded-full bg-sand flex items-center justify-center text-terracotta hover:bg-terracotta hover:text-white transition">
+              <i data-lucide="linkedin" class="w-5 h-5"></i>
+            </a>
+            <a id="social-github" href="#" class="w-12 h-12 rounded-full bg-sand flex items-center justify-center text-terracotta hover:bg-terracotta hover:text-white transition">
+              <i data-lucide="github" class="w-5 h-5"></i>
+            </a>
+            <a id="social-twitter" href="#" class="w-12 h-12 rounded-full bg-sand flex items-center justify-center text-terracotta hover:bg-terracotta hover:text-white transition">
+              <i data-lucide="twitter" class="w-5 h-5"></i>
+            </a>
+            <a id="social-website" href="#" class="w-12 h-12 rounded-full bg-sand flex items-center justify-center text-terracotta hover:bg-terracotta hover:text-white transition">
+              <i data-lucide="globe" class="w-5 h-5"></i>
+            </a>
+          </div>
+        </div>
+
+        <form class="max-w-2xl mx-auto space-y-8 pt-16">
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="relative">
+              <input type="text" placeholder="Your Name"
+                class="w-full bg-transparent border-b-2 border-warm py-4 focus:outline-none focus:border-terracotta transition placeholder:text-stone-400">
+            </div>
+            <div class="relative">
+              <input type="email" placeholder="Your Email"
+                class="w-full bg-transparent border-b-2 border-warm py-4 focus:outline-none focus:border-terracotta transition placeholder:text-stone-400">
+            </div>
+          </div>
+          <div class="relative">
+            <textarea placeholder="Tell me about your project..." rows="4"
+              class="w-full bg-transparent border-b-2 border-warm py-4 focus:outline-none focus:border-terracotta transition resize-none placeholder:text-stone-400"></textarea>
+          </div>
+          <button
+            class="w-full md:w-auto px-12 py-5 bg-terracotta text-white text-xs font-bold uppercase tracking-wider rounded-lg hover:bg-[#c5624e] transition-all warm-shadow">
+            Send Message
+          </button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ZestFolio CTA -->
+  <div class="w-full border-t border-warm bg-sand py-12 px-4">
+    <div class="max-w-[960px] mx-auto text-center space-y-4">
+      <p class="text-stone-600 text-sm font-light">
+        Portfolio created with <span class="text-terracotta font-semibold">ZestFolio</span>
+      </p>
+      <div class="space-y-4">
+        <p class="text-stone-900 text-lg font-medium">
+          Want to create your portfolio right now?
+        </p>
+        <a href="https://zestfolio.vercel.app/" target="_blank" rel="noopener noreferrer"
+          class="inline-flex items-center justify-center px-8 py-3 bg-terracotta text-white text-xs font-bold uppercase tracking-wider rounded-lg hover:bg-[#c5624e] transition-all duration-300 warm-shadow">
+          Get Started
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="py-8 text-center text-[10px] font-semibold uppercase tracking-wider text-stone-400">
+    © 2026 All Rights Reserved
+  </footer>
+
+  <!-- Fixed Floating Button -->
+  <a href="https://zestfolio.vercel.app/login" target="_blank" rel="noopener noreferrer"
+    class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-terracotta text-white px-6 py-3 rounded-full font-bold text-xs uppercase tracking-wider warm-shadow hover:bg-[#c5624e] hover:scale-105 transition-all duration-300 flex items-center gap-2">
+    <i data-lucide="plus-circle" class="w-4 h-4"></i>
+    Create with this template
+  </a>
+
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+  </script>
+</body>
+
+</html>
