@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { ExternalLink, Github, Linkedin, Mail, Star, TrendingUp } from "lucide-react";
+import { ExternalLink, Github, Linkedin, Mail, Star, TrendingUp, CheckCircle2 } from "lucide-react";
 
 export default function Examples() {
     const examples = [
@@ -240,15 +240,27 @@ export default function Examples() {
                                 Your Portfolio Could Be Next
                             </h2>
                             <p className="text-lg text-muted-foreground">
-                                Join these amazing students and create your own professional portfolio today.
+                                Join these amazing students and create your professional portfolio in just 5 minutes.
                             </p>
-                            <Link
-                                href="/dashboard"
-                                className="inline-flex h-12 items-center justify-center rounded-lg bg-primary px-8 text-base font-medium text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30"
-                            >
-                                Create Your Portfolio
-                                <ExternalLink className="ml-2 h-4 w-4" />
-                            </Link>
+                            <div className="flex flex-col sm:flex-row items-center gap-4">
+                                <Link
+                                    href="/dashboard"
+                                    className="inline-flex h-12 items-center justify-center rounded-lg bg-primary px-8 text-base font-semibold text-primary-foreground shadow-lg hover:shadow-xl hover:bg-primary/90 transition-all hover:scale-105"
+                                >
+                                    Create Your Portfolio
+                                    <ExternalLink className="ml-2 h-4 w-4" />
+                                </Link>
+                                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                                    <div className="flex items-center gap-1.5">
+                                        <CheckCircle2 className="w-4 h-4 text-primary" />
+                                        <span>5 min setup</span>
+                                    </div>
+                                    <div className="flex items-center gap-1.5">
+                                        <CheckCircle2 className="w-4 h-4 text-primary" />
+                                        <span>100% free</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>

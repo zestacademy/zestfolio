@@ -148,18 +148,30 @@ export default function Features() {
                     <div className="container px-4 md:px-6 mx-auto">
                         <div className="flex flex-col items-center text-center space-y-6 max-w-2xl mx-auto">
                             <h2 className="text-3xl md:text-4xl font-bold">
-                                Ready to Build Your Portfolio?
+                                Ready to Showcase Your Skills?
                             </h2>
                             <p className="text-lg text-muted-foreground">
-                                Join thousands of students who are already showcasing their work with Zestfolio.
+                                Join thousands of students who are already getting noticed with Zestfolio.
                             </p>
-                            <Link
-                                href="/dashboard"
-                                className="inline-flex h-12 items-center justify-center rounded-lg bg-primary px-8 text-base font-medium text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                            >
-                                Get Started Free
-                                <Rocket className="ml-2 h-4 w-4" />
-                            </Link>
+                            <div className="flex flex-col sm:flex-row items-center gap-4">
+                                <Link
+                                    href="/dashboard"
+                                    className="inline-flex h-12 items-center justify-center rounded-lg bg-primary px-8 text-base font-semibold text-primary-foreground shadow-lg hover:shadow-xl hover:bg-primary/90 transition-all hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                                >
+                                    Build Your Portfolio Now
+                                    <Rocket className="ml-2 h-4 w-4" />
+                                </Link>
+                                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                                    <div className="flex items-center gap-1.5">
+                                        <CheckCircle2 className="w-4 h-4 text-primary" />
+                                        <span>Free forever</span>
+                                    </div>
+                                    <div className="flex items-center gap-1.5">
+                                        <CheckCircle2 className="w-4 h-4 text-primary" />
+                                        <span>No credit card</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
