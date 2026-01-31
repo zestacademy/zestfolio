@@ -216,13 +216,25 @@ export default function Templates() {
                             <p className="text-lg text-muted-foreground">
                                 Switch between templates anytime. Your content stays the same, just the design changes.
                             </p>
-                            <Link
-                                href="/dashboard"
-                                className="inline-flex h-12 items-center justify-center rounded-lg bg-primary px-8 text-base font-medium text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30"
-                            >
-                                Start Building Now
-                                <Sparkles className="ml-2 h-4 w-4" />
-                            </Link>
+                            <div className="flex flex-col sm:flex-row items-center gap-4">
+                                <Link
+                                    href="/dashboard"
+                                    className="inline-flex h-12 items-center justify-center rounded-lg bg-primary px-8 text-base font-semibold text-primary-foreground shadow-lg hover:shadow-xl hover:bg-primary/90 transition-all hover:scale-105"
+                                >
+                                    Start Building Now
+                                    <Sparkles className="ml-2 h-4 w-4" />
+                                </Link>
+                                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                                    <div className="flex items-center gap-1.5">
+                                        <CheckCircle2 className="w-4 h-4 text-primary" />
+                                        <span>No coding needed</span>
+                                    </div>
+                                    <div className="flex items-center gap-1.5">
+                                        <CheckCircle2 className="w-4 h-4 text-primary" />
+                                        <span>Free to use</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
