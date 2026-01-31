@@ -62,7 +62,7 @@ export function Sidebar() {
     const sidebarContent = (
         <>
             <div className="p-6 h-16 flex items-center border-b gap-2">
-                <img src="/logo.png" alt="Zestfolio Logo" className="w-8 h-8 object-contain" />
+                <img src="/logo.png" alt="Zestfolio Logo" className="w-16 h-16 object-contain" />
                 <span className="font-bold text-xl tracking-tight">
                     <span className="text-primary">Zest</span>folio
                 </span>
@@ -133,7 +133,7 @@ export function Sidebar() {
                     <Menu className="w-6 h-6" />
                 </button>
                 <div className="ml-4 flex items-center gap-2">
-                    <img src="/logo.png" alt="Zestfolio Logo" className="w-7 h-7 object-contain" />
+                    <img src="/logo.png" alt="Zestfolio Logo" className="w-10 h-10 object-contain" />
                     <span className="font-bold text-lg tracking-tight">
                         <span className="text-primary">Zest</span>folio
                     </span>

@@ -8,7 +8,7 @@ export function Navbar() {
     return (
         <header className="px-4 md:px-6 h-16 flex items-center border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 shadow-sm">
             <Link href="/" className="flex items-center gap-2 font-bold text-lg md:text-xl tracking-tight">
-                <img src="/logo.png" alt="Zestfolio Logo" className="w-7 h-7 md:w-8 md:h-8 object-contain" />
+                <img src="/logo.png" alt="Zestfolio Logo" className="w-10 h-10 md:w-16 md:h-16 object-contain" />
                 <span><span className="text-primary">Zest</span>folio</span>
             </Link>
             <nav className="ml-auto hidden md:flex gap-6 lg:gap-8 text-sm font-medium">
