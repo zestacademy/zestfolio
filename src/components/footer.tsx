@@ -24,7 +24,7 @@ export function Footer() {
                         <Link href="/examples" className="text-muted-foreground hover:text-primary transition-colors">
                             Examples
                         </Link>
-                        <Link href="#pricing" className="text-muted-foreground hover:text-primary transition-colors">
+                        <Link href="/#pricing" className="text-muted-foreground hover:text-primary transition-colors">
                             Pricing
                         </Link>
                     </div>

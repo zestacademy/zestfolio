@@ -15,8 +15,8 @@ export function Navbar() {
                 <Link href="/" className="hover:text-primary transition-colors">Home</Link>
                 <Link href="/templates" className="hover:text-primary transition-colors">Templates</Link>
                 <Link href="/features" className="hover:text-primary transition-colors">Features</Link>
-                <Link href="/examples" className="hover:text-primary transition-colors">How It Works</Link>
-                <Link href="#pricing" className="hover:text-primary transition-colors">Pricing</Link>
+                <Link href="/examples" className="hover:text-primary transition-colors">Examples</Link>
+                <Link href="/#pricing" className="hover:text-primary transition-colors">Pricing</Link>
             </nav>
             <div className="ml-4 md:ml-6 flex items-center gap-2 md:gap-3">
                 <ThemeToggle />
