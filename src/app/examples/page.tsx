@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { ExternalLink, Github, Linkedin, Mail, Star, TrendingUp } from "lucide-react";
+import { ExternalLink, Github, Linkedin, Mail, Star, TrendingUp, CheckCircle2 } from "lucide-react";
 
 export default function Examples() {
     const examples = [
