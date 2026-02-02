@@ -26,7 +26,7 @@ ZestFolio is a dynamic portfolio building platform designed for students to show
 *   **Language**: TypeScript
 *   **Styling**: Tailwind CSS + Shadcn UI
 *   **Database**: Firebase Firestore
-*   **Authentication**: Firebase Auth
+*   **Authentication**: ZestAcademy SSO (OAuth 2.0)
 *   **Storage**: Firebase Storage (for images)
 *   **Icons**: Lucide React
 
@@ -50,13 +50,19 @@ ZestFolio is a dynamic portfolio building platform designed for students to show
     ```
 
 3.  Set up Environment Variables:
-    Create a `.env.local` file with your Firebase config:
+    Create a `.env.local` file with your configuration:
     ```env
+    # Firebase (for Firestore/Storage only)
     NEXT_PUBLIC_FIREBASE_API_KEY=...
-    NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=...
     NEXT_PUBLIC_FIREBASE_PROJECT_ID=...
-    # ... other firebase vars
+    
+    # ZestAcademy SSO
+    NEXT_PUBLIC_SSO_AUTH_URL=https://auth.zestacademy.tech
+    NEXT_PUBLIC_SSO_CLIENT_ID=zestfolio
+    NEXT_PUBLIC_SSO_REDIRECT_URI=https://zestfolio.tech/api/auth/callback
+    SSO_CLIENT_SECRET=your_client_secret_here
     ```
+    See `.env.example` for complete configuration.
 
 4.  Run the Development Server:
     ```bash
@@ -67,7 +73,22 @@ ZestFolio is a dynamic portfolio building platform designed for students to show
 
 ## 📅 System Updates (Change Log)
 
-### **Latest Update (January 28, 2026)**
+### **Latest Update (February 2, 2026)**
+*   **Single Sign-On (SSO) Integration**:
+    *   **Unified Authentication**: Login with ZestAcademy account across all platforms
+    *   **OAuth 2.0 Flow**: Secure authorization code flow with CSRF protection
+    *   **HTTP-Only Cookies**: Tokens stored securely, never in localStorage
+    *   **Backend Token Exchange**: Client secret never exposed to frontend
+    *   **Global Logout**: Sign out from all ZestAcademy platforms at once
+    *   **JWT Validation**: Automatic token expiration and issuer checks
+    *   **Seamless Experience**: One account for zestacademy.tech, zestfolio.tech, and zestcompilers.tech
+*   **Security Enhancements**:
+    *   No passwords stored or transmitted by Zestfolio
+    *   State parameter validation for CSRF protection
+    *   Secure cookie configuration with SameSite protection
+    *   Token validation on every request
+
+### **Previous Update (January 28, 2026)**
 *   **Admin Dashboard Cleanup & Reconfiguration**:
     *   **Improved User Identification**: Table now displays "Full Name" and "URL Name" directly from the database root.
     *   **Enhanced Search**: Search functionality now filters by Full Name, URL Name, and Email.
@@ -84,11 +105,21 @@ ZestFolio is a dynamic portfolio building platform designed for students to show
 *   **Security**: Updated `firestore.rules` and implemented automatic maintenance page.
 *   **Network Access**: Dev server spans `0.0.0.0` for local testing.
 
-## 🔒 Security Rules (Firestore)
+## 🔒 Security
 
+### Authentication
+*   **Single Sign-On**: Powered by ZestAcademy OAuth 2.0
+*   **No Password Storage**: Zestfolio never handles passwords
+*   **HTTP-Only Cookies**: Secure token storage
+*   **CSRF Protection**: State parameter validation
+*   **JWT Validation**: Automatic token verification
+
+### Firestore Rules
 *   **Public Read**: Allowed for `portfolios` collection (required for public pages).
 *   **Private Write**: Only the document owner can edit their portfolio.
 *   **Admin Access**: Special admin accounts (`zestacademy@rsmk.co.in`, `zestacademyonline@gmail.com`) have full dashboard access.
+
+For detailed SSO documentation, see [SSO_INTEGRATION_GUIDE.md](./SSO_INTEGRATION_GUIDE.md).
 
 ## 🤝 Contributing
 
