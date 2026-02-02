@@ -40,12 +40,12 @@ export function validateJWT(token: string, expectedIssuer: string, expectedAudie
 
     // Check expiration
     const now = Math.floor(Date.now() / 1000);
-    if (payload.exp && payload.exp < now) {
+    if (payload.exp && (payload.exp as number) < now) {
       return { valid: false, error: 'Token expired' };
     }
 
     // Check not before
-    if (payload.nbf && payload.nbf > now) {
+    if (payload.nbf && (payload.nbf as number) > now) {
       return { valid: false, error: 'Token not yet valid' };
     }
 
@@ -110,7 +110,7 @@ export function isTokenExpired(token: string): boolean {
   }
   
   const now = Math.floor(Date.now() / 1000);
-  return payload.exp < now;
+  return (payload.exp as number) < now;
 }
 
 /**
@@ -118,5 +118,5 @@ export function isTokenExpired(token: string): boolean {
  */
 export function getTokenExpiration(token: string): number | null {
   const payload = decodeJWT(token);
-  return payload?.exp || null;
+  return (payload?.exp as number) || null;
 }
