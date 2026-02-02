@@ -33,7 +33,7 @@ export default function LoginPage() {
       // Store state in cookie for validation on callback
       setCookie('oauth_state', state, {
         maxAge: 600, // 10 minutes
-        secure: true, // Always use Secure flag for CSRF tokens
+        secure: process.env.NODE_ENV === 'production',
       });
       
       // Redirect to authorization server
@@ -55,7 +55,7 @@ export default function LoginPage() {
       // Store state in cookie for validation on callback
       setCookie('google_oauth_state', state, {
         maxAge: 600, // 10 minutes
-        secure: true, // Always use Secure flag for CSRF tokens
+        secure: process.env.NODE_ENV === 'production',
       });
       
       // Redirect to Google authorization
