@@ -26,7 +26,7 @@ ZestFolio is a dynamic portfolio building platform designed for students to show
 *   **Language**: TypeScript
 *   **Styling**: Tailwind CSS + Shadcn UI
 *   **Database**: Firebase Firestore
-*   **Authentication**: ZestAcademy SSO (OAuth 2.0)
+*   **Authentication**: ZestAcademy SSO (OAuth 2.0) + Google OAuth 2.0
 *   **Storage**: Firebase Storage (for images)
 *   **Icons**: Lucide React
 
@@ -56,6 +56,11 @@ ZestFolio is a dynamic portfolio building platform designed for students to show
     NEXT_PUBLIC_FIREBASE_API_KEY=...
     NEXT_PUBLIC_FIREBASE_PROJECT_ID=...
     
+    # Google OAuth (optional - for Google authentication)
+    NEXT_PUBLIC_GOOGLE_CLIENT_ID=your_google_client_id
+    GOOGLE_CLIENT_SECRET=your_google_client_secret
+    NEXT_PUBLIC_GOOGLE_REDIRECT_URI=http://localhost:3000/api/auth/google/callback
+    
     # ZestAcademy SSO
     NEXT_PUBLIC_SSO_AUTH_URL=https://auth.zestacademy.tech
     NEXT_PUBLIC_SSO_CLIENT_ID=zestfolio
@@ -74,6 +79,12 @@ ZestFolio is a dynamic portfolio building platform designed for students to show
 ## 📅 System Updates (Change Log)
 
 ### **Latest Update (February 2, 2026)**
+*   **Google OAuth Integration**:
+    *   **Multiple Authentication Options**: Users can now sign in with Google or ZestAcademy SSO
+    *   **OAuth 2.0 Flow**: Secure authorization code flow with CSRF protection
+    *   **HTTP-Only Cookies**: Tokens stored securely, never in localStorage
+    *   **Backend Token Exchange**: Client secret never exposed to frontend
+    *   **Flexible Authentication**: Choose your preferred sign-in method
 *   **Single Sign-On (SSO) Integration**:
     *   **Unified Authentication**: Login with ZestAcademy account across all platforms
     *   **OAuth 2.0 Flow**: Secure authorization code flow with CSRF protection
@@ -108,7 +119,8 @@ ZestFolio is a dynamic portfolio building platform designed for students to show
 ## 🔒 Security
 
 ### Authentication
-*   **Single Sign-On**: Powered by ZestAcademy OAuth 2.0
+*   **Multiple Authentication Options**: Google OAuth 2.0 and ZestAcademy SSO
+*   **OAuth 2.0 Standard**: Industry-standard authentication protocol
 *   **No Password Storage**: Zestfolio never handles passwords
 *   **HTTP-Only Cookies**: Secure token storage
 *   **CSRF Protection**: State parameter validation

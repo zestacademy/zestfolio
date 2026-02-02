@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { getAuthorizationUrl, generateState } from '@/lib/sso-config';
+import { getGoogleAuthorizationUrl } from '@/lib/google-auth-client';
 import { getUserInfoFromCookie, setCookie } from '@/lib/cookie-utils';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
@@ -32,11 +33,33 @@ export default function LoginPage() {
       // Store state in cookie for validation on callback
       setCookie('oauth_state', state, {
         maxAge: 600, // 10 minutes
-        secure: true, // Always use Secure flag for CSRF tokens
+        secure: process.env.NODE_ENV === 'production',
       });
       
       // Redirect to authorization server
       const authUrl = getAuthorizationUrl(state);
+      window.location.href = authUrl;
+    } catch (err) {
+      console.error('Login error:', err);
+      setIsRedirecting(false);
+    }
+  };
+
+  const handleLoginWithGoogle = () => {
+    setIsRedirecting(true);
+    
+    try {
+      // Generate state parameter for CSRF protection
+      const state = generateState();
+      
+      // Store state in cookie for validation on callback
+      setCookie('google_oauth_state', state, {
+        maxAge: 600, // 10 minutes
+        secure: process.env.NODE_ENV === 'production',
+      });
+      
+      // Redirect to Google authorization
+      const authUrl = getGoogleAuthorizationUrl(state);
       window.location.href = authUrl;
     } catch (err) {
       console.error('Login error:', err);
@@ -50,7 +73,7 @@ export default function LoginPage() {
         <div className="text-center mb-6">
           <h1 className="text-2xl font-bold mb-2">Welcome to Zestfolio</h1>
           <p className="text-muted-foreground text-sm">
-            Sign in with your ZestAcademy account
+            Sign in to your account
           </p>
         </div>
 
@@ -61,14 +84,35 @@ export default function LoginPage() {
           </Alert>
         )}
 
-        <Button 
-          onClick={handleLoginWithZestAcademy}
-          disabled={isRedirecting}
-          className="w-full"
-          size="lg"
-        >
-          {isRedirecting ? 'Redirecting...' : 'Login with ZestAcademy'}
-        </Button>
+        <div className="space-y-3">
+          <Button 
+            onClick={handleLoginWithGoogle}
+            disabled={isRedirecting}
+            className="w-full"
+            size="lg"
+            variant="outline"
+          >
+            {isRedirecting ? 'Redirecting...' : 'Continue with Google'}
+          </Button>
+
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-card px-2 text-muted-foreground">Or</span>
+            </div>
+          </div>
+
+          <Button 
+            onClick={handleLoginWithZestAcademy}
+            disabled={isRedirecting}
+            className="w-full"
+            size="lg"
+          >
+            {isRedirecting ? 'Redirecting...' : 'Login with ZestAcademy'}
+          </Button>
+        </div>
 
         <div className="mt-6 text-center text-xs text-muted-foreground">
           <p>
