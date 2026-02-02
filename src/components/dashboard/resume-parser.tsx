@@ -93,7 +93,14 @@ export function ResumeParser() {
             }
         } catch (err: any) {
             console.error(err);
-            setError(err.message || 'An error occurred during parsing.');
+            let msg = err.message || 'An error occurred during parsing.';
+
+            // Check for quota/rate limit errors and show user-friendly message
+            if (msg.includes('Quota') || msg.includes('Too Many Requests') || msg.includes('429')) {
+                msg = "Cannot reach right now, Please Enter Manually";
+            }
+
+            setError(msg);
             setStep('upload');
         }
     };
