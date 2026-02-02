@@ -6,7 +6,7 @@
 /**
  * Decode JWT without verification (for reading payload)
  */
-export function decodeJWT(token: string): any {
+export function decodeJWT(token: string): Record<string, unknown> | null {
   try {
     const parts = token.split('.');
     if (parts.length !== 3) {
@@ -28,7 +28,7 @@ export function decodeJWT(token: string): any {
  */
 export function validateJWT(token: string, expectedIssuer: string, expectedAudience: string): {
   valid: boolean;
-  payload?: any;
+  payload?: Record<string, unknown>;
   error?: string;
 } {
   try {
@@ -60,15 +60,16 @@ export function validateJWT(token: string, expectedIssuer: string, expectedAudie
     }
 
     return { valid: true, payload };
-  } catch (error: any) {
-    return { valid: false, error: error.message };
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    return { valid: false, error: errorMessage };
   }
 }
 
 /**
  * Extract user info from JWT payload
  */
-export function extractUserInfo(payload: any): {
+export function extractUserInfo(payload: Record<string, unknown>): {
   uid: string;
   email: string;
   name?: string;

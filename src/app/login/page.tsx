@@ -37,7 +37,7 @@ export default function LoginPage() {
       // Redirect to authorization server
       const authUrl = getAuthorizationUrl(state);
       window.location.href = authUrl;
-    } catch (err: any) {
+    } catch (err) {
       console.error('Login error:', err);
       setIsRedirecting(false);
     }

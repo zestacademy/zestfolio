@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { isTokenExpired } from '@/lib/jwt-utils';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const cookieStore = await cookies();
     const userInfoCookie = cookieStore.get('user_info');
@@ -28,8 +28,9 @@ export async function GET(request: NextRequest) {
       authenticated: true,
       user: userInfo,
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Session check error:', error);
-    return NextResponse.json({ authenticated: false, error: error.message }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    return NextResponse.json({ authenticated: false, error: errorMessage }, { status: 500 });
   }
 }

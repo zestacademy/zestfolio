@@ -1,13 +1,11 @@
 'use client';
-import { Button } from '@/components/ui/button';
-import { useAuth } from '@/lib/sso-auth-context';
+import { useAuth } from '@/lib/auth-context';
 import { useRouter } from 'next/navigation';
 import { db } from '@/lib/firebase';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { useEffect } from 'react';
 import { Sidebar } from '@/components/dashboard/sidebar';
 import { Loader2 } from 'lucide-react';
-import { useState } from 'react';
 
 export default function DashboardLayout({
     children,
@@ -32,11 +30,6 @@ export default function DashboardLayout({
             });
         }
     }, [user, loading, router]);
-
-    const handleLogout = async () => {
-        // Redirect to logout endpoint
-        window.location.href = '/api/auth/logout';
-    };
 
     if (loading) {
         return (

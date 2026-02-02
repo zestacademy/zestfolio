@@ -113,10 +113,11 @@ export async function GET(request: NextRequest) {
     response.cookies.delete('oauth_state');
 
     return response;
-  } catch (error: any) {
+  } catch (error) {
     console.error('OAuth callback error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Authentication failed';
     return NextResponse.redirect(
-      new URL(`/login?error=${encodeURIComponent(error.message || 'Authentication failed')}`, request.url)
+      new URL(`/login?error=${encodeURIComponent(errorMessage)}`, request.url)
     );
   }
 }

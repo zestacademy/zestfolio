@@ -24,16 +24,11 @@ const ADMIN_EMAILS = ['zestacademy@rsmk.co.in', 'zestacademyonline@gmail.com'];
 
 export function Sidebar() {
     const pathname = usePathname();
-    const router = useRouter();
     const { user } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
-    const [isAdmin, setIsAdmin] = useState(false);
-
-    useEffect(() => {
-        if (user) {
-            setIsAdmin(ADMIN_EMAILS.includes(user.email || ''));
-        }
-    }, [user]);
+    
+    // Compute admin status from user email
+    const isAdmin = user ? ADMIN_EMAILS.includes(user.email || '') : false;
 
     const handleSignOut = async () => {
         // Redirect to SSO logout endpoint
@@ -42,7 +37,10 @@ export function Sidebar() {
 
     // Close sidebar when route changes on mobile
     useEffect(() => {
-        setIsOpen(false);
+        // Only run on client side after initial render
+        if (typeof window !== 'undefined') {
+            setIsOpen(false);
+        }
     }, [pathname]);
 
     // Prevent body scroll when sidebar is open on mobile
