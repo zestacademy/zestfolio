@@ -1,66 +1,99 @@
 'use client';
 
-import { useState } from 'react';
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { getAuthorizationUrl, generateState } from '@/lib/sso-config';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { AlertCircle } from 'lucide-react';
 
 export default function LoginPage() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const router = useRouter();
+  const [isRedirecting, setIsRedirecting] = useState(false);
+  const searchParams = useSearchParams();
+  const error = searchParams.get('error');
+  const router = useRouter();
 
-    const handleLogin = async (e: React.FormEvent) => {
-        e.preventDefault();
-        try {
-            await signInWithEmailAndPassword(auth, email, password);
-            router.push('/dashboard');
-        } catch (err: any) {
-            setError(err.message);
-        }
-    };
+  useEffect(() => {
+    // Check if already authenticated
+    const userInfoCookie = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('user_info='));
 
-    const handleGoogleLogin = async () => {
-        const provider = new GoogleAuthProvider();
-        try {
-            await signInWithPopup(auth, provider);
-            router.push('/dashboard');
-        } catch (err: any) {
-            setError(err.message);
-        }
-    };
+    if (userInfoCookie) {
+      router.push('/dashboard');
+    }
+  }, [router]);
 
-    return (
-        <div className="flex items-center justify-center min-h-screen bg-muted/40">
-            <div className="w-full max-w-md p-8 bg-card rounded-xl shadow-lg border">
-                <h1 className="text-2xl font-bold text-center mb-6">Sign In to Zestfolio</h1>
-                {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-                <form onSubmit={handleLogin} className="space-y-4">
-                    <div className="space-y-2">
-                        <Label htmlFor="email">Email</Label>
-                        <Input id="email" type="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                    </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="password">Password</Label>
-                        <Input id="password" type="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                    </div>
-                    <Button type="submit" className="w-full">Sign In</Button>
-                </form>
-                <div className="mt-4 flex items-center justify-between">
-                    <div className="bg-border h-px flex-1"></div>
-                    <span className="px-2 text-muted-foreground text-xs">OR</span>
-                    <div className="bg-border h-px flex-1"></div>
-                </div>
-                <Button variant="outline" className="w-full mt-4" onClick={handleGoogleLogin}>Sign in with Google</Button>
-                <p className="mt-6 text-center text-sm text-muted-foreground">
-                    Don't have an account? <Link href="/signup" className="text-primary hover:underline">Sign Up</Link>
-                </p>
-            </div>
+  const handleLoginWithZestAcademy = () => {
+    setIsRedirecting(true);
+    
+    try {
+      // Generate state parameter for CSRF protection
+      const state = generateState();
+      
+      // Store state in cookie for validation on callback
+      document.cookie = `oauth_state=${state}; path=/; max-age=600; SameSite=Lax${process.env.NODE_ENV === 'production' ? '; Secure' : ''}`;
+      
+      // Redirect to authorization server
+      const authUrl = getAuthorizationUrl(state);
+      window.location.href = authUrl;
+    } catch (err: any) {
+      console.error('Login error:', err);
+      setIsRedirecting(false);
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-muted/40">
+      <div className="w-full max-w-md p-8 bg-card rounded-xl shadow-lg border">
+        <div className="text-center mb-6">
+          <h1 className="text-2xl font-bold mb-2">Welcome to Zestfolio</h1>
+          <p className="text-muted-foreground text-sm">
+            Sign in with your ZestAcademy account
+          </p>
         </div>
-    );
+
+        {error && (
+          <Alert variant="destructive" className="mb-4">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
+
+        <Button 
+          onClick={handleLoginWithZestAcademy}
+          disabled={isRedirecting}
+          className="w-full"
+          size="lg"
+        >
+          {isRedirecting ? 'Redirecting...' : 'Login with ZestAcademy'}
+        </Button>
+
+        <div className="mt-6 text-center text-xs text-muted-foreground">
+          <p>
+            By signing in, you agree to our{' '}
+            <a href="/terms-conditions" className="text-primary hover:underline">
+              Terms & Conditions
+            </a>{' '}
+            and{' '}
+            <a href="/privacy-policy" className="text-primary hover:underline">
+              Privacy Policy
+            </a>
+          </p>
+        </div>
+
+        <div className="mt-6 p-4 bg-muted rounded-lg">
+          <h3 className="font-semibold text-sm mb-2">Single Sign-On (SSO)</h3>
+          <p className="text-xs text-muted-foreground">
+            One ZestAcademy account works across all platforms:
+          </p>
+          <ul className="text-xs text-muted-foreground mt-2 space-y-1">
+            <li>• zestacademy.tech</li>
+            <li>• zestfolio.tech</li>
+            <li>• zestcompilers.tech</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
 }

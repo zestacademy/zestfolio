@@ -5,8 +5,6 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { LayoutDashboard, User, Folder, Award, Settings, LogOut, GraduationCap, Menu, X, Shield, LayoutTemplate } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { auth } from '@/lib/firebase';
-import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/lib/auth-context';
@@ -38,8 +36,8 @@ export function Sidebar() {
     }, [user]);
 
     const handleSignOut = async () => {
-        await signOut(auth);
-        router.push('/');
+        // Redirect to SSO logout endpoint
+        window.location.href = '/api/auth/logout';
     };
 
     // Close sidebar when route changes on mobile
