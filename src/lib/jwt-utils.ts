@@ -54,8 +54,12 @@ export function validateJWT(token: string, expectedIssuer: string, expectedAudie
       return { valid: false, error: 'Invalid issuer' };
     }
 
-    // Validate audience
-    if (payload.aud !== expectedAudience && !payload.aud?.includes(expectedAudience)) {
+    // Validate audience (can be string or array of strings)
+    const audienceMatch = typeof payload.aud === 'string'
+      ? payload.aud === expectedAudience
+      : Array.isArray(payload.aud) && payload.aud.includes(expectedAudience);
+    
+    if (!audienceMatch) {
       return { valid: false, error: 'Invalid audience' };
     }
 
@@ -76,11 +80,22 @@ export function extractUserInfo(payload: Record<string, unknown>): {
   picture?: string;
   emailVerified?: boolean;
 } {
+  const uid = (payload.sub || payload.user_id) as string;
+  const email = payload.email as string;
+  
+  if (!uid) {
+    throw new Error('JWT payload missing required "sub" or "user_id" field');
+  }
+  
+  if (!email) {
+    throw new Error('JWT payload missing required "email" field');
+  }
+  
   return {
-    uid: payload.sub || payload.user_id,
-    email: payload.email,
-    name: payload.name || payload.full_name,
-    picture: payload.picture || payload.avatar,
+    uid,
+    email,
+    name: payload.name as string | undefined || payload.full_name as string | undefined,
+    picture: payload.picture as string | undefined || payload.avatar as string | undefined,
     emailVerified: payload.email_verified === true,
   };
 }

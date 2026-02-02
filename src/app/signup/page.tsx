@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { getUserInfoFromCookie } from '@/lib/cookie-utils';
 import Link from 'next/link';
 
 export default function SignupPage() {
@@ -10,11 +11,8 @@ export default function SignupPage() {
 
   useEffect(() => {
     // Check if already authenticated
-    const userInfoCookie = document.cookie
-      .split('; ')
-      .find(row => row.startsWith('user_info='));
-
-    if (userInfoCookie) {
+    const userInfo = getUserInfoFromCookie();
+    if (userInfo) {
       router.push('/dashboard');
     }
   }, [router]);

@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
+import { getUserInfoFromCookie } from './cookie-utils';
 
 export interface SSOUser {
   uid: string;
@@ -28,17 +29,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const checkSession = async () => {
     try {
-      // Check session from cookies
-      const userInfoCookie = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('user_info='));
-
-      if (userInfoCookie) {
-        const userInfo = JSON.parse(decodeURIComponent(userInfoCookie.split('=')[1]));
-        setUser(userInfo);
-      } else {
-        setUser(null);
-      }
+      const userInfo = getUserInfoFromCookie();
+      setUser(userInfo);
     } catch (error) {
       console.error('Session check error:', error);
       setUser(null);

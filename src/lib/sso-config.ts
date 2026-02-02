@@ -116,17 +116,14 @@ export function generateState(): string {
   if (typeof window !== 'undefined' && window.crypto) {
     window.crypto.getRandomValues(array);
   } else {
-    // Server-side fallback using dynamic import
-    // Note: In production, ensure crypto is available server-side
+    // Server-side: crypto module is required for security
     try {
       // eslint-disable-next-line @typescript-eslint/no-require-imports
       const crypto = require('crypto');
       crypto.randomFillSync(array);
-    } catch {
-      // Fallback to Math.random if crypto is not available
-      for (let i = 0; i < array.length; i++) {
-        array[i] = Math.floor(Math.random() * 256);
-      }
+    } catch (error) {
+      // Crypto is not available - this is a critical security error
+      throw new Error('Crypto module not available. Cannot generate secure state parameter for OAuth CSRF protection.');
     }
   }
   return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');

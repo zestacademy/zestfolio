@@ -37,10 +37,7 @@ export function Sidebar() {
 
     // Close sidebar when route changes on mobile
     useEffect(() => {
-        // Only run on client side after initial render
-        if (typeof window !== 'undefined') {
-            setIsOpen(false);
-        }
+        setIsOpen(false);
     }, [pathname]);
 
     // Prevent body scroll when sidebar is open on mobile

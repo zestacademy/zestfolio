@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
     if (!validation.valid) {
       console.error('Token validation failed:', validation.error);
       return NextResponse.redirect(
-        new URL('/login?error=Invalid+token', request.url)
+        new URL(`/login?error=${encodeURIComponent(validation.error || 'Token validation failed')}`, request.url)
       );
     }
 

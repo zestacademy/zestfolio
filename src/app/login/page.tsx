@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { getAuthorizationUrl, generateState } from '@/lib/sso-config';
+import { getUserInfoFromCookie, setCookie } from '@/lib/cookie-utils';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
 
@@ -15,11 +16,8 @@ export default function LoginPage() {
 
   useEffect(() => {
     // Check if already authenticated
-    const userInfoCookie = document.cookie
-      .split('; ')
-      .find(row => row.startsWith('user_info='));
-
-    if (userInfoCookie) {
+    const userInfo = getUserInfoFromCookie();
+    if (userInfo) {
       router.push('/dashboard');
     }
   }, [router]);
@@ -32,7 +30,10 @@ export default function LoginPage() {
       const state = generateState();
       
       // Store state in cookie for validation on callback
-      document.cookie = `oauth_state=${state}; path=/; max-age=600; SameSite=Lax${process.env.NODE_ENV === 'production' ? '; Secure' : ''}`;
+      setCookie('oauth_state', state, {
+        maxAge: 600, // 10 minutes
+        secure: true, // Always use Secure flag for CSRF tokens
+      });
       
       // Redirect to authorization server
       const authUrl = getAuthorizationUrl(state);
