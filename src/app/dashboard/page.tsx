@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button';
 import { ExternalLink, Edit, Eye } from 'lucide-react';
 import Link from 'next/link';
 
+import { ResumeParser } from '@/components/dashboard/resume-parser';
+
 export default function DashboardPage() {
     const { user } = useAuth();
     const [portfolio, setPortfolio] = useState<any>(null);
@@ -84,6 +86,20 @@ export default function DashboardPage() {
                             <Button size="sm" variant="secondary" className="w-full">Set Username</Button>
                         </Link>
                     )}
+                </div>
+
+                {/* Smart Import Card */}
+                <div className="p-6 rounded-xl border bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/20 dark:to-purple-950/20 text-card-foreground shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h3 className="text-sm font-medium text-indigo-600 dark:text-indigo-400 mb-2">Smart Import</h3>
+                        <h4 className="text-lg font-bold mb-2">Import from Resume</h4>
+                        <p className="text-xs text-muted-foreground mb-4">
+                            Auto-fill your portfolio automatically by parsing your PDF, DOCX, or TXT resume.
+                        </p>
+                    </div>
+                    <div className="pt-2">
+                        <ResumeParser />
+                    </div>
                 </div>
 
                 {/* Quick Actions */}
