@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import mammoth from 'mammoth';
 import PDFParser from 'pdf2json';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 export async function POST(req: NextRequest) {
     try {
@@ -18,14 +19,12 @@ export async function POST(req: NextRequest) {
 
         if (file.type === 'application/pdf') {
             text = await new Promise((resolve, reject) => {
-                const pdfParser = new PDFParser(null, 1); // 1 = text content only
+                const pdfParser = new PDFParser(null, true); // true = text content only
 
                 pdfParser.on("pdfParser_dataError", (errData: any) => reject(errData.parserError));
                 pdfParser.on("pdfParser_dataReady", (pdfData: any) => {
-                    // rawText is usually URL encoded, sometimes easier to use .getRawTextContent() if available, 
-                    // or simple parsing. 
-                    // pdf2json "text only" output usually needs a bit of extracting.
-                    // However, let's use the explicit raw text extraction mode.
+                    // The raw text might be URL encoded, use decodeURIComponent if needed, 
+                    // or rely on getRawTextContent() which is generally cleaner.
                     resolve(pdfParser.getRawTextContent());
                 });
 
@@ -44,137 +43,102 @@ export async function POST(req: NextRequest) {
             throw new Error("Extracted text is empty. The file might be an image or scanned document.");
         }
 
-        // --- RULE-BASED PARSING LOGIC ---
-        // (Same robust logic as before)
+        // --- GEMINI AI PARSING LOGIC ---
+        const apiKey = process.env.GEMINI_API_KEY;
+        if (!apiKey) {
+            console.warn("GEMINI_API_KEY is missing. Falling back or returning error.");
+            return NextResponse.json({
+                error: 'Server configuration error: GEMINI_API_KEY is missing.',
+                hint: 'Please add GEMINI_API_KEY to your .env.local file.'
+            }, { status: 500 });
+        }
 
-        const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
-        const fullText = lines.join('\n');
+        const genAI = new GoogleGenerativeAI(apiKey);
 
-        const parsedData = {
-            personal_details: {
-                fullName: '',
-                email: '',
-                phone: '',
-                location: '',
-                linkedin: '',
-                github: '',
-                website: '',
-                professionalTitle: ''
-            },
-            summary: '',
-            skills: [] as string[],
-            education: [] as any[],
-            experience: [] as any[],
-            projects: [] as any[],
-            certifications: [] as any[],
-            achievements: [] as any[]
-        };
+        // List of models to try in order of preference to handle Rate Limits (429)
+        const modelsToTry = ["gemini-2.0-flash-001", "gemini-2.0-flash", "gemini-flash-latest", "gemini-pro-latest"];
 
-        // Regex Utils
-        const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/;
-        const phoneRegex = /(?:\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}/;
-        const linkedinRegex = /linkedin\.com\/in\/([a-zA-Z0-9-]+)/i;
-        const githubRegex = /github\.com\/([a-zA-Z0-9-]+)/i;
+        // Sanitize text and truncate to avoid excessive token usage (approx 5-6k tokens limit for safety)
+        const MAX_CHARS = 20000;
+        let sanitizedText = text.replace(/`/g, "'");
+        if (sanitizedText.length > MAX_CHARS) {
+            console.warn(`Resume text too long (${sanitizedText.length} chars). Truncating to ${MAX_CHARS}.`);
+            sanitizedText = sanitizedText.substring(0, MAX_CHARS);
+        }
 
-        // Naive Name Extraction (First non-empty line usually)
-        if (lines.length > 0) parsedData.personal_details.fullName = lines[0];
+        // Minified prompt to save tokens
+        const prompt = `Parse resume to JSON. No markdown.
+Schema:
+{
+  "personal_details": {
+    "fullName": "Name", "email": "Email", "phone": "Phone", "location": "City, Country",
+    "linkedin": "URL", "github": "URL", "website": "URL", "professionalTitle": "Title"
+  },
+  "summary": "Summary",
+  "skills": ["Skill1", "Skill2"],
+  "education": [{ "institution": "School", "degree": "Degree", "year": "Year" }],
+  "experience": [{ "company": "Co", "role": "Role", "duration": "Dates", "description": "Desc" }],
+  "projects": [{ "title": "Title", "description": "Desc", "technologies": ["Tech"] }],
+  "certifications": [{ "name": "Name", "issuer": "Org", "year": "Year" }],
+  "achievements": [{ "title": "Title", "description": "Desc" }]
+}
+Resume:
+${sanitizedText}`;
 
-        // Extraction
-        const emailMatch = fullText.match(emailRegex);
-        if (emailMatch) parsedData.personal_details.email = emailMatch[0];
+        let responseText = '';
+        let lastError: any = null;
 
-        const phoneMatch = fullText.match(phoneRegex);
-        if (phoneMatch) parsedData.personal_details.phone = phoneMatch[0];
+        for (const modelName of modelsToTry) {
+            try {
+                console.log(`Attempting to parse with model: ${modelName}`);
+                const model = genAI.getGenerativeModel({ model: modelName });
 
-        const linkedinMatch = fullText.match(linkedinRegex);
-        if (linkedinMatch) parsedData.personal_details.linkedin = "https://linkedin.com/in/" + linkedinMatch[1];
+                const result = await model.generateContent(prompt);
+                const response = await result.response;
+                responseText = response.text();
 
-        const githubMatch = fullText.match(githubRegex);
-        if (githubMatch) parsedData.personal_details.github = "https://github.com/" + githubMatch[1];
+                // Clean up if the model includes code blocks despite instructions
+                const cleanJson = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
 
-        // Section Segmentation
-        let currentSection = 'unknown';
-        const sections: Record<string, string[]> = {
-            summary: [],
-            skills: [],
-            education: [],
-            experience: [],
-            projects: []
-        };
+                const parsedData = JSON.parse(cleanJson);
 
-        const sectionKeywords: Record<string, string[]> = {
-            summary: ['summary', 'objective', 'about me', 'profile'],
-            skills: ['skills', 'technologies', 'technical skills', 'core competencies', 'stack'],
-            education: ['education', 'academic', 'qualifications', 'university'],
-            experience: ['experience', 'work history', 'employment', 'career history'],
-            projects: ['projects', 'key projects']
-        };
+                // If we get here, success!
+                return NextResponse.json({ success: true, data: parsedData });
 
-        for (let i = 1; i < lines.length; i++) {
-            const line = lines[i];
-            const lowerLine = line.toLowerCase();
-            let isHeader = false;
+            } catch (error: any) {
+                console.warn(`Model ${modelName} failed:`, error.message);
+                lastError = error;
 
-            // Heuristic: Headers are usually short
-            if (line.length < 50) {
-                for (const [section, keywords] of Object.entries(sectionKeywords)) {
-                    if (keywords.some(k => lowerLine.includes(k) && lowerLine.length < k.length + 10)) {
-                        currentSection = section;
-                        isHeader = true;
-                        break;
-                    }
+                // If it's NOT a rate limit error (429) or Service Unavailable (503), throw immediately (e.g. invalid key)
+                const isRateLimit = error.status === 429 || error.message?.includes('429') || error.message?.includes('Quota');
+                const isServiceError = error.status === 503;
+
+                if (!isRateLimit && !isServiceError) {
+                    break; // Don't retry for other errors
                 }
-            }
-
-            if (!isHeader && currentSection !== 'unknown' && sections[currentSection]) {
-                sections[currentSection].push(line);
-            } else if (!isHeader && currentSection === 'unknown') {
-                if (lowerLine.match(/software|developer|engineer|manager|designer/)) {
-                    parsedData.personal_details.professionalTitle = line;
-                } else if (lines.length < 10) {
-                    // Early lines might be summary/location
-                    if (!parsedData.personal_details.location && line.match(/[A-Z][a-z]+, [A-Z]{2}/)) {
-                        parsedData.personal_details.location = line;
-                    }
-                }
+                // Otherwise loop to next model
             }
         }
 
-        // Process Sections
-        if (sections.skills.length > 0) {
-            // Cleaning skills text
-            const rawSkills = sections.skills.join(' ');
-            parsedData.skills = rawSkills.split(/[,|•·\n]/).map(s => s.trim()).filter(s => s.length > 2 && s.length < 30);
+        // If we exhausted all models
+        console.error("All models failed. Last error:", lastError);
+        console.log("Raw Response Text (if any):", responseText);
+
+        let errorMessage = 'Failed to parse resume with AI';
+        let errorDetails = lastError?.message || 'Unknown error';
+
+        if (lastError instanceof SyntaxError) {
+            errorMessage = 'AI returned invalid JSON';
+            errorDetails = 'The model response could not be parsed as JSON.';
+        } else if (lastError?.status === 429 || lastError?.message?.includes('429')) {
+            errorMessage = 'Too Many Requests';
+            errorDetails = 'Free tier quota exceeded on all available models. Please wait a moment.';
         }
 
-        parsedData.summary = sections.summary.join(' ');
-
-        if (sections.education.length > 0) {
-            parsedData.education.push({
-                institution: sections.education[0] || "Unknown Institution",
-                degree: sections.education.find(l => l.includes('Degree') || l.includes('Bachelor') || l.includes('Master')) || "",
-                year: sections.education.find(l => l.match(/\d{4}/)) || ""
-            });
-        }
-
-        if (sections.experience.length > 0) {
-            parsedData.experience.push({
-                company: "Parsed from Resume",
-                role: "",
-                duration: "",
-                description: sections.experience.join('\n')
-            });
-        }
-
-        if (sections.projects.length > 0) {
-            parsedData.projects.push({
-                title: "Parsed Projects",
-                description: sections.projects.join('\n'),
-                technologies: []
-            });
-        }
-
-        return NextResponse.json({ success: true, data: parsedData });
+        return NextResponse.json({
+            error: errorMessage,
+            details: errorDetails
+        }, { status: 502 });
 
     } catch (error: any) {
         console.error('Resume Parsing Error:', error);

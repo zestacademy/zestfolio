@@ -78,7 +78,10 @@ export function ResumeParser() {
 
             if (!response.ok) {
                 const errData = await response.json();
-                throw new Error(errData.error || 'Failed to parse resume');
+                const msg = errData.details
+                    ? `${errData.error}: ${errData.details}`
+                    : (errData.error || 'Failed to parse resume');
+                throw new Error(msg);
             }
 
             const result = await response.json();
