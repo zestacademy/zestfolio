@@ -58,7 +58,7 @@ export default function ProfileForm() {
                         setIsUsernameAvailable(true); // Assuming their current one is valid
                     }
                 } else {
-                    setFormData(prev => ({ ...prev, fullName: user.displayName || '', email: user.email || '' }));
+                    setFormData(prev => ({ ...prev, fullName: user.name || '', email: user.email || '' }));
                 }
             } catch (error) {
                 console.error("Error fetching profile:", error);

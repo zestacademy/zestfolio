@@ -1,14 +1,11 @@
 'use client';
-import { Button } from '@/components/ui/button';
 import { useAuth } from '@/lib/auth-context';
 import { useRouter } from 'next/navigation';
-import { db, auth } from '@/lib/firebase';
+import { db } from '@/lib/firebase';
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { useEffect } from 'react';
 import { Sidebar } from '@/components/dashboard/sidebar';
 import { Loader2 } from 'lucide-react';
-import { signOut, sendEmailVerification } from 'firebase/auth';
-import { useState } from 'react';
 
 export default function DashboardLayout({
     children,
@@ -17,8 +14,6 @@ export default function DashboardLayout({
 }) {
     const { user, loading } = useAuth();
     const router = useRouter();
-    const [resending, setResending] = useState(false);
-    const [resendMessage, setResendMessage] = useState('');
 
     useEffect(() => {
         if (!loading && !user) {
@@ -27,32 +22,14 @@ export default function DashboardLayout({
             // Track user activity & ensure doc exists
             setDoc(doc(db, 'portfolios', user.uid), {
                 lastActiveAt: serverTimestamp(),
-                // Sync essential auth data if missing
-                ...(user.email ? { email: user.email } : {})
+                // Sync essential auth data
+                email: user.email,
+                fullName: user.name || '',
             }, { merge: true }).catch(e => {
                 console.log('Error tracking activity:', e);
             });
         }
     }, [user, loading, router]);
-
-    const handleResendVerification = async () => {
-        if (!user) return;
-        setResending(true);
-        setResendMessage('');
-        try {
-            await sendEmailVerification(user);
-            setResendMessage('Verification email sent! Check your inbox (and spam).');
-        } catch (error: any) {
-            console.error("Error resending verification:", error);
-            if (error.code === 'auth/too-many-requests') {
-                setResendMessage('Too many requests. Please wait a bit.');
-            } else {
-                setResendMessage('Failed to send email. Please try again.');
-            }
-        } finally {
-            setResending(false);
-        }
-    };
 
     if (loading) {
         return (
@@ -66,35 +43,8 @@ export default function DashboardLayout({
         return null; // Will redirect
     }
 
-    if (!user.emailVerified) {
-        return (
-            <div className="flex min-h-screen flex-col items-center justify-center bg-background p-4 text-center">
-                <div className="max-w-md space-y-6 rounded-lg border bg-card p-8 shadow-sm">
-                    <h1 className="text-2xl font-bold text-foreground">Verify Your Email</h1>
-                    <p className="text-muted-foreground">
-                        Please verify your email address to access your dashboard.
-                        We sent a verification link to <strong>{user.email}</strong>.
-                    </p>
-                    {resendMessage && (
-                        <p className={`text-sm ${resendMessage.includes('sent') ? 'text-green-600' : 'text-red-500'}`}>
-                            {resendMessage}
-                        </p>
-                    )}
-                    <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
-                        <Button onClick={handleResendVerification} disabled={resending} variant="secondary">
-                            {resending ? 'Sending...' : 'Resend Email'}
-                        </Button>
-                        <Button onClick={() => window.location.reload()}>
-                            I've Verified
-                        </Button>
-                        <Button variant="outline" onClick={() => signOut(auth).then(() => router.push('/login'))}>
-                            Sign Out
-                        </Button>
-                    </div>
-                </div>
-            </div>
-        );
-    }
+    // SSO users are always verified through auth.zestacademy.tech
+    // No email verification needed
 
     return (
         <div className="flex min-h-screen bg-background">

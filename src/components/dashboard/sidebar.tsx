@@ -5,8 +5,6 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { LayoutDashboard, User, Folder, Award, Settings, LogOut, GraduationCap, Menu, X, Shield, LayoutTemplate } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { auth } from '@/lib/firebase';
-import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/lib/auth-context';
@@ -26,20 +24,15 @@ const ADMIN_EMAILS = ['zestacademy@rsmk.co.in', 'zestacademyonline@gmail.com'];
 
 export function Sidebar() {
     const pathname = usePathname();
-    const router = useRouter();
     const { user } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
-    const [isAdmin, setIsAdmin] = useState(false);
-
-    useEffect(() => {
-        if (user) {
-            setIsAdmin(ADMIN_EMAILS.includes(user.email || ''));
-        }
-    }, [user]);
+    
+    // Compute admin status from user email
+    const isAdmin = user ? ADMIN_EMAILS.includes(user.email || '') : false;
 
     const handleSignOut = async () => {
-        await signOut(auth);
-        router.push('/');
+        // Redirect to SSO logout endpoint
+        window.location.href = '/api/auth/logout';
     };
 
     // Close sidebar when route changes on mobile
