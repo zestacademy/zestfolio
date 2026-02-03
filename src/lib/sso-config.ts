@@ -8,16 +8,16 @@ export const ssoConfig = {
   clientId: process.env.NEXT_PUBLIC_SSO_CLIENT_ID || 'zestfolio',
   redirectUri: process.env.NEXT_PUBLIC_SSO_REDIRECT_URI || 'https://zestfolio.tech/api/auth/callback',
   clientSecret: process.env.SSO_CLIENT_SECRET || '',
-  
+
   // OAuth endpoints
-  authorizeEndpoint: '/authorize',
-  tokenEndpoint: '/token',
-  userInfoEndpoint: '/userinfo',
-  logoutEndpoint: '/logout',
-  
+  authorizeEndpoint: '/api/oauth/authorize',
+  tokenEndpoint: '/api/oauth/token',
+  userInfoEndpoint: '/api/oauth/userinfo',
+  logoutEndpoint: '/api/auth/logout',
+
   // Default scopes
   scopes: ['openid', 'profile', 'email'],
-  
+
   // Response type for authorization code flow
   responseType: 'code',
 };
@@ -44,7 +44,7 @@ export function getLogoutUrl(postLogoutRedirectUri?: string): string {
   const params = new URLSearchParams({
     client_id: ssoConfig.clientId,
   });
-  
+
   if (postLogoutRedirectUri) {
     params.append('post_logout_redirect_uri', postLogoutRedirectUri);
   }
