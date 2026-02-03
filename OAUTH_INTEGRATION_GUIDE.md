@@ -104,7 +104,6 @@ import { cookies } from 'next/headers'
 
 const AUTH_SERVER_URL = process.env.AUTH_SERVER_URL || 'https://auth.zestacademy.tech'
 const CLIENT_ID = process.env.OAUTH_CLIENT_ID
-const CLIENT_SECRET = process.env.OAUTH_CLIENT_SECRET // Not needed for PKCE but required by spec
 const REDIRECT_URI = process.env.REDIRECT_URI
 
 export async function GET(request: NextRequest) {
@@ -148,15 +147,15 @@ export async function POST(request: NextRequest) {
     const tokenResponse = await fetch(`${AUTH_SERVER_URL}/api/oauth/token`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: JSON.stringify({
+      body: new URLSearchParams({
         grant_type: 'authorization_code',
         code,
         client_id: CLIENT_ID,
         redirect_uri: REDIRECT_URI,
         code_verifier: code_verifier,
-      }),
+      }).toString(),
     })
     
     if (!tokenResponse.ok) {

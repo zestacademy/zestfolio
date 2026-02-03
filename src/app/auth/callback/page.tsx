@@ -63,6 +63,7 @@ export default function AuthCallback() {
       .catch(() => {
         router.push('/login?error=network_error')
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router, searchParams])
   
   return (
