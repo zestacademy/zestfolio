@@ -54,26 +54,39 @@ export function getLogoutUrl(postLogoutRedirectUri?: string): string {
 
 /**
  * Exchange authorization code for tokens
+ * Supports PKCE flow with code_verifier parameter
  */
-export async function exchangeCodeForTokens(code: string): Promise<{
+export async function exchangeCodeForTokens(
+  code: string,
+  codeVerifier?: string
+): Promise<{
   access_token: string;
   id_token: string;
   refresh_token?: string;
   expires_in: number;
   token_type: string;
 }> {
+  const params: Record<string, string> = {
+    grant_type: 'authorization_code',
+    code,
+    redirect_uri: ssoConfig.redirectUri,
+    client_id: ssoConfig.clientId,
+  };
+
+  // Add code_verifier for PKCE flow
+  if (codeVerifier) {
+    params.code_verifier = codeVerifier;
+  } else {
+    // Legacy flow: include client_secret if no PKCE
+    params.client_secret = ssoConfig.clientSecret;
+  }
+
   const response = await fetch(`${ssoConfig.authServerUrl}${ssoConfig.tokenEndpoint}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: new URLSearchParams({
-      grant_type: 'authorization_code',
-      code,
-      redirect_uri: ssoConfig.redirectUri,
-      client_id: ssoConfig.clientId,
-      client_secret: ssoConfig.clientSecret,
-    }).toString(),
+    body: new URLSearchParams(params).toString(),
   });
 
   if (!response.ok) {
