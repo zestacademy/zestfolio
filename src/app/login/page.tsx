@@ -3,9 +3,10 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { getAuthorizationUrl, generateState } from '@/lib/sso-config';
+import { initiateLogin } from '@/lib/oauth';
 import { getGoogleAuthorizationUrl } from '@/lib/google-auth-client';
 import { getUserInfoFromCookie, setCookie } from '@/lib/cookie-utils';
+import { generateState } from '@/lib/sso-config';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
 
@@ -23,22 +24,12 @@ export default function LoginPage() {
     }
   }, [router]);
 
-  const handleLoginWithZestAcademy = () => {
+  const handleLoginWithZestAcademy = async () => {
     setIsRedirecting(true);
     
     try {
-      // Generate state parameter for CSRF protection
-      const state = generateState();
-      
-      // Store state in cookie for validation on callback
-      setCookie('oauth_state', state, {
-        maxAge: 600, // 10 minutes
-        secure: process.env.NODE_ENV === 'production',
-      });
-      
-      // Redirect to authorization server
-      const authUrl = getAuthorizationUrl(state);
-      window.location.href = authUrl;
+      // Use PKCE OAuth flow (stores state and code_verifier in sessionStorage)
+      await initiateLogin();
     } catch (err) {
       console.error('Login error:', err);
       setIsRedirecting(false);
