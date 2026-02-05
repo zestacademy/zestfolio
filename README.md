@@ -25,7 +25,7 @@ ZestFolio is a dynamic portfolio building platform designed for students to show
 *   **Framework**: Next.js 15 (App Router)
 *   **Language**: TypeScript
 *   **Styling**: Tailwind CSS + Shadcn UI
-*   **Database**: Firebase Firestore
+*   **Database**: Firebase Firestore + Firebase Realtime Database
 *   **Authentication**: ZestAcademy SSO (OAuth 2.0) + Google OAuth 2.0
 *   **Storage**: Firebase Storage (for images)
 *   **Icons**: Lucide React
@@ -78,7 +78,24 @@ ZestFolio is a dynamic portfolio building platform designed for students to show
 
 ## 📅 System Updates (Change Log)
 
-### **Latest Update (February 2, 2026)**
+### **Latest Update (February 5, 2026)**
+*   **Zest ID Architecture Implementation**:
+    *   **Unique Zest IDs**: Every user now receives a unique Zest ID (format: `ZU0001`, `ZU0002`, etc.) upon registration
+    *   **Portfolio Document Keys**: All portfolios are now stored in Firestore using Zest IDs as document keys instead of Firebase UIDs
+    *   **Backward Compatibility**: Automatic fallback loading from old UID-based documents ensures seamless migration for existing users
+    *   **Data Migration**: When existing users save their portfolio, data automatically migrates to the new Zest ID document structure
+    *   **Admin Dashboard**: Updated to match users with portfolios using Zest IDs (with UID fallback for legacy data)
+*   **Activity Logging System**:
+    *   **Realtime Database Integration**: New user registrations are now logged to Firebase Realtime Database
+    *   **Registration Tracking**: Captures user registration events (Google OAuth and Email-based) with detailed metadata
+    *   **Log Format**: Includes `displayName`, `zestId`, `uid`, `timestamp`, and `action` for comprehensive tracking
+    *   **Activity Path**: Logs stored in `registration_logs` for easy monitoring and analytics
+*   **Enhanced Data Organization**:
+    *   **Consistent Identifiers**: Both `uid` and `zestId` are stored within portfolio documents for reference
+    *   **Improved Scalability**: Zest ID-based structure supports future cross-platform integration
+    *   **Type Safety**: Fixed TypeScript errors with proper variable capturing in async operations
+
+### **Previous Update (February 2, 2026)**
 *   **Google OAuth Integration**:
     *   **Multiple Authentication Options**: Users can now sign in with Google or ZestAcademy SSO
     *   **OAuth 2.0 Flow**: Secure authorization code flow with CSRF protection
