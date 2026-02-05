@@ -41,7 +41,7 @@ interface ExtractedData {
 }
 
 export function ResumeParser() {
-    const { user } = useAuth();
+    const { user, profile } = useAuth();
     const [open, setOpen] = useState(false);
     const [step, setStep] = useState<'upload' | 'parsing' | 'review' | 'success'>('upload');
     const [file, setFile] = useState<File | null>(null);
@@ -106,10 +106,10 @@ export function ResumeParser() {
     };
 
     const handleSave = async () => {
-        if (!user || !data) return;
+        if (!user || !profile?.zestId || !data) return;
 
         try {
-            const portfolioRef = doc(db, 'portfolios', user.uid);
+            const portfolioRef = doc(db, 'portfolios', profile.zestId);
 
             const updateData: any = {
                 updatedAt: new Date(),

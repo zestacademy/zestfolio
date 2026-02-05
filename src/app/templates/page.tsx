@@ -4,7 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { CheckCircle2, Sparkles, Layout, X, Maximize2 } from "lucide-react";
+import { CheckCircle2, Sparkles, Layout, X, Maximize2, ArrowRight, Zap, Target } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function Templates() {
     const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
@@ -135,87 +136,104 @@ export default function Templates() {
     const currentTemplate = templates.find(t => t.id === selectedTemplate);
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen selection:bg-primary selection:text-primary-foreground">
             <Navbar />
 
-            <main className="flex-1">
+            <main className="flex-1 overflow-hidden">
                 {/* Hero Section */}
-                <section className="w-full py-16 md:py-24 lg:py-32 bg-gradient-to-br from-secondary/20 via-background to-accent/10 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-                    <div className="container px-4 md:px-6 mx-auto relative">
-                        <div className="flex flex-col items-center text-center space-y-6 max-w-3xl mx-auto">
-                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/20 text-accent-foreground text-sm font-medium border border-accent/30">
+                <section className="w-full py-20 bg-gradient-to-b from-background via-background to-primary/5 relative">
+                    {/* Background elements */}
+                    <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[100px] opacity-30 animate-pulse"></div>
+                    <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-400/10 rounded-full blur-[100px] opacity-30 animate-pulse animation-delay-2000"></div>
+
+                    <div className="container px-4 md:px-6 mx-auto relative z-10">
+                        <div className="flex flex-col items-center text-center space-y-8 max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-1000 ease-out">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-primary/10 text-primary text-xs font-black uppercase tracking-widest border border-primary/20 backdrop-blur-md">
                                 <Layout className="w-4 h-4" />
-                                Premium Templates
+                                Premium Selection
                             </div>
-                            <h1 className="text-4xl font-extrabold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl/none">
-                                Choose Your Perfect <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent via-primary to-accent">Template</span>
+                            <h1 className="text-5xl md:text-7xl font-black tracking-tighter sm:leading-tight">
+                                Pick Your <span className="text-primary italic">Signature</span> Look.
                             </h1>
-                            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl">
-                                Each template is carefully crafted, fully responsive, and customizable.
-                                Pick the one that matches your style and goals.
+                            <p className="text-lg md:text-2xl text-muted-foreground max-w-3xl leading-relaxed font-medium">
+                                15+ professionally designed templates ready to launch.
+                                <span className="text-foreground"> Switch anytime without losing your data.</span>
                             </p>
                         </div>
                     </div>
                 </section>
 
-                {/* Templates Grid */}
-                <section className="w-full py-16 md:py-24">
+                {/* Templates Grid Container */}
+                <section className="w-full py-12 md:py-24">
                     <div className="container px-4 md:px-6 mx-auto">
                         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                             {templates.map((template, index) => (
                                 <div
-                                    key={index}
-                                    className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card transition-all duration-300 hover:shadow-2xl hover:-translate-y-2"
+                                    key={template.id}
+                                    className="group relative flex flex-col rounded-[32px] border border-border/60 bg-card transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] hover:-translate-y-2 overflow-hidden animate-in fade-in slide-in-from-bottom-8 duration-700 fill-mode-both"
+                                    style={{ animationDelay: `${index * 100}ms` }}
                                 >
-                                    {/* Preview Area with Iframe - Clickable */}
+                                    {/* Preview Area */}
                                     <div
-                                        className="relative h-64 bg-slate-900 overflow-hidden group-hover:h-80 transition-all duration-300 cursor-pointer"
+                                        className="relative h-64 bg-slate-900 overflow-hidden cursor-pointer group-hover:h-72 transition-all duration-500"
                                         onClick={() => setSelectedTemplate(template.id)}
                                     >
+                                        <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent to-black/20 pointer-events-none" />
                                         <iframe
                                             src={template.preview}
-                                            className="w-full h-full pointer-events-none scale-50 origin-top-left"
+                                            className="w-full h-full pointer-events-none scale-50 origin-top-left transition-transform duration-700 group-hover:scale-[0.55]"
                                             style={{ width: '200%', height: '200%' }}
                                             title={`${template.name} Preview`}
                                         />
-                                        {/* Hover Overlay */}
-                                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                            <div className="text-white text-center">
-                                                <Maximize2 className="w-12 h-12 mx-auto mb-2 opacity-80" />
-                                                <p className="text-sm font-medium">Click to preview</p>
+
+                                        {/* Hover Interaction Overlay */}
+                                        <div className="absolute inset-0 z-20 bg-primary/40 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center">
+                                            <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center scale-90 group-hover:scale-100 transition-transform duration-500">
+                                                <Maximize2 className="w-8 h-8 text-white" />
                                             </div>
+                                            <p className="mt-4 text-white font-black text-sm uppercase tracking-widest translate-y-2 group-hover:translate-y-0 transition-transform duration-500">Instant Preview</p>
                                         </div>
-                                        {/* Sparkle Effect */}
-                                        <Sparkles className="absolute top-4 right-4 w-6 h-6 text-accent opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                                        {/* Template Badge */}
+                                        <div className="absolute top-4 left-4 z-20 px-3 py-1 rounded-xl bg-white/80 dark:bg-black/80 backdrop-blur-md text-[10px] font-black uppercase tracking-tighter border border-white/20">
+                                            {template.id}
+                                        </div>
                                     </div>
 
-                                    {/* Content */}
-                                    <div className="p-6 space-y-4">
-                                        <div>
-                                            <h3 className="text-xl font-bold mb-2">{template.name}</h3>
-                                            <p className="text-sm text-muted-foreground leading-relaxed">
-                                                {template.description}
+                                    {/* Content Info */}
+                                    <div className="p-8 space-y-6 flex-1 flex flex-col">
+                                        <div className="space-y-2">
+                                            <h3 className="text-2xl font-black tracking-tight group-hover:text-primary transition-colors">{template.name}</h3>
+                                            <p className="text-sm text-muted-foreground font-medium leading-relaxed italic">
+                                                "{template.description}"
                                             </p>
                                         </div>
 
-                                        {/* Features */}
-                                        <div className="space-y-2">
-                                            {template.features.map((feature, idx) => (
-                                                <div key={idx} className="flex items-center gap-2 text-sm">
-                                                    <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" />
-                                                    <span className="text-foreground/80">{feature}</span>
-                                                </div>
+                                        {/* Tech Pills */}
+                                        <div className="flex flex-wrap gap-2">
+                                            {template.features.slice(0, 2).map((feat, i) => (
+                                                <span key={i} className="px-3 py-1 rounded-lg bg-muted text-[10px] font-bold text-muted-foreground border border-border/40">
+                                                    {feat}
+                                                </span>
                                             ))}
+                                            <span className="px-3 py-1 rounded-lg bg-primary/5 text-[10px] font-bold text-primary border border-primary/10">
+                                                RESPONSIVE
+                                            </span>
                                         </div>
 
                                         {/* Action Button */}
-                                        <Link
-                                            href="/dashboard/templates"
-                                            className={`w-full inline-flex items-center justify-center px-4 py-2.5 rounded-lg bg-gradient-to-r ${template.color} text-white font-medium shadow-md hover:shadow-lg transition-all`}
-                                        >
-                                            Use This Template
-                                        </Link>
+                                        <div className="mt-auto pt-4">
+                                            <Link
+                                                href="/dashboard/templates"
+                                                className={cn(
+                                                    "w-full inline-flex items-center justify-center h-14 rounded-2xl bg-foreground text-background font-black text-sm uppercase tracking-widest transition-all hover:scale-[1.02] active:scale-95 group/btn",
+                                                    "shadow-[0_4px_15px_rgba(0,0,0,0.1)] group-hover:shadow-primary/20 group-hover:bg-primary group-hover:text-white"
+                                                )}
+                                            >
+                                                Launch Designer
+                                                <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                                            </Link>
+                                        </div>
                                     </div>
                                 </div>
                             ))}
@@ -223,63 +241,68 @@ export default function Templates() {
                     </div>
                 </section>
 
-                {/* Features Section */}
-                <section className="w-full py-16 md:py-24 bg-muted/30">
+                {/* Features Inclusion Section */}
+                <section className="w-full py-24 bg-muted/30">
                     <div className="container px-4 md:px-6 mx-auto">
-                        <div className="text-center mb-12">
-                            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                                All Templates Include
+                        <div className="text-center mb-16 space-y-4">
+                            <h2 className="text-3xl md:text-5xl font-black tracking-tight uppercase">
+                                Standard in <span className="text-primary">Every</span> Built
                             </h2>
-                            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                                Every template comes loaded with professional features out of the box
+                            <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-medium">
+                                We've handled the boring stuff so you can focus on yours.
                             </p>
                         </div>
 
-                        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+                        <div className="grid md:grid-cols-4 gap-8 max-w-6xl mx-auto">
                             {[
-                                { title: "Mobile Responsive", desc: "Perfect on any screen size" },
-                                { title: "SEO Optimized", desc: "Better search rankings" },
-                                { title: "Fast Loading", desc: "Optimized performance" },
-                                { title: "Easy Customization", desc: "No coding needed" }
+                                { icon: <Zap className="w-6 h-6" />, title: "Turbo Loading", desc: "Built with Next.js for sub-second page loads." },
+                                { icon: <Target className="w-6 h-6" />, title: "SEO Mastered", desc: "Rank higher on Google with built-in metadata." },
+                                { icon: <Layout className="w-6 h-6" />, title: "Fluid Design", desc: "Looks stunning on iPhone, Android, and Desktop." },
+                                { icon: <Sparkles className="w-6 h-6" />, title: "AI Generation", desc: "Auto-generate sections with smart parsing." }
                             ].map((item, index) => (
-                                <div key={index} className="text-center p-6 rounded-xl bg-card border border-border/50">
-                                    <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-                                        <CheckCircle2 className="w-6 h-6 text-primary" />
+                                <div key={index} className="flex flex-col items-center text-center space-y-4 p-8 rounded-[32px] bg-card border border-border/50 group hover:border-primary/20 transition-all duration-500">
+                                    <div className="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center transition-transform group-hover:rotate-12 duration-500">
+                                        {item.icon}
                                     </div>
-                                    <h3 className="font-semibold mb-2">{item.title}</h3>
-                                    <p className="text-sm text-muted-foreground">{item.desc}</p>
+                                    <h3 className="text-xl font-bold italic">{item.title}</h3>
+                                    <p className="text-sm text-muted-foreground font-medium leading-relaxed">{item.desc}</p>
                                 </div>
                             ))}
                         </div>
                     </div>
                 </section>
 
-                {/* CTA Section */}
-                <section className="w-full py-16 md:py-24">
+                {/* Secondary CTA */}
+                <section className="w-full py-24 border-t">
                     <div className="container px-4 md:px-6 mx-auto">
-                        <div className="flex flex-col items-center text-center space-y-6 max-w-2xl mx-auto">
-                            <h2 className="text-3xl md:text-4xl font-bold">
-                                Can't Decide? Try Them All!
-                            </h2>
-                            <p className="text-lg text-muted-foreground">
-                                Switch between templates anytime. Your content stays the same, just the design changes.
-                            </p>
-                            <div className="flex flex-col sm:flex-row items-center gap-4">
-                                <Link
-                                    href="/dashboard"
-                                    className="inline-flex h-12 items-center justify-center rounded-lg bg-primary px-8 text-base font-semibold text-primary-foreground shadow-lg hover:shadow-xl hover:bg-primary/90 transition-all hover:scale-105"
-                                >
-                                    Start Building Now
-                                    <Sparkles className="ml-2 h-4 w-4" />
-                                </Link>
-                                <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                                    <div className="flex items-center gap-1.5">
-                                        <CheckCircle2 className="w-4 h-4 text-primary" />
-                                        <span>No coding needed</span>
-                                    </div>
-                                    <div className="flex items-center gap-1.5">
-                                        <CheckCircle2 className="w-4 h-4 text-primary" />
-                                        <span>Free to use</span>
+                        <div className="bg-foreground text-background rounded-[48px] p-10 md:p-20 text-center relative overflow-hidden group">
+                            {/* Background animation for CTA */}
+                            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-tr from-primary/20 to-transparent -z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+
+                            <div className="relative z-10 max-w-3xl mx-auto space-y-8">
+                                <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase leading-tight">
+                                    Ready to Build Your <br /> Digital Legacy?
+                                </h2>
+                                <p className="text-xl text-background/70 font-medium">
+                                    Join 5,000+ students and launch your portfolio in under 5 minutes.
+                                </p>
+                                <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-4">
+                                    <Link
+                                        href="/dashboard"
+                                        className="h-16 px-12 rounded-2xl bg-primary text-white font-black text-lg uppercase tracking-widest shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-2 group"
+                                    >
+                                        Get Started Now
+                                        <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-2" />
+                                    </Link>
+                                    <div className="flex items-center gap-6">
+                                        <div className="flex -space-x-3">
+                                            {[1, 2, 3, 4].map(i => (
+                                                <div key={i} className="w-10 h-10 rounded-full border-2 border-foreground bg-muted overflow-hidden">
+                                                    <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=user${i}`} alt="" />
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <p className="text-xs font-bold text-background/50 italic">Join 5k+ students</p>
                                     </div>
                                 </div>
                             </div>
@@ -290,46 +313,63 @@ export default function Templates() {
 
             <Footer />
 
-            {/* Full Screen Preview Modal */}
+            {/* Premium Preview Modal */}
             {selectedTemplate && currentTemplate && (
                 <div
-                    className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
+                    className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-300"
                     onClick={() => setSelectedTemplate(null)}
                 >
                     <div
-                        className="relative w-full h-full max-w-7xl max-h-[90vh] bg-white rounded-xl overflow-hidden shadow-2xl"
+                        className="relative w-full h-full max-w-7xl max-h-[92vh] bg-background rounded-[40px] overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.5)] border border-white/5 flex flex-col animate-in zoom-in-95 duration-500"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        {/* Modal Header */}
-                        <div className="absolute top-0 left-0 right-0 z-10 bg-gradient-to-b from-black/80 to-transparent p-4 flex items-center justify-between">
-                            <div className="text-white">
-                                <h3 className="text-lg font-bold">{currentTemplate.name}</h3>
-                                <p className="text-sm text-white/80">{currentTemplate.description}</p>
+                        {/* Premium Modal Header */}
+                        <div className="p-8 flex items-center justify-between border-b border-white/5 bg-background/50 backdrop-blur-xl">
+                            <div className="flex items-center gap-6">
+                                <div className={cn("w-12 h-12 rounded-2xl bg-gradient-to-br flex items-center justify-center shadow-lg transform rotate-3", currentTemplate.color)}>
+                                    <Layout className="w-6 h-6 text-white" />
+                                </div>
+                                <div className="hidden sm:block">
+                                    <h3 className="text-2xl font-black italic uppercase leading-none mb-1">{currentTemplate.name}</h3>
+                                    <p className="text-xs font-bold text-muted-foreground tracking-widest uppercase">Live Interactive Preview</p>
+                                </div>
                             </div>
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-4">
                                 <Link
                                     href="/dashboard/templates"
-                                    className={`px-4 py-2 rounded-lg bg-gradient-to-r ${currentTemplate.color} text-white font-semibold shadow-md hover:shadow-lg transition-all`}
-                                    onClick={() => setSelectedTemplate(null)}
+                                    className="px-8 py-3 rounded-2xl bg-primary text-white font-black text-sm uppercase tracking-widest shadow-xl hover:scale-[1.02] active:scale-95 transition-all"
                                 >
-                                    Use This Template
+                                    Select Design
                                 </Link>
                                 <button
                                     onClick={() => setSelectedTemplate(null)}
-                                    className="p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
-                                    aria-label="Close preview"
+                                    className="p-3 bg-muted hover:bg-muted-foreground/10 rounded-2xl transition-all active:scale-90"
                                 >
-                                    <X className="w-6 h-6 text-white" />
+                                    <X className="w-6 h-6" />
                                 </button>
                             </div>
                         </div>
 
-                        {/* Iframe Preview */}
-                        <iframe
-                            src={currentTemplate.preview}
-                            className="w-full h-full"
-                            title={`${currentTemplate.name} Full Preview`}
-                        />
+                        {/* Full Screen Iframe Preview */}
+                        <div className="flex-1 bg-white relative">
+                            <div className="absolute inset-0 flex items-center justify-center bg-muted -z-10">
+                                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary"></div>
+                            </div>
+                            <iframe
+                                src={currentTemplate.preview}
+                                className="w-full h-full"
+                                title={`${currentTemplate.name} Full Preview`}
+                            />
+                        </div>
+
+                        {/* Info Footer */}
+                        <div className="p-6 bg-muted/30 border-t border-white/5 flex items-center justify-center gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/50">
+                            <span>Fully Customizable</span>
+                            <div className="w-1 h-1 rounded-full bg-muted-foreground/30" />
+                            <span>Mobile Optimized</span>
+                            <div className="w-1 h-1 rounded-full bg-muted-foreground/30" />
+                            <span>SEO Ready</span>
+                        </div>
                     </div>
                 </div>
             )}

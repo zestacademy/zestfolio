@@ -1,5 +1,5 @@
 /**
- * Cookie utility functions for SSO authentication
+ * Cookie utility functions for authentication
  */
 
 /**
@@ -32,7 +32,7 @@ export function getUserInfoFromCookie(): {
   emailVerified?: boolean;
 } | null {
   const userInfoCookie = getCookie('user_info');
-  
+
   if (!userInfoCookie) {
     return null;
   }

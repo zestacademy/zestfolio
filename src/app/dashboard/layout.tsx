@@ -12,29 +12,29 @@ export default function DashboardLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const { user, loading } = useAuth();
+    const { user, profile, loading } = useAuth();
     const router = useRouter();
 
     useEffect(() => {
         if (!loading && !user) {
             router.push('/login');
-        } else if (user) {
+        } else if (user && profile) {
             // Track user activity & ensure doc exists
-            setDoc(doc(db, 'portfolios', user.uid), {
+            setDoc(doc(db, 'users', user.uid), {
                 lastActiveAt: serverTimestamp(),
-                // Sync essential auth data
-                email: user.email,
-                fullName: user.name || '',
             }, { merge: true }).catch(e => {
                 console.log('Error tracking activity:', e);
             });
         }
-    }, [user, loading, router]);
+    }, [user, profile, loading, router]);
 
     if (loading) {
         return (
-            <div className="flex h-screen w-full items-center justify-center">
-                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <div className="flex h-screen w-full items-center justify-center bg-background">
+                <div className="flex flex-col items-center gap-4">
+                    <Loader2 className="h-10 w-10 animate-spin text-primary" />
+                    <p className="text-sm text-muted-foreground animate-pulse">Loading your profile...</p>
+                </div>
             </div>
         );
     }
@@ -42,9 +42,6 @@ export default function DashboardLayout({
     if (!user) {
         return null; // Will redirect
     }
-
-    // SSO users are always verified through auth.zestacademy.tech
-    // No email verification needed
 
     return (
         <div className="flex min-h-screen bg-background">

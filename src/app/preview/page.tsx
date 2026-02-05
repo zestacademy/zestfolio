@@ -10,19 +10,19 @@ import Link from 'next/link';
 import { PortfolioData } from '@/types';
 
 export default function PreviewPage() {
-    const { user } = useAuth();
+    const { user, profile } = useAuth();
     const [username, setUsername] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     const [viewport, setViewport] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
 
     useEffect(() => {
         const fetchData = async () => {
-            if (!user) {
-                setLoading(false);
+            if (!user || !profile?.zestId) {
+                if (!user) setLoading(false);
                 return;
             }
             try {
-                const docRef = doc(db, 'portfolios', user.uid);
+                const docRef = doc(db, 'portfolios', profile.zestId);
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
                     const data = docSnap.data();
@@ -37,7 +37,7 @@ export default function PreviewPage() {
             }
         };
         fetchData();
-    }, [user]);
+    }, [user, profile]);
 
     if (loading) {
         return <div className="h-screen w-full flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin" /></div>;

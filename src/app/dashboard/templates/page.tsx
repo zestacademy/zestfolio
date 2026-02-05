@@ -132,7 +132,7 @@ const TEMPLATES = [
 ];
 
 export default function TemplatesPage() {
-    const { user } = useAuth();
+    const { user, profile } = useAuth();
     const [loadingId, setLoadingId] = useState<string | null>(null);
     const [selectedId, setSelectedId] = useState<string | null>(null); // Currently ACTIVE template
     const [previewId, setPreviewId] = useState<string | null>(null); // Currently PREVIEWING (modal) template
@@ -140,9 +140,9 @@ export default function TemplatesPage() {
     // Fetch current template selection
     useEffect(() => {
         const fetchData = async () => {
-            if (!user) return;
+            if (!user || !profile?.zestId) return;
             try {
-                const docRef = doc(db, 'portfolios', user.uid);
+                const docRef = doc(db, 'portfolios', profile.zestId);
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
                     const data = docSnap.data();
@@ -153,13 +153,13 @@ export default function TemplatesPage() {
             }
         };
         fetchData();
-    }, [user]);
+    }, [user, profile]);
 
     const handleSelectTemplate = async (templateId: string) => {
-        if (!user) return;
+        if (!user || !profile?.zestId) return;
         setLoadingId(templateId);
         try {
-            const docRef = doc(db, 'portfolios', user.uid);
+            const docRef = doc(db, 'portfolios', profile.zestId);
             await setDoc(docRef, {
                 templateId: templateId,
                 updatedAt: new Date().toISOString()
