@@ -210,7 +210,7 @@ zestfolio/
 - **Firebase Hosting** - Alternative hosting option
 - **Image Optimization** - AVIF and WebP format support
 
-```
+
 
 ## 🧩 Components
 
