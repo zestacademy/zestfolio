@@ -307,7 +307,7 @@ export default function ProjectsForm() {
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
                                     <div className="absolute bottom-6 left-8 right-8 flex items-center justify-between">
                                         <div className="flex gap-2">
-                                            {project.technologies.slice(0, 3).map(t => (
+                                            {(project.technologies || []).slice(0, 3).map(t => (
                                                 <span key={t} className="px-2 py-0.5 rounded-lg bg-white/10 backdrop-blur-md text-[8px] font-black text-white border border-white/20 uppercase tracking-widest">{t}</span>
                                             ))}
                                         </div>

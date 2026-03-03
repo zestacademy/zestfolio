@@ -21,6 +21,11 @@ export default function ProfileForm() {
     const [profilePhotoURL, setProfilePhotoURL] = useState<string>('');
     const fileInputRef = useRef<HTMLInputElement>(null);
 
+    // LinkedIn Scraper handling
+    const [scrapeUrl, setScrapeUrl] = useState('');
+    const [isScraping, setIsScraping] = useState(false);
+    const [scrapeStatus, setScrapeStatus] = useState<{ type: 'success' | 'error' | null, message: string }>({ type: null, message: '' });
+
     // Username handling
     const [usernameError, setUsernameError] = useState('');
     const [isCheckingUsername, setIsCheckingUsername] = useState(false);
@@ -206,6 +211,68 @@ export default function ProfileForm() {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
+    const handleScrapeLinkedIn = async () => {
+        if (!scrapeUrl || !scrapeUrl.includes('linkedin.com/in/')) {
+            setScrapeStatus({ type: 'error', message: 'Please enter a valid LinkedIn Profile URL' });
+            return;
+        }
+
+        setIsScraping(true);
+        setScrapeStatus({ type: null, message: '' });
+
+        try {
+            const res = await fetch('/api/scrape-linkedin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ linkedinUrl: scrapeUrl })
+            });
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.error || 'Failed to scrape profile');
+            }
+
+            // Update form with basic/general data
+            setFormData(prev => ({
+                ...prev,
+                fullName: data.basicInformation?.fullName || prev.fullName,
+                professionalTitle: data.basicInformation?.professionalTitle || prev.professionalTitle,
+                aboutMe: data.basicInformation?.aboutMe || prev.aboutMe,
+                domain: data.basicInformation?.domain || prev.domain,
+                email: data.basicInformation?.email || prev.email,
+                profilePhoto: data.generalInformation?.profilePhotoUrl || prev.profilePhoto, // update URL as well
+                linkedin: data.socialLinks?.linkedin || prev.linkedin,
+                github: data.socialLinks?.github || prev.github,
+                twitter: data.socialLinks?.twitter || prev.twitter,
+                website: data.socialLinks?.personalWebsite || prev.website,
+            }));
+
+            if (data.generalInformation?.profilePhotoUrl) {
+                setProfilePhotoURL(data.generalInformation?.profilePhotoUrl);
+            }
+
+            // Save non-form collections to Firestore
+            if (profile?.zestId) {
+                const docRef = doc(db, 'portfolios', profile.zestId);
+                await setDoc(docRef, {
+                    skills: data.skills || [],
+                    education: data.education || [],
+                    projects: data.projects || [],
+                    certifications: data.certifications || [],
+                    socialLinks: data.socialLinks || {}, // Fully override social paths in DB if mapped
+                }, { merge: true });
+            }
+
+            setScrapeStatus({ type: 'success', message: 'Profile scraped successfully! Your details have been updated.' });
+            setScrapeUrl(''); // Clear input
+        } catch (e: any) {
+            console.error(e);
+            setScrapeStatus({ type: 'error', message: e.message || 'An error occurred while scraping.' });
+        } finally {
+            setIsScraping(false);
+        }
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
     };
@@ -224,6 +291,60 @@ export default function ProfileForm() {
                     <span className="text-sm font-black uppercase tracking-widest">Saving Engine Active</span>
                 </div>
             </div>
+
+            {/* LinkedIn Quick Fill */}
+            <Card className="rounded-[40px] border-border/40 bg-card/30 overflow-hidden relative">
+                <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 via-transparent to-primary/5 pointer-events-none" />
+                <CardHeader className="p-8 pb-4 relative z-10">
+                    <CardTitle className="text-xl font-black uppercase tracking-tight flex items-center gap-3 text-blue-500">
+                        <Linkedin className="w-6 h-6" />
+                        Quick Fill with LinkedIn
+                    </CardTitle>
+                    <CardDescription className="text-muted-foreground font-medium text-sm">
+                        Instantly populate your entire portfolio, including education, experiences, and skills, by scraping your LinkedIn profile.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent className="p-8 pt-2 relative z-10 space-y-4">
+                    <div className="flex flex-col sm:flex-row gap-4">
+                        <div className="relative flex-1">
+                            <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-muted-foreground/50">
+                                <LinkIcon className="w-4 h-4" />
+                            </div>
+                            <Input
+                                disabled={isScraping}
+                                value={scrapeUrl}
+                                onChange={(e) => setScrapeUrl(e.target.value)}
+                                placeholder="https://www.linkedin.com/in/username"
+                                className="pl-11 h-12 rounded-2xl bg-muted/50 border-border/40 text-sm font-medium focus-visible:ring-blue-500/20"
+                            />
+                        </div>
+                        <Button
+                            type="button"
+                            disabled={isScraping || !scrapeUrl}
+                            onClick={handleScrapeLinkedIn}
+                            className="h-12 px-8 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold transition-all disabled:opacity-50 min-w-[140px]"
+                        >
+                            {isScraping ? (
+                                <>
+                                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                    Scraping...
+                                </>
+                            ) : (
+                                "Fill Details"
+                            )}
+                        </Button>
+                    </div>
+                    {(isScraping || scrapeStatus.message) && (
+                        <p className={cn(
+                            "text-sm font-bold flex items-center gap-2",
+                            scrapeStatus.type === 'success' ? "text-green-500" : (scrapeStatus.type === 'error' ? "text-red-500" : "text-muted-foreground text-blue-500")
+                        )}>
+                            {scrapeStatus.type === 'success' ? <CheckCircle2 className="w-4 h-4" /> : scrapeStatus.type === 'error' ? <XCircle className="w-4 h-4" /> : <Loader2 className="w-4 h-4 animate-spin" />}
+                            {isScraping ? "Scraping profile details... This may take 10-30 seconds" : scrapeStatus.message}
+                        </p>
+                    )}
+                </CardContent>
+            </Card>
 
             {/* Top Grid: Photo & Essential IDs */}
             <div className="grid lg:grid-cols-12 gap-10">
@@ -259,7 +380,7 @@ export default function ProfileForm() {
                             <div className="w-full space-y-4">
                                 <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1">Photo Reference URL</Label>
                                 <Input
-                                    value={formData.profilePhoto}
+                                    value={formData.profilePhoto || ''}
                                     onChange={(e) => {
                                         setFormData(prev => ({ ...prev, profilePhoto: e.target.value }));
                                         setProfilePhotoURL(e.target.value);
@@ -320,7 +441,7 @@ export default function ProfileForm() {
                                     </div>
                                     <Input
                                         name="username"
-                                        value={formData.username}
+                                        value={formData.username || ''}
                                         onChange={handleChange}
                                         placeholder="your.handle"
                                         className={cn(
@@ -347,13 +468,13 @@ export default function ProfileForm() {
                                     <Label className="text-[11px] font-black uppercase tracking-wider ml-1 flex items-center gap-2">
                                         <User className="w-3.5 h-3.5" /> Full Legal Name
                                     </Label>
-                                    <Input name="fullName" value={formData.fullName} onChange={handleChange} placeholder="First Last" className="h-14 rounded-2xl bg-muted/40 border-border/40 text-base font-black" required />
+                                    <Input name="fullName" value={formData.fullName || ''} onChange={handleChange} placeholder="First Last" className="h-14 rounded-2xl bg-muted/40 border-border/40 text-base font-black" required />
                                 </div>
                                 <div className="space-y-3 font-bold">
                                     <Label className="text-[11px] font-black uppercase tracking-wider ml-1 flex items-center gap-2">
                                         <Sparkles className="w-3.5 h-3.5" /> Professional Title
                                     </Label>
-                                    <Input name="professionalTitle" value={formData.professionalTitle} onChange={handleChange} placeholder="e.g. Systems Architect" className="h-14 rounded-2xl bg-muted/40 border-border/40 text-base font-black" required />
+                                    <Input name="professionalTitle" value={formData.professionalTitle || ''} onChange={handleChange} placeholder="e.g. Systems Architect" className="h-14 rounded-2xl bg-muted/40 border-border/40 text-base font-black" required />
                                 </div>
                             </div>
 
@@ -361,7 +482,7 @@ export default function ProfileForm() {
                                 <Label className="text-[11px] font-black uppercase tracking-wider ml-1">Executive Summary (About Me)</Label>
                                 <textarea
                                     name="aboutMe"
-                                    value={formData.aboutMe}
+                                    value={formData.aboutMe || ''}
                                     onChange={handleChange}
                                     className="flex w-full rounded-3xl border border-border/40 bg-muted/30 px-5 py-4 text-base font-medium ring-offset-background placeholder:text-muted-foreground/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 min-h-[160px] resize-none"
                                     placeholder="Tell the story of your professional evolution..."
@@ -371,13 +492,13 @@ export default function ProfileForm() {
                             <div className="grid md:grid-cols-2 gap-8">
                                 <div className="space-y-3 font-bold">
                                     <Label className="text-[11px] font-black uppercase tracking-wider ml-1">Core Domain</Label>
-                                    <Input name="domain" value={formData.domain} onChange={handleChange} placeholder="e.g. AI / Machine Learning" className="h-14 rounded-2xl bg-muted/40 border-border/40 text-base font-black" required />
+                                    <Input name="domain" value={formData.domain || ''} onChange={handleChange} placeholder="e.g. AI / Machine Learning" className="h-14 rounded-2xl bg-muted/40 border-border/40 text-base font-black" required />
                                 </div>
                                 <div className="space-y-3 font-bold">
                                     <Label className="text-[11px] font-black uppercase tracking-wider ml-1 flex items-center gap-2">
                                         <Mail className="w-3.5 h-3.5" /> Public Contact Email
                                     </Label>
-                                    <Input name="publicEmail" value={formData.publicEmail} onChange={handleChange} placeholder="hello@domain.com" className="h-14 rounded-2xl bg-muted/40 border-border/40 text-base font-black" />
+                                    <Input name="publicEmail" value={formData.publicEmail || ''} onChange={handleChange} placeholder="hello@domain.com" className="h-14 rounded-2xl bg-muted/40 border-border/40 text-base font-black" />
                                 </div>
                             </div>
                         </CardContent>
@@ -394,13 +515,13 @@ export default function ProfileForm() {
                                     <Label className="text-[10px] font-black uppercase tracking-widest ml-1 flex items-center gap-2">
                                         <MapPin className="w-3 h-3" /> Primary Location
                                     </Label>
-                                    <Input name="location" value={formData.location} onChange={handleChange} placeholder="City, Country" className="h-12 rounded-2xl bg-muted/40 border-border/40 text-sm font-black" />
+                                    <Input name="location" value={formData.location || ''} onChange={handleChange} placeholder="City, Country" className="h-12 rounded-2xl bg-muted/40 border-border/40 text-sm font-black" />
                                 </div>
                                 <div className="space-y-3 font-bold">
                                     <Label className="text-[10px] font-black uppercase tracking-widest ml-1 flex items-center gap-2">
                                         <Phone className="w-3 h-3" /> Encrypted Phone
                                     </Label>
-                                    <Input name="phone" value={formData.phone} onChange={handleChange} placeholder="+XX XXX XXX XXXX" className="h-12 rounded-2xl bg-muted/40 border-border/40 text-sm font-black" />
+                                    <Input name="phone" value={formData.phone || ''} onChange={handleChange} placeholder="+XX XXX XXX XXXX" className="h-12 rounded-2xl bg-muted/40 border-border/40 text-sm font-black" />
                                 </div>
                             </CardContent>
                         </Card>
@@ -415,25 +536,25 @@ export default function ProfileForm() {
                                         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/40 group-focus-within/social:text-primary transition-colors">
                                             <Linkedin className="w-4 h-4" />
                                         </div>
-                                        <Input name="linkedin" value={formData.linkedin} onChange={handleChange} placeholder="LinkedIn Handle" className="h-11 pl-12 rounded-xl bg-muted/40 border-border/40 text-xs font-bold" />
+                                        <Input name="linkedin" value={formData.linkedin || ''} onChange={handleChange} placeholder="LinkedIn Handle" className="h-11 pl-12 rounded-xl bg-muted/40 border-border/40 text-xs font-bold" />
                                     </div>
                                     <div className="relative group/social">
                                         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/40 group-focus-within/social:text-primary transition-colors">
                                             <Github className="w-4 h-4" />
                                         </div>
-                                        <Input name="github" value={formData.github} onChange={handleChange} placeholder="GitHub Handle" className="h-11 pl-12 rounded-xl bg-muted/40 border-border/40 text-xs font-bold" />
+                                        <Input name="github" value={formData.github || ''} onChange={handleChange} placeholder="GitHub Handle" className="h-11 pl-12 rounded-xl bg-muted/40 border-border/40 text-xs font-bold" />
                                     </div>
                                     <div className="relative group/social">
                                         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/40 group-focus-within/social:text-primary transition-colors">
                                             <Twitter className="w-4 h-4" />
                                         </div>
-                                        <Input name="twitter" value={formData.twitter} onChange={handleChange} placeholder="X / Twitter Handle" className="h-11 pl-12 rounded-xl bg-muted/40 border-border/40 text-xs font-bold" />
+                                        <Input name="twitter" value={formData.twitter || ''} onChange={handleChange} placeholder="X / Twitter Handle" className="h-11 pl-12 rounded-xl bg-muted/40 border-border/40 text-xs font-bold" />
                                     </div>
                                     <div className="relative group/social">
                                         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/40 group-focus-within/social:text-primary transition-colors">
                                             <Globe className="w-4 h-4" />
                                         </div>
-                                        <Input name="website" value={formData.website} onChange={handleChange} placeholder="Personal URL" className="h-11 pl-12 rounded-xl bg-muted/40 border-border/40 text-xs font-bold" />
+                                        <Input name="website" value={formData.website || ''} onChange={handleChange} placeholder="Personal URL" className="h-11 pl-12 rounded-xl bg-muted/40 border-border/40 text-xs font-bold" />
                                     </div>
                                 </div>
                             </CardContent>

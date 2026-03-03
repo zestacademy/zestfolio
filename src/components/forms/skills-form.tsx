@@ -15,8 +15,8 @@ export default function SkillsForm() {
     const { user, profile } = useAuth();
     const [saving, setSaving] = useState(false);
     const [initialized, setInitialized] = useState(false);
-    const [skills, setSkills] = useState<string[]>([]);
-    const [certifications, setCertifications] = useState<string[]>([]);
+    const [skills, setSkills] = useState<any[]>([]);
+    const [certifications, setCertifications] = useState<any[]>([]);
     const [inputValue, setInputValue] = useState('');
     const [certInputValue, setCertInputValue] = useState('');
 
@@ -72,8 +72,9 @@ export default function SkillsForm() {
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter' && inputValue.trim()) {
             e.preventDefault();
-            if (!skills.includes(inputValue.trim().toUpperCase())) {
-                setSkills([...skills, inputValue.trim().toUpperCase()]);
+            const val = inputValue.trim().toUpperCase();
+            if (!skills.some(s => (typeof s === 'string' ? s : s.name) === val)) {
+                setSkills([...skills, val]);
             }
             setInputValue('');
         }
@@ -81,22 +82,24 @@ export default function SkillsForm() {
 
     const addSkill = () => {
         if (inputValue.trim()) {
-            if (!skills.includes(inputValue.trim().toUpperCase())) {
-                setSkills([...skills, inputValue.trim().toUpperCase()]);
+            const val = inputValue.trim().toUpperCase();
+            if (!skills.some(s => (typeof s === 'string' ? s : s.name) === val)) {
+                setSkills([...skills, val]);
             }
             setInputValue('');
         }
     };
 
-    const removeSkill = (skill: string) => {
-        setSkills(skills.filter(s => s !== skill));
+    const removeSkill = (indexToRemove: number) => {
+        setSkills(skills.filter((_, i) => i !== indexToRemove));
     };
 
     const handleCertKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter' && certInputValue.trim()) {
             e.preventDefault();
-            if (!certifications.includes(certInputValue.trim())) {
-                setCertifications([...certifications, certInputValue.trim()]);
+            const val = certInputValue.trim();
+            if (!certifications.some(c => (typeof c === 'string' ? c : c.name) === val)) {
+                setCertifications([...certifications, { name: val, issuer: '', date: '' }]);
             }
             setCertInputValue('');
         }
@@ -104,15 +107,16 @@ export default function SkillsForm() {
 
     const addCertification = () => {
         if (certInputValue.trim()) {
-            if (!certifications.includes(certInputValue.trim())) {
-                setCertifications([...certifications, certInputValue.trim()]);
+            const val = certInputValue.trim();
+            if (!certifications.some(c => (typeof c === 'string' ? c : c.name) === val)) {
+                setCertifications([...certifications, { name: val, issuer: '', date: '' }]);
             }
             setCertInputValue('');
         }
     };
 
-    const removeCertification = (cert: string) => {
-        setCertifications(certifications.filter(c => c !== cert));
+    const removeCertification = (indexToRemove: number) => {
+        setCertifications(certifications.filter((_, i) => i !== indexToRemove));
     };
 
     return (
@@ -168,20 +172,23 @@ export default function SkillsForm() {
                                     <p className="text-xs font-black uppercase tracking-widest italic">No skills cataloged yet</p>
                                 </div>
                             ) : (
-                                skills.map(skill => (
-                                    <div
-                                        key={skill}
-                                        className="group/tag flex items-center gap-3 px-5 py-2.5 rounded-2xl bg-primary/5 text-primary border border-primary/20 text-xs font-black tracking-widest hover:bg-primary transition-all hover:text-white hover:scale-105"
-                                    >
-                                        {skill}
-                                        <button
-                                            onClick={() => removeSkill(skill)}
-                                            className="opacity-40 group-hover/tag:opacity-100 hover:text-red-200 transition-all active:scale-90"
+                                skills.map((skill, index) => {
+                                    const skillName = typeof skill === 'string' ? skill : (skill.name || 'UNKNOWN SKILL');
+                                    return (
+                                        <div
+                                            key={index}
+                                            className="group/tag flex items-center gap-3 px-5 py-2.5 rounded-2xl bg-primary/5 text-primary border border-primary/20 text-xs font-black tracking-widest hover:bg-primary transition-all hover:text-white hover:scale-105"
                                         >
-                                            <X className="w-4 h-4" />
-                                        </button>
-                                    </div>
-                                ))
+                                            {skillName}
+                                            <button
+                                                onClick={() => removeSkill(index)}
+                                                className="opacity-40 group-hover/tag:opacity-100 hover:text-red-200 transition-all active:scale-90"
+                                            >
+                                                <X className="w-4 h-4" />
+                                            </button>
+                                        </div>
+                                    );
+                                })
                             )}
                         </div>
                     </CardContent>
@@ -224,25 +231,28 @@ export default function SkillsForm() {
                                     <p className="text-xs font-black uppercase tracking-widest italic">No credentials logged yet</p>
                                 </div>
                             ) : (
-                                certifications.map(cert => (
-                                    <div
-                                        key={cert}
-                                        className="group/cert flex items-center justify-between p-4 rounded-2xl bg-emerald-500/5 text-emerald-700 dark:text-emerald-400 border border-emerald-500/10 hover:bg-emerald-500 hover:text-white transition-all duration-300"
-                                    >
-                                        <div className="flex items-center gap-4">
-                                            <div className="p-2 rounded-lg bg-emerald-500/20 group-hover/cert:bg-white/20 transition-colors">
-                                                <Award className="w-4 h-4" />
-                                            </div>
-                                            <span className="text-sm font-black tracking-tight">{cert}</span>
-                                        </div>
-                                        <button
-                                            onClick={() => removeCertification(cert)}
-                                            className="p-2 opacity-40 group-hover/cert:opacity-100 hover:bg-white/20 rounded-xl transition-all active:scale-90"
+                                certifications.map((cert, index) => {
+                                    const certName = typeof cert === 'string' ? cert : (cert.name || 'UNKNOWN CERTIFICATION');
+                                    return (
+                                        <div
+                                            key={index}
+                                            className="group/cert flex items-center justify-between p-4 rounded-2xl bg-emerald-500/5 text-emerald-700 dark:text-emerald-400 border border-emerald-500/10 hover:bg-emerald-500 hover:text-white transition-all duration-300"
                                         >
-                                            <X className="w-5 h-5" />
-                                        </button>
-                                    </div>
-                                ))
+                                            <div className="flex items-center gap-4">
+                                                <div className="p-2 rounded-lg bg-emerald-500/20 group-hover/cert:bg-white/20 transition-colors">
+                                                    <Award className="w-4 h-4" />
+                                                </div>
+                                                <span className="text-sm font-black tracking-tight">{certName}</span>
+                                            </div>
+                                            <button
+                                                onClick={() => removeCertification(index)}
+                                                className="p-2 opacity-40 group-hover/cert:opacity-100 hover:bg-white/20 rounded-xl transition-all active:scale-90"
+                                            >
+                                                <X className="w-5 h-5" />
+                                            </button>
+                                        </div>
+                                    );
+                                })
                             )}
                         </div>
                     </CardContent>

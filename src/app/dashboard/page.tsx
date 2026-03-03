@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils';
 
 import { ResumeParser } from '@/components/dashboard/resume-parser';
 import { UserProfile } from '@/components/dashboard/user-profile';
+import { LinkedinScraperCard } from '@/components/dashboard/linkedin-scraper-card';
 
 export default function DashboardPage() {
     const { user, profile } = useAuth();
@@ -137,31 +138,8 @@ export default function DashboardPage() {
                     </div>
                 </div>
 
-                {/* Quick Actions */}
-                <div className="group p-8 rounded-[32px] border bg-card text-card-foreground shadow-sm flex flex-col hover:shadow-xl transition-all duration-500 hover:-translate-y-1 border-border/60 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-400 fill-mode-both">
-                    <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-6">Quick Edit</h3>
-                    <div className="flex flex-col gap-3">
-                        <Link href="/dashboard/projects">
-                            <Button variant="ghost" className="w-full justify-between h-14 rounded-2xl px-6 group/btn border border-transparent hover:border-primary/20 hover:bg-primary/5 transition-all">
-                                <span className="font-bold">Manage Projects</span>
-                                <div className="p-2 rounded-xl bg-primary/10 text-primary group-hover/btn:scale-110 transition-transform">
-                                    <Edit className="w-4 h-4" />
-                                </div>
-                            </Button>
-                        </Link>
-                        <Link href="/dashboard/skills">
-                            <Button variant="ghost" className="w-full justify-between h-14 rounded-2xl px-6 group/btn border border-transparent hover:border-amber-500/20 hover:bg-amber-500/5 transition-all">
-                                <span className="font-bold">Update Skills</span>
-                                <div className="p-2 rounded-xl bg-amber-500/10 text-amber-500 group-hover/btn:scale-110 transition-transform">
-                                    <Zap className="w-4 h-4" />
-                                </div>
-                            </Button>
-                        </Link>
-                    </div>
-                    <div className="mt-auto pt-6 text-center">
-                        <p className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground/50 italic">More coming soon</p>
-                    </div>
-                </div>
+                {/* LinkedIn Scraper Card */}
+                <LinkedinScraperCard />
             </div>
         </div>
     );
