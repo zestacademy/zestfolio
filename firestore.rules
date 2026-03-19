@@ -2,16 +2,38 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     
-    // User Portfolios Collection
-    match /portfolios/{userId} {
-      // 1. Write Access: Users can write to their own document OR the specific admin can write
-      allow write: if request.auth != null && (
-        request.auth.uid == userId || 
+    // Function to check if the user is an admin
+    function isAdmin() {
+      return request.auth != null && (
+        request.auth.token.email == 'zestacademy@rsmk.co.in' || 
         request.auth.token.email == 'zestacademyonline@gmail.com'
       );
-      
-      // 2. Read Access: PUBLIC
+    }
+
+    // Auth Users Collection
+    match /users/{userId} {
+      allow read, write: if request.auth != null && (request.auth.uid == userId || isAdmin());
+    }
+
+    // Portfolios Collection
+    match /portfolios/{portfolioId} {
       allow read: if true;
+      allow write: if request.auth != null && (
+        request.auth.uid == portfolioId || 
+        isAdmin() || 
+        (request.resource.data != null && request.resource.data.uid == request.auth.uid)
+      );
+    }
+
+    // Counters for Zest ID generation
+    match /counters/{counterId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Default rule for other documents
+    match /{document=**} {
+      allow read, write: if isAdmin();
     }
   }
 }
+
